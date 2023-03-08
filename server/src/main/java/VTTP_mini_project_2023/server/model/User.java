@@ -26,4 +26,5 @@ public class User {
 
     // TODO
     // getter and setter
+
 }
