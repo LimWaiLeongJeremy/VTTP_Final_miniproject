@@ -13,9 +13,24 @@ public class UserContoller {
     @Autowired
     private UserService userSvc;
 
+    @PostConstruct 
+    public void initRolesAndUsers() {
+        userSvc.initRolesAndUser();
+    }
+
     @PostMapping
     public User registerNewUser(@RequestBody User user) {
         return userSvc.registerNewUser(user);
+    }
+
+    @GetMapping({"/forAdmin"})
+    public String forAdmin() {
+        return "Welcome back Admin!";
+    }
+
+    @GetMapping({"/forUser"})
+    public String forUser() {
+        return "Welcome back User!";
     }
     
 }
