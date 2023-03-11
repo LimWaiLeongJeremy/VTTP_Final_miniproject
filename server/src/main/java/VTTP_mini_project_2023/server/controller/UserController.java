@@ -1,14 +1,20 @@
 package VTTP_mini_project_2023.server.controller;
 
-import org.springframwork.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestController;
+
+import VTTP_mini_project_2023.server.entity.User;
 import VTTP_mini_project_2023.server.service.UserService;
-import org.springframwork.web.bind.annotation.PostMapping;
-import VTTP_mini_project_2023.server.model.User;
-import org.springframwork.web.bind.annotation.RequestBody;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-public class UserContoller {
+public class UserController {
 
     @Autowired
     private UserService userSvc;
@@ -18,7 +24,7 @@ public class UserContoller {
         userSvc.initRolesAndUser();
     }
 
-    @PostMapping
+    @PostMapping({"/registerNewUser"})
     public User registerNewUser(@RequestBody User user) {
         return userSvc.registerNewUser(user);
     }

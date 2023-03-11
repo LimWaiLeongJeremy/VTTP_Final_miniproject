@@ -1,11 +1,10 @@
-package VTTP_mini_project_2023.server.model;
+package VTTP_mini_project_2023.server.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 public class Role {
-
     @Id
     private String roleName;
     private String roleDescription;
@@ -14,7 +13,7 @@ public class Role {
         return roleName;
     }
 
-    public void setRoleName(Strign roleName) { 
+    public void setRoleName(String roleName) { 
         this.roleName = roleName;
     }
 
@@ -22,7 +21,7 @@ public class Role {
         return roleDescription;
     }
 
-    public void setRoleDescription(Strign roleDescription) { 
+    public void setRoleDescription(String roleDescription) { 
         this.roleDescription = roleDescription;
     }
 

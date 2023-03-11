@@ -12,15 +12,15 @@ public class CorsConfiguration {
     private static final String POST = "POST";
     private static final String DELETE = "DELETE";
 
-    public WebMvcConfigurer() {
+    public WebMvcConfigurer WebMvcConfigurer() {
         return new WebMvcConfigurer() {
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedMethords()
+                        .allowedMethods()
                         .allowedHeaders("*")
-                        .allowedOrigonPatterns("*")
+                        .allowedOriginPatterns("*")
                         .allowCredentials(true);
             } 
         };

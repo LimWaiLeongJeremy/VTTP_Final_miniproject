@@ -1,13 +1,11 @@
 package VTTP_mini_project_2023.server.controller;
 
-import org.springframework.web.binb.annotation.controller;
-
-import VTTP_mini_project_2023.server.model.Role;
+import VTTP_mini_project_2023.server.entity.Role;
 import VTTP_mini_project_2023.server.service.RoleService;
-import org.springframwork.web.bind.annotation.RestController;
-import org.springframwork.beans.factory.annotation.Autowired;
-import org.springframwork.web.bind.annotation.PostMapping;
-import org.springframwork.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
