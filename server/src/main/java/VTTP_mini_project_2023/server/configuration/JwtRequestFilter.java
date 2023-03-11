@@ -52,19 +52,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = jwtSvc.loadUserByUsername(userName);
 
-            if (jwtUtil.validateToken(jwtToken, userDetails)) {
+            if (jwtUtil.validate(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                                                                                            userDetails, 
-                                                                                null, 
-                                                                                            userDetails.getAuthorities());
+                        userDetails,
+                        null,
+                        userDetails.getAuthorities());
 
                 usernamePasswordAuthenticationToken
-                    .setDetails(new WebAuthenticationDetailsSource()
-                    .buildDetails(request));
+                        .setDetails(new WebAuthenticationDetailsSource()
+                                .buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
 
         throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
     }

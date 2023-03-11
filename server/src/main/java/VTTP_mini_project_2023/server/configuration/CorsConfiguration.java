@@ -22,7 +22,7 @@ public class CorsConfiguration {
                         .allowedHeaders("*")
                         .allowedOriginPatterns("*")
                         .allowCredentials(true);
-            } 
+            }
         };
     }
 }

@@ -2,7 +2,7 @@ package VTTP_mini_project_2023.server.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import VTTP_mini_project_2023.server.entity.User;
+import VTTP_mini_project_2023.server.model.User;
 import VTTP_mini_project_2023.server.service.UserService;
 
 import javax.annotation.PostConstruct;
@@ -12,31 +12,30 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 public class UserController {
 
     @Autowired
     private UserService userSvc;
 
-    @PostConstruct 
+    @PostConstruct
     public void initRolesAndUsers() {
         userSvc.initRolesAndUser();
     }
 
-    @PostMapping({"/registerNewUser"})
+    @PostMapping({ "/registerNewUser" })
     public User registerNewUser(@RequestBody User user) {
         return userSvc.registerNewUser(user);
     }
 
-    @GetMapping({"/forAdmin"})
+    @GetMapping({ "/forAdmin" })
     public String forAdmin() {
         return "Welcome back Admin!";
     }
 
-    @GetMapping({"/forUser"})
+    @GetMapping({ "/forUser" })
     public String forUser() {
         return "Welcome back User!";
     }
-    
+
 }
