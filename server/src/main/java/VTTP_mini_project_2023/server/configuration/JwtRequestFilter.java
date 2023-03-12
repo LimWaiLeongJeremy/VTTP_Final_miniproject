@@ -1,8 +1,6 @@
 package VTTP_mini_project_2023.server.configuration;
 
 import java.io.IOException;
-import java.util.Enumeration;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -32,14 +30,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         final String header = request.getHeader("Authorization");
+        // System.out.println("request filter: " + header);
 
-        String jwtToken = "";
-        String userName = "";
+        String jwtToken = null;
+        String userName = null;
         if (header != null && header.startsWith("Bearer ")) {
             jwtToken = header.substring(7);
 
             try {
                 userName = jwtUtil.getUserNameFromToken(jwtToken);
+                // System.out.println("request filter: " + userName);
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get JWT token");
             } catch (ExpiredJwtException e) {
@@ -57,18 +57,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                         userDetails,
                         null,
                         userDetails.getAuthorities());
-
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource()
                                 .buildDetails(request));
-
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
 
         filterChain.doFilter(request, response);
 
-        throw new UnsupportedOperationException("Unimplemented method 'doFilterInternal'");
     }
 
 }

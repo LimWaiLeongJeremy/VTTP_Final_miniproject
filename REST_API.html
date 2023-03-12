@@ -1,1 +1,44 @@
+POST localhost:8080/createNewRole
+
+========================================
+
+POST localhost:8080/registerNewUser
+Body:
+    {
+        "userName": "tan",
+        "password": "tan",
+        "firstName": "tan",
+        "lastName": "ah gao",
+        "email": "gao@mail.com"
+    }
+
+========================================
+
+GET localhost:8080/forAdmin
+Header:
+    {
+        "Authorization" "Bearer {token}"
+    }
+
+========================================
+
+GET localhost:8080/forUser
+Header:
+    {
+        "Authorization" "Bearer {token}"
+    }
+
+========================================
+
+POST localhost:8080/authenticate
+Body:
+    {
+        "userName": "admin",
+        "password": "admin"
+    }
+
+========================================
+
+localhost:8080/createNewRole
+localhost:8080/createNewRole
 localhost:8080/createNewRole

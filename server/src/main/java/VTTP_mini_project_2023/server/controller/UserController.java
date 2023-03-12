@@ -8,6 +8,7 @@ import VTTP_mini_project_2023.server.service.UserService;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,11 +30,13 @@ public class UserController {
     }
 
     @GetMapping({ "/forAdmin" })
+    @PreAuthorize("hasRole('Admin')")
     public String forAdmin() {
         return "Welcome back Admin!";
     }
 
     @GetMapping({ "/forUser" })
+    @PreAuthorize("hasRole('User')")
     public String forUser() {
         return "Welcome back User!";
     }

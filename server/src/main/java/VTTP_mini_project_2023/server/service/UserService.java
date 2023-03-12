@@ -23,6 +23,12 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User registerNewUser(User user) {
+        Role role = roleRepo.findById("User").get();
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRole(roles);
+        user.setPassword(encoderPassword(user.getPassword()));
+
         return userRepo.save(user);
     }
 
