@@ -15,12 +15,16 @@ import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthGuard } from './authenticate/auth.guard';
+import { AuthInterceptor } from './authenticate/auth.interceptor';
+import { UserService } from './service/user.service';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'admin', component: AdminComponent },
-  { path: 'user', component: UserComponent },
+  { path: 'admin', component: AdminComponent, canActivate:[AuthGuard], data:{roles:['Admin']} },
+  { path: 'user', component: UserComponent, canActivate:[AuthGuard], data:{roles:['User']} },
   { path: 'login', component: LoginComponent },
   { path: 'forbidden', component: ForbiddenComponent },
 ];
@@ -46,7 +50,15 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass:AuthInterceptor,
+      multi: true,
+    },
+    UserService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

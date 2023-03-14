@@ -1,6 +1,9 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { Credential } from '../model/credentials';
+import { UserAuthService } from '../service/user-auth.service';
 import { UserService } from '../service/user.service';
 
 @Component({
@@ -12,7 +15,12 @@ export class LoginComponent implements OnInit {
   form!: FormGroup;
   credential!: Credential;
 
-  constructor(private fb: FormBuilder, private userSvc: UserService) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private userSvc: UserService,
+    private userAuthSvc: UserAuthService,
+  ) {}
 
   ngOnInit(): void {
     this.form = this.createCredential();
@@ -22,8 +30,15 @@ export class LoginComponent implements OnInit {
     this.credential = this.form.value as Credential;
     console.info('>>> form: ', this.credential);
     this.userSvc.login(this.credential).subscribe(
-      (response) => {
-        console.info(response);
+      (response: any) => {
+        this.userAuthSvc.setRole(response.user.role);
+        this.userAuthSvc.setToken(response.jwtToken);
+        const role = response.user.role[0].role;
+        if (role === 'Admin') {
+          this.router.navigateByUrl('/admin');
+        } else {
+          this.router.navigateByUrl('/user');
+        }
       },
       (error) => {
         console.info(error);
@@ -37,4 +52,5 @@ export class LoginComponent implements OnInit {
       password: this.fb.control<string>('', Validators.required),
     });
   }
+
 }

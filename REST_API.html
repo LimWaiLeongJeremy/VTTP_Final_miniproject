@@ -1,8 +1,8 @@
-POST localhost:8080/createNewRole
+POST localhost:8080/api/createNewRole
 
 ========================================
 
-POST localhost:8080/registerNewUser
+POST localhost:8080/api/registerNewUser
 Body:
     {
         "userName": "tan",
@@ -14,7 +14,7 @@ Body:
 
 ========================================
 
-GET localhost:8080/forAdmin
+GET localhost:8080/api/forAdmin
 Header:
     {
         "Authorization" "Bearer {token}"
@@ -22,7 +22,7 @@ Header:
 
 ========================================
 
-GET localhost:8080/forUser
+GET localhost:8080/api/forUser
 Header:
     {
         "Authorization" "Bearer {token}"
@@ -30,7 +30,7 @@ Header:
 
 ========================================
 
-POST localhost:8080/authenticate
+POST localhost:8080/api/authenticate
 Body:
     {
         "userName": "admin",

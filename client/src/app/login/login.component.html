@@ -1,32 +1,28 @@
-<div class="container mt-5">
-  <div class="card">
-    <form [formGroup]="form">
-      <span class="p-float-label">
-        <input
-          type="text"
-          name="userName"
-          pInputText
-          class="ng-invalid ng-dirty"
-          formControlName="userName"
-          id="userName"
-        />
-        <label for="float-input-invalid">Username</label>
-      </span>
+<form [formGroup]="form" (submit)="submit()">
+  <span class="p-float-label">
+    <input
+      type="text"
+      name="userName"
+      pInputText
+      class="ng-invalid ng-dirty"
+      formControlName="userName"
+      id="userName"
+    />
+    <label for="float-input-invalid">Username</label>
+  </span>
 
-      <span class="p-float-label">
-        <input
-          type="password"
-          name="password"
-          pInputText
-          class="ng-invalid ng-dirty"
-          formControlName="password"
-          id="password"
-        />
-        <label for="float-input-invalid">Password</label>
-      </span>
-      <span>
-        <p-button label="Login" (click)="submit()"></p-button>
-      </span>
-    </form>
-  </div>
-</div>
+  <span class="p-float-label">
+    <input
+      type="password"
+      name="password"
+      pInputText
+      class="ng-invalid ng-dirty"
+      formControlName="password"
+      id="password"
+    />
+    <label for="float-input-invalid">Password</label>
+  </span>
+  <span>
+    <p-button type="submit" label="Login"></p-button>
+  </span>
+</form>
