@@ -16,15 +16,25 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthGuard } from './authenticate/auth.guard';
 import { AuthInterceptor } from './authenticate/auth.interceptor';
 import { UserService } from './service/user.service';
+import { CardModule } from 'primeng/card';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
-  { path: 'admin', component: AdminComponent, canActivate:[AuthGuard], data:{roles:['Admin']} },
-  { path: 'user', component: UserComponent, canActivate:[AuthGuard], data:{roles:['User']} },
+  {
+    path: 'admin',
+    component: AdminComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['Admin'] },
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['User'] },
+  },
   { path: 'login', component: LoginComponent },
   { path: 'forbidden', component: ForbiddenComponent },
 ];
@@ -49,15 +59,16 @@ const routes: Routes = [
     InputTextModule,
     ReactiveFormsModule,
     HttpClientModule,
+    CardModule,
   ],
   providers: [
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass:AuthInterceptor,
+      useClass: AuthInterceptor,
       multi: true,
     },
-    UserService
+    UserService,
   ],
   bootstrap: [AppComponent],
 })

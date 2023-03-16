@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Roles } from '../model/roles';
 
 
 @Injectable({
@@ -7,12 +8,12 @@ import { Injectable } from '@angular/core';
 export class UserAuthService {
   constructor() {}
 
-  public setRole(roles: []) {
+  public setRole(roles: Roles[]) {
     localStorage.setItem('roles', JSON.stringify(roles));
   }
 
   public getRoles(){
-    return JSON.parse(localStorage.getItem('roles') || '[]');
+    return JSON.parse(localStorage.getItem('roles') || '');
   
   }
 
@@ -22,6 +23,22 @@ export class UserAuthService {
 
   public getToken() {
     return localStorage.getItem('jwtToken');
+  }
+
+  public setUserName(userName: string) {
+    localStorage.setItem('userName', userName)
+  }
+
+  public getUserName() {
+    return localStorage.getItem('userName')
+  }
+
+  public setPassword(password: string) {
+    localStorage.setItem('password', password)
+  }
+
+  public getPassword() {
+    return localStorage.getItem('password')
   }
 
   public clear() {
