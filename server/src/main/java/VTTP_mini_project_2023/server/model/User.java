@@ -5,6 +5,7 @@ import java.util.Set;
 
 @Entity
 public class User {
+    // TODO: change id o an ID number 
     @Id
     private String userName;
     private String firstName;

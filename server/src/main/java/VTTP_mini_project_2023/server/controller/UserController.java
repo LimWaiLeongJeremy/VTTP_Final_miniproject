@@ -3,6 +3,7 @@ package VTTP_mini_project_2023.server.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import VTTP_mini_project_2023.server.model.User;
+import VTTP_mini_project_2023.server.service.ItemService;
 import VTTP_mini_project_2023.server.service.UserService;
 
 import javax.annotation.PostConstruct;
@@ -20,6 +21,8 @@ public class UserController {
 
     @Autowired
     private UserService userSvc;
+    @Autowired
+    private ItemService itemSvc;
 
     @PostConstruct
     public void initRolesAndUsers() {
@@ -40,6 +43,7 @@ public class UserController {
     @GetMapping({ "/forUser" })
     @PreAuthorize("hasRole('User')")
     public String forUser() {
+        itemSvc.getItem();
         return "Welcome back User!";
     }
 

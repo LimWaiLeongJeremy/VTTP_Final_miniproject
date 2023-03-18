@@ -1,13 +1,20 @@
 package VTTP_mini_project_2023.server.model;
 
 public class Item {
+    private String id;
     private String itemName;
     private String effect;
     private String img;
-    private String price;
+    private float price;
     private String quantity;
-
     
+    
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getQuantity() {
         return quantity;
     }
@@ -32,10 +39,10 @@ public class Item {
     public void setImg(String img) {
         this.img = img;
     }
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
     

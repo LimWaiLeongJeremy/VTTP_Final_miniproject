@@ -41,7 +41,6 @@ public class JwtService implements UserDetailsService {
         String newGeneratedToken = jwtUtil.generateToken(userDetails);
 
         User user = userRepo.findById(userName).get();
-        System.out.println(">>>>>>Username" +userName);
         return new JwtResponse(user, newGeneratedToken);
     }
 

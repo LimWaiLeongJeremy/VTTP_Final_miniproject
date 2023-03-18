@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Item } from '../model/item';
+import { UserAuthService } from '../service/user-auth.service';
+import { UserService } from '../service/user.service';
 
 
 @Component({
@@ -6,6 +9,14 @@ import { Component } from '@angular/core';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
-export class UserComponent {
+export class UserComponent implements OnInit{
+
+  items: Item[] = []
+  constructor( private userSvc: UserService, private userAuthSvc: UserAuthService) {}
+  
+  ngOnInit(): void {
+    this.items = this.userSvc.getItem();
+      // this.userSvc.getItem(role[0])
+  }
 
 }

@@ -1,7 +1,9 @@
 
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { firstValueFrom, from, lastValueFrom, Subscription } from 'rxjs';
 import { AuthResponse } from '../model/authResponse';
 import { Credential } from '../model/credentials';
 import { UserAuthService } from '../service/user-auth.service';
@@ -12,25 +14,27 @@ import { UserService } from '../service/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   credential!: Credential;
-
+  sub!: Subscription;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private userSvc: UserService,
     private userAuthSvc: UserAuthService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     this.form = this.createCredential();
   }
   
-  submit() {
+  async submit() {
     this.credential = this.form.value as Credential;
-    this.userSvc.login(this.credential).subscribe(
+    
+    this.sub = this.userSvc.login(this.credential).subscribe(
       (response: AuthResponse) => {
       this.userAuthSvc.setRole(response.user.role);
       this.userAuthSvc.setToken(response.jwtToken);
@@ -45,6 +49,12 @@ export class LoginComponent implements OnInit {
       console.info(error);
     }
     );
+  }
+
+  ngOnDestroy(): void {
+      if(this.sub) {
+        this.sub.unsubscribe();
+      }
   }
 
   

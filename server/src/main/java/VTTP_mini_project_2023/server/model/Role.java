@@ -5,6 +5,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Role {
+// TODO: change id to an ID NUMBER
     @Id
     private String role;
     private String description;
