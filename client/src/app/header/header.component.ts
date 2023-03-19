@@ -38,6 +38,4 @@ export class HeaderComponent {
     localStorage.clear();
     this.router.navigateByUrl('/home');
   }
-
-
 }

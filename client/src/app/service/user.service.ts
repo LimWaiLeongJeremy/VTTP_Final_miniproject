@@ -52,11 +52,15 @@ export class UserService {
   constructor(private http: HttpClient, private userAuthSvc: UserAuthService) {}
 
   public login(loginData: any) {
-    this.userName = loginData.userName
-    this.password = loginData.password
-    return this.http.post<AuthResponse>(this.API_URL + '/api/authenticate', loginData, {
-      headers: this.requestHeader,
-    });
+    this.userName = loginData.userName;
+    this.password = loginData.password;
+    return this.http.post<AuthResponse>(
+      this.API_URL + '/api/authenticate',
+      loginData,
+      {
+        headers: this.requestHeader,
+      }
+    );
   }
 
   // async getToken(loginData: any): Promise<AuthResponse> {
@@ -73,8 +77,10 @@ export class UserService {
   //   return result;
   // }
 
-  public getItem() {
-    return this.items;
+  public getItem(role: Roles) {
+    return this.http.get(this.API_URL + `/for${role}`, {
+      responseType: "text",
+    });
   }
 
   public roleMatch(allowedRoles: string | any[]): boolean {

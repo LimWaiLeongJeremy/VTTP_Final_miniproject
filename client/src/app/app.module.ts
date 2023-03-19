@@ -22,9 +22,6 @@ import { UserService } from './service/user.service';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 
-
-
-
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   {
@@ -65,8 +62,6 @@ const routes: Routes = [
     HttpClientModule,
     CardModule,
     TableModule,
-
-
   ],
   providers: [
     AuthGuard,

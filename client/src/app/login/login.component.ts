@@ -1,4 +1,3 @@
-
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -30,41 +29,39 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = this.createCredential();
   }
-  
+
   async submit() {
     this.credential = this.form.value as Credential;
-    
+
     this.sub = this.userSvc.login(this.credential).subscribe(
       (response: AuthResponse) => {
-      this.userAuthSvc.setRole(response.user.role);
-      this.userAuthSvc.setToken(response.jwtToken);
-      const role = this.userAuthSvc.getRoles();
-      if (role[0].role === 'Admin') {
-        this.router.navigateByUrl('/admin');
-      } else {
-        this.router.navigateByUrl('/user');
+        this.userAuthSvc.setRole(response.user.role);
+        this.userAuthSvc.setToken(response.jwtToken);
+        const role = this.userAuthSvc.getRoles();
+        if (role[0].role === 'Admin') {
+          this.router.navigateByUrl('/admin');
+        } else {
+          this.router.navigateByUrl('/user');
+        }
+      },
+      (error) => {
+        console.info(error);
       }
-    },
-    (error) => {
-      console.info(error);
-    }
     );
   }
 
   ngOnDestroy(): void {
-      if(this.sub) {
-        this.sub.unsubscribe();
-      }
+    if (this.sub) {
+      this.sub.unsubscribe();
+    }
   }
 
-  
   private createCredential(): FormGroup {
     return this.fb.group({
       userName: this.fb.control<string>('', Validators.required),
       password: this.fb.control<string>('', Validators.required),
     });
   }
-  
 }
 
 // submit() {

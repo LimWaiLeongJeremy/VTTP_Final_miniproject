@@ -6,7 +6,17 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, throwError, catchError, switchMap, map, firstValueFrom, from, mergeMap, of } from 'rxjs';
+import {
+  Observable,
+  throwError,
+  catchError,
+  switchMap,
+  map,
+  firstValueFrom,
+  from,
+  mergeMap,
+  of,
+} from 'rxjs';
 import { UserAuthService } from '../service/user-auth.service';
 import { Injectable } from '@angular/core';
 import { UserService } from '../service/user.service';
@@ -21,9 +31,8 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router,
     private userSvc: UserService
   ) {}
-    
 
-   intercept(
+  intercept(
     req: HttpRequest<any>,
     next: HttpHandler,
     roles: string = ''
@@ -34,10 +43,10 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const token = this.userAuthSvc.getToken() || '';
 
-    const authResp =  this.addToken(req, next, token);
-    
-    console.log(authResp)
-  
+    const authResp = this.addToken(req, next, token);
+
+    console.log(authResp);
+
     return next.handle(req).pipe(
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
@@ -54,82 +63,83 @@ export class AuthInterceptor implements HttpInterceptor {
         }
       })
     );
-    
+  }
+
+  private addToken(
+    req: HttpRequest<any>,
+    next: HttpHandler,
+    token?: string
+  ): Observable<HttpEvent<any>> {
+    if (token) {
+      const authReq = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return next.handle(authReq);
     }
 
-    private addToken(req: HttpRequest<any>, next: HttpHandler, token?: string): Observable<HttpEvent<any>> {
-      if (token) {
+    const credential = {
+      userName: req.body.userName,
+      password: req.body.password,
+    };
+
+    return from(this.userSvc.login(credential)).pipe(
+      switchMap((authResponse: AuthResponse) => {
         const authReq = req.clone({
           setHeaders: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${authResponse.jwtToken}`,
           },
         });
-    
         return next.handle(authReq);
-      }
-    
-      const credential = {
-        userName: req.body.userName,
-        password: req.body.password,
-      };
-    
-      return from(this.userSvc.login(credential)).pipe(
-        switchMap((authResponse: AuthResponse) => {
-          const authReq = req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${authResponse.jwtToken}`,
-            },
-          });
-          return next.handle(authReq);
-        }),
-        catchError((err) => {
-          console.error(err);
-          this.router.navigate(['/login']);
-          return throwError(err);
-        })
-      );
-    }
-  
-  
+      }),
+      catchError((err) => {
+        console.error(err);
+        this.router.navigate(['/login']);
+        return throwError(err);
+      })
+    );
+  }
 
-//   // intercept(
-//   //   req: HttpRequest<any>,
-//   //   next: HttpHandler
-//   // ): Observable<HttpEvent<any>> {
-//   //   if (req.headers.get('No-Auth') === 'True') {
-//   //     return next.handle(req.clone());
-//   //   }
+  //   // intercept(
+  //   //   req: HttpRequest<any>,
+  //   //   next: HttpHandler
+  //   // ): Observable<HttpEvent<any>> {
+  //   //   if (req.headers.get('No-Auth') === 'True') {
+  //   //     return next.handle(req.clone());
+  //   //   }
 
-//   //     const token = this.userAuthSvc.getToken() ;
-//   //     // req = this.addToken(req, token);
-//   //     return next.handle(req).pipe(
-//   //       catchError(
-//   //           (err: HttpErrorResponse) => {
-//   //               console.info(err.status);
-//   //               if(err.status === 401) {
-//   //                   this.router.navigate(['/login'])
-//   //               }
-//   //               return throwError("Some thing is wrong")
-//   //           }
-//   //       )
-//   //     );
-//   // }
+  //   //     const token = this.userAuthSvc.getToken() ;
+  //   //     // req = this.addToken(req, token);
+  //   //     return next.handle(req).pipe(
+  //   //       catchError(
+  //   //           (err: HttpErrorResponse) => {
+  //   //               console.info(err.status);
+  //   //               if(err.status === 401) {
+  //   //                   this.router.navigate(['/login'])
+  //   //               }
+  //   //               return throwError("Some thing is wrong")
+  //   //           }
+  //   //       )
+  //   //     );
+  //   // }
 
-//   // private addToken(req: HttpRequest<any>, token: string) {
-//   //   console.info(token)
-//   //   console.info(!token)
-//   //   if(token) {
-//   //     const credential = {
-//   //       userName: this.userAuthSvc.getUserName(),
-//   //       password: this.userAuthSvc.getPassword()
-//   //     };
-//   //     console.log(credential)
-//   //   }
-//   //   return req.clone({
-//   //     setHeaders: {
-//   //       Authorization: `Bearer ${token}`,
-//   //     },
-//   //   });
-//   // }
-// }
+  //   // private addToken(req: HttpRequest<any>, token: string) {
+  //   //   console.info(token)
+  //   //   console.info(!token)
+  //   //   if(token) {
+  //   //     const credential = {
+  //   //       userName: this.userAuthSvc.getUserName(),
+  //   //       password: this.userAuthSvc.getPassword()
+  //   //     };
+  //   //     console.log(credential)
+  //   //   }
+  //   //   return req.clone({
+  //   //     setHeaders: {
+  //   //       Authorization: `Bearer ${token}`,
+  //   //     },
+  //   //   });
+  //   // }
+  // }
 }

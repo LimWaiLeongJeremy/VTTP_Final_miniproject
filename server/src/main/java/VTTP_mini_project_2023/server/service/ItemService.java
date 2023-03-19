@@ -1,6 +1,10 @@
 package VTTP_mini_project_2023.server.service;
 
+import java.io.StringReader;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -9,13 +13,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import VTTP_mini_project_2023.server.model.Item;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 
 @Service
 public class ItemService {
 
     public static final String POTTER_POTION_API_URL = "https://api.potterdb.com/v1/potions";
 
-    public List<Item> getItem() {
+    public JsonArray getItem() {
         // call API
         RequestEntity<Void> req = RequestEntity
                 .get(POTTER_POTION_API_URL)
@@ -25,9 +33,19 @@ public class ItemService {
         ResponseEntity<String> resp = template.exchange(req, String.class);
         // get body from response
         String payload = resp.getBody();
-        // set model 
-        System.out.println(payload);
-        return null;
+        // set model
+        JsonReader reader = Json.createReader(new StringReader(payload));
+        JsonArray data = reader.readObject().getJsonArray("data");
+        Item item = new Item();
+        List<Item> items = new LinkedList<>();
+        for (int i = 0; i < data.size(); i++) {
+
+            items.add(item.setJObj(data.getJsonObject(i).getJsonObject("attributes")));
+            System.out.printf("service index:%d: %s \n", i, items.get(i).toString());
+
+        }
+
+        return item.setJArr(items);
     }
 
     // @Transactional
