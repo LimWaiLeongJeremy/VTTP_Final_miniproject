@@ -29,13 +29,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-           if (request.getHeader("Authorization") != null) {
-             // Do something with the Authorization header
-             System.out.println(request.getHeader("Authorization"));
-           } else { 
-        System.out.println("token is null");
-           }
-              
+        System.out.println(request.getHeader("Authorization"));
+        System.out.println(request.getRequestURL());
+        if (request.getHeader("Authorization") != null) {
+            // Do something with the Authorization header
+            System.out.println(request.getHeader("Authorization"));
+        } else {
+            System.out.println("token is null");
+        }
+
         final String header = request.getHeader("Authorization");
         // System.out.println("request filter: " + header);
 
@@ -43,6 +45,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String userName = null;
         if (header != null && header.startsWith("Bearer ")) {
             jwtToken = header.substring(7);
+            System.out.println(jwtToken);
 
             try {
                 userName = jwtUtil.getUserNameFromToken(jwtToken);
@@ -60,6 +63,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             UserDetails userDetails = jwtSvc.loadUserByUsername(userName);
 
             if (jwtUtil.validate(jwtToken, userDetails)) {
+                System.out.println("JWT validation passed");
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

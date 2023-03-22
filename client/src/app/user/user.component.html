@@ -1,5 +1,5 @@
 <div class="text-center">
-  <h1 style="padding: 20px; color: red">Welcome to User potter</h1>
+  <h1 style="padding: 20px; color: red">Welcome to Potter Potions</h1>
 </div>
 
 <div class="card-container">
@@ -12,11 +12,12 @@
   >
     <ng-template pTemplate="header">
       <img
-        alt="Card"
-        src="https://primefaces.org/cdn/primeng/images/usercard.png"
+        class="image"
+        alt="Image"
+        [src]="item.image"
       />
     </ng-template>
-    <p>{{ item.effect }}</p>
+    <p><i>{{ item.effect }}</i></p>
     <ng-template pTemplate="footer">
       <p-button label="Add to Cart" icon="pi pi-cart-plus"></p-button>
       <!-- <p-button

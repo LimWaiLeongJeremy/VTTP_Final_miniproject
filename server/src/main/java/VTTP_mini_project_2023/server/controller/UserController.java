@@ -48,11 +48,7 @@ public class UserController {
     @PreAuthorize("hasRole('Admin')")
     @ResponseBody
     public ResponseEntity<String> forAdmin() {
-        String good = "Welcome back Admin!";
-        JsonObject jsonObject = Json.createObjectBuilder().add("message",
-                good).build();
-        String json = jsonObject.toString();
-        return ResponseEntity.ok(json.toString());
+        return ResponseEntity.ok(itemSvc.getItem().toString());
     }
 
     @GetMapping({ "/forUser" })

@@ -12,6 +12,7 @@ import { UserService } from '../service/user.service';
 export class HeaderComponent {
   items!: MenuItem[];
   loggedIn: boolean = false;
+  username: any = this.userAuthSvc.getUserName();
 
   constructor(
     private userAuthSvc: UserAuthService,

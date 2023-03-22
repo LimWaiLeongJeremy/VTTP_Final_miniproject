@@ -10,14 +10,22 @@
     >
       Login
     </button>
-    <button
-      *ngIf="authenticated()"
-      pButton
-      type="button"
-      class="p-button-danger"
-      (click)="loggedOut()"
-    >
-      Logout
-    </button>
+
+    <div class="row">
+      <label *ngIf="authenticated()" class="welcomeLabel">
+        <i class="pi pi-user"></i> {{ username }}
+      </label>
+    </div>
+    <div class="row">
+      <button
+        *ngIf="authenticated()"
+        pButton
+        type="button"
+        class="p-button-danger"
+        (click)="loggedOut()"
+      >
+        Logout
+      </button>
+    </div>
   </ng-template>
 </p-menubar>

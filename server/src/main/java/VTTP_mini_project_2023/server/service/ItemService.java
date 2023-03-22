@@ -41,7 +41,7 @@ public class ItemService {
         for (int i = 0; i < data.size(); i++) {
 
             items.add(item.setJObj(data.getJsonObject(i).getJsonObject("attributes")));
-            System.out.printf("service index:%d: %s \n", i, items.get(i).toString());
+            // System.out.printf("service index:%d: %s \n", i, items.get(i).toString());
 
         }
 

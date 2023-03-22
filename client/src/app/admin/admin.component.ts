@@ -4,6 +4,7 @@ import { UserService } from '../service/user.service';
 import { SelectItem, FilterService, FilterMatchMode } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { InputTextModule } from 'primeng/inputtext';
+import { UserAuthService } from '../service/user-auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -13,6 +14,7 @@ import { InputTextModule } from 'primeng/inputtext';
 export class AdminComponent implements OnInit {
   constructor(
     private userSvc: UserService,
+    private userAuthSvc: UserAuthService,
     private filterService: FilterService
   ) {}
 
@@ -21,6 +23,12 @@ export class AdminComponent implements OnInit {
   matchModeOptions!: SelectItem[];
 
   ngOnInit(): void {
+    console.log(this.userAuthSvc.getToken());
+    this.userSvc.getAdminItem().subscribe((items: Item[])=> {
+      this.items = items;
+      console.log(this.items)
+    })
+
     const customFilterName = 'custom-equals';
 
     this.filterService.register(
@@ -52,9 +60,5 @@ export class AdminComponent implements OnInit {
       { label: 'Starts With', value: FilterMatchMode.STARTS_WITH },
       { label: 'Contains', value: FilterMatchMode.CONTAINS },
     ];
-
-    this.items = this.userSvc.getItem();
-    // this.userSvc.getItem().then(items => (this.items = items))
-    // this.carService.getCarsMedium().then(cars => (this.cars = cars));
   }
 }

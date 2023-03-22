@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { firstValueFrom, from, lastValueFrom, Subscription } from 'rxjs';
 import { AuthResponse } from '../model/authResponse';
 import { Credential } from '../model/credentials';
@@ -12,6 +13,7 @@ import { UserService } from '../service/user.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  providers: [MessageService]
 })
 export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
@@ -23,7 +25,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private userSvc: UserService,
     private userAuthSvc: UserAuthService,
-    private http: HttpClient
+    private http: HttpClient,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +40,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       (response: AuthResponse) => {
         this.userAuthSvc.setRole(response.user.role);
         this.userAuthSvc.setToken(response.jwtToken);
+        this.userAuthSvc.setUserName(response.user.firstName +' ' + response.user.lastName)
         const role = this.userAuthSvc.getRoles();
+        console.log('roles: ', role);
         if (role[0].role === 'Admin') {
           this.router.navigateByUrl('/admin');
         } else {
@@ -46,6 +51,13 @@ export class LoginComponent implements OnInit, OnDestroy {
       },
       (error) => {
         console.info(error);
+        this.messageService.add({
+          key: 'loginToast',
+          severity: 'error',
+          summary: 'Authentication Error',
+          detail:
+            'Please login with the correct credentials or create an account',
+        });
       }
     );
   }

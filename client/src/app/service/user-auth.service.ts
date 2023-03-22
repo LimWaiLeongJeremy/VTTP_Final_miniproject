@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Roles } from '../model/roles';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserAuthService {
+  private token!: string;
+  private tokenSubject = new Subject<string>();
+  token$ = this.tokenSubject.asObservable();
+  
   constructor() {}
+
 
   public setRole(roles: Roles[]) {
     localStorage.setItem('roles', JSON.stringify(roles));
@@ -17,6 +23,13 @@ export class UserAuthService {
 
   public setToken(jwtToken: string) {
     localStorage.setItem('jwtToken', jwtToken);
+    console.log(jwtToken);
+    this.token = jwtToken;
+    this.tokenSubject.next(jwtToken);
+  }
+
+  getTokenObservable() {
+    return this.tokenSubject.asObservable();
   }
 
   public getToken() {

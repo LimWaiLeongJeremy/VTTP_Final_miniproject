@@ -2,7 +2,7 @@ export interface Item {
   id: string;
   itemName: string;
   effect: string;
-  img: string;
+  image: string;
   price: number;
   quantity: string;
 }
