@@ -1,11 +1,13 @@
 package VTTP_mini_project_2023.server.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import VTTP_mini_project_2023.server.model.Role;
 import VTTP_mini_project_2023.server.model.User;
@@ -23,6 +25,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public User registerNewUser(User user) {
+        // TODO: handle if user exist
         Role role = roleRepo.findById("User").get();
         Set<Role> roles = new HashSet<>();
         roles.add(role);
@@ -68,5 +71,9 @@ public class UserService {
 
     public String encoderPassword(String password) {
         return passwordEncoder.encode(password);
+    }
+
+    private String idGenerator() {
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }

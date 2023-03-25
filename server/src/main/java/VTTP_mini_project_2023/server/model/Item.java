@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
@@ -99,6 +101,17 @@ public class Item {
         item.setQuantity(randomQuantity);
 
         return item;
+    }
+
+    public static Item setModelFromSql(SqlRowSet rs) {
+        Item i = new Item();
+        i.setId(rs.getString("item_id"));
+        i.setItemName(rs.getString("item_name"));
+        i.setEffect(rs.getString("effect"));
+        i.setImage(rs.getString("image"));
+        i.setPrice(rs.getFloat("price"));
+        i.setQuantity(rs.getInt("quantity"));
+        return i;
     }
 
     public static JsonArray setJArr(List<Item> items) {

@@ -6,13 +6,17 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import VTTP_mini_project_2023.server.model.Item;
+import VTTP_mini_project_2023.server.repository.ItemRepository;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
@@ -21,32 +25,43 @@ import jakarta.json.JsonReader;
 @Service
 public class ItemService {
 
+    @Autowired
+    private ItemRepository itemRepo;
+
     public static final String POTTER_POTION_API_URL = "https://api.potterdb.com/v1/potions";
 
     public JsonArray getItem() {
-        // call API
-        RequestEntity<Void> req = RequestEntity
-                .get(POTTER_POTION_API_URL)
-                .accept(MediaType.APPLICATION_JSON)
-                .build();
-        RestTemplate template = new RestTemplate();
-        ResponseEntity<String> resp = template.exchange(req, String.class);
-        // get body from response
-        String payload = resp.getBody();
-        // set model
-        JsonReader reader = Json.createReader(new StringReader(payload));
-        JsonArray data = reader.readObject().getJsonArray("data");
         Item item = new Item();
         List<Item> items = new LinkedList<>();
-        for (int i = 0; i < data.size(); i++) {
 
-            items.add(item.setJObj(data.getJsonObject(i).getJsonObject("attributes")));
-            // System.out.printf("service index:%d: %s \n", i, items.get(i).toString());
-
+        // check if items exisit in db
+        if (!itemRepo.getFromMySQL().isEmpty()) {
+            System.out.println(">>>>>>>>item form SQL");
+            items = itemRepo.getFromMySQL();
+        } else {
+            // if item not in DB isert item and return value
+            // call API
+            System.out.println(">>>>>>>>item form API");
+            RequestEntity<Void> req = RequestEntity
+                    .get(POTTER_POTION_API_URL)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .build();
+            RestTemplate template = new RestTemplate();
+            ResponseEntity<String> resp = template.exchange(req, String.class);
+            // get body from response
+            String payload = resp.getBody();
+            JsonReader reader = Json.createReader(new StringReader(payload));
+            JsonArray data = reader.readObject().getJsonArray("data");
+            // set model and insert item
+            for (int i = 0; i < data.size(); i++) {
+                Item setModel = item.setJObj(data.getJsonObject(i).getJsonObject("attributes"));
+                itemRepo.insertIntoSQL(setModel);
+                items.add(setModel);
+            }
         }
-
         return item.setJArr(items);
     }
+
 
     // @Transactional
     // public List<Hero> search(int limit, int offset) {
