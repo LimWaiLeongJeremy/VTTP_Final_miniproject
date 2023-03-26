@@ -54,7 +54,7 @@ public class ItemService {
             JsonArray data = reader.readObject().getJsonArray("data");
             // set model and insert item
             for (int i = 0; i < data.size(); i++) {
-                Item setModel = item.setJObj(data.getJsonObject(i).getJsonObject("attributes"));
+                Item setModel = item.setJObj(data.getJsonObject(i));
                 itemRepo.insertIntoSQL(setModel);
                 items.add(setModel);
             }

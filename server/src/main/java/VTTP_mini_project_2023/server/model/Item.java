@@ -77,19 +77,19 @@ public class Item {
     public static Item setJObj(JsonObject doc) {
         final Item item = new Item();
 
-        item.setId(UUID.randomUUID().toString().substring(0, 8));
-        item.setItemName(doc.getString("name"));
+        item.setId(doc.getString("id"));
+        item.setItemName(doc.getJsonObject("attributes").getString("name"));
 
-        if (doc.isNull("effect")) {
+        if (doc.getJsonObject("attributes").isNull("effect")) {
             item.setEffect("No effect");
         } else {
-            item.setEffect(doc.getString("effect"));
+            item.setEffect(doc.getJsonObject("attributes").getString("effect"));
         }
 
-        if (doc.isNull("image")) {
+        if (doc.getJsonObject("attributes").isNull("image")) {
             item.setImage("https://primefaces.org/cdn/primeng/images/usercard.png");
         } else {
-            item.setImage(doc.getString("image"));
+            item.setImage(doc.getJsonObject("attributes").getString("image"));
         }
 
         Random rand = new Random();
