@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,HostListener,OnDestroy } from '@angular/core';
+import { UserAuthService } from './service/user-auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,14 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'client';
 
-  // onDestroy: purge loccalstorage
+  constructor(private userAuthSvc: UserAuthService) {}
+
+  // ngOnDestroy(): void {
+  //   localStorage.clear();
+  // }
+  @HostListener('window:beforeunload', ['$event'])
+  clearLocalStorage(event: Event) {
+    localStorage.clear();
+  }
+  // TODO: onDestroy: purge loccalstorage
 }

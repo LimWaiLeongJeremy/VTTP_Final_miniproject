@@ -3,6 +3,7 @@ package VTTP_mini_project_2023.server.service;
 import java.io.StringReader;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import VTTP_mini_project_2023.server.model.Item;
+import VTTP_mini_project_2023.server.repository.ItemCache;
 import VTTP_mini_project_2023.server.repository.ItemRepository;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
@@ -28,18 +30,18 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepo;
 
+    @Autowired
+    private ItemCache itemCache;
+
     public static final String POTTER_POTION_API_URL = "https://api.potterdb.com/v1/potions";
 
     public JsonArray getItem() {
-        Item item = new Item();
         List<Item> items = new LinkedList<>();
+        Optional<List<Item>> cache = itemCache.get("potion");
+        
+        if(cache.isEmpty() && itemRepo.getFromMySQL().isEmpty()) {
 
-        // check if items exisit in db
-        if (!itemRepo.getFromMySQL().isEmpty()) {
-            System.out.println(">>>>>>>>item form SQL");
-            items = itemRepo.getFromMySQL();
-        } else {
-            // if item not in DB isert item and return value
+            // if item not in cache or DB isert item and return value
             // call API
             System.out.println(">>>>>>>>item form API");
             RequestEntity<Void> req = RequestEntity
@@ -52,14 +54,33 @@ public class ItemService {
             String payload = resp.getBody();
             JsonReader reader = Json.createReader(new StringReader(payload));
             JsonArray data = reader.readObject().getJsonArray("data");
-            // set model and insert item
             for (int i = 0; i < data.size(); i++) {
-                Item setModel = item.setJObj(data.getJsonObject(i));
+                // set model and insert item into items list 
+                Item setModel = Item.setJObj(data.getJsonObject(i));
+                // insert item into SQL
                 itemRepo.insertIntoSQL(setModel);
+                
                 items.add(setModel);
             }
+            System.out.println(">>>> save to SQL");
+            // insert itemsinto cache
+            itemCache.add("potion", items);
+            System.out.println(">>>> save to redis");
+        } else if (cache.isEmpty()) {
+            // check if items exisit in db
+            System.out.println(">>>>>>>>item form SQL");
+            items = itemRepo.getFromMySQL();
+            itemCache.add("potion", items);
+            System.out.println(">>>> save to redis");
+
+        } else {
+            // check if item exist in cache
+            System.out.println(">>>>>>>>item form Cache");
+            items = cache.get();
         }
-        return item.setJArr(items);
+
+        return Item.setJArr(items);
+        
     }
 
 

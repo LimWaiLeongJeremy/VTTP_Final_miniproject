@@ -134,4 +134,26 @@ public class Item {
         return jArr;
     }
 
+    public JsonObject toJson() {
+        return Json.createObjectBuilder()
+            .add("id", id)
+            .add("itemName", itemName)
+            .add("effect", effect)
+            .add("image", image)
+            .add("price", price)
+            .add("quantity", quantity)
+            .build();
+    }
+
+    public static Item fromCache(JsonObject doc) {
+
+        final Item item = new Item();
+        item.setId(doc.getString("id"));
+        item.setItemName(doc.getString("itemName"));
+        item.setEffect(doc.getString("effect"));
+        item.setImage(doc.getString("image"));
+        item.setPrice(doc.getInt("price"));
+        item.setQuantity(doc.getInt("quantity"));
+        return item;
+    }
 }

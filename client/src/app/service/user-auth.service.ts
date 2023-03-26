@@ -44,14 +44,6 @@ export class UserAuthService {
     return localStorage.getItem('userName');
   }
 
-  public setPassword(password: string) {
-    localStorage.setItem('password', password);
-  }
-
-  public getPassword() {
-    return localStorage.getItem('password');
-  }
-
   public clear() {
     localStorage.clear();
   }
