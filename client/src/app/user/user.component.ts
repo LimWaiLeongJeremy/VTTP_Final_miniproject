@@ -3,6 +3,9 @@ import { Subscription } from 'rxjs';
 import { Item } from '../model/item';
 import { UserAuthService } from '../service/user-auth.service';
 import { UserService } from '../service/user.service';
+import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview'
+
+
 
 @Component({
   selector: 'app-user',
@@ -11,7 +14,7 @@ import { UserService } from '../service/user.service';
 })
 export class UserComponent implements OnInit {
   
-  items: Item[] = [];
+  products: Item[] = [];
   token!: string;
   tokenSubscription!: Subscription;
   
@@ -22,9 +25,9 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.userAuthSvc.getToken());
-    this.userSvc.getUserItem().subscribe((items: Item[])=> {
-      this.items = items;
-      console.log(this.items) 
+    this.userSvc.getItem().subscribe((items: Item[])=> {
+      this.products = items;
+      console.log(this.products) 
     })
     // if(!this.userAuthSvc.getToken() === null) {
     //   this.tokenSubscription = this.userAuthSvc

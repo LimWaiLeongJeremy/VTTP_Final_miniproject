@@ -55,7 +55,12 @@ public class UserController {
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> forUser() {
+        return ResponseEntity.ok(itemSvc.getItem().toString());
+    }
 
+    @GetMapping({ "/items" })
+    @ResponseBody
+    public ResponseEntity<String> getItem() {
         return ResponseEntity.ok(itemSvc.getItem().toString());
     }
 

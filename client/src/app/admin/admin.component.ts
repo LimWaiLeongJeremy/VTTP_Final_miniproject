@@ -24,7 +24,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.userAuthSvc.getToken());
-    this.userSvc.getAdminItem().subscribe((items: Item[])=> {
+    this.userSvc.getItem().subscribe((items: Item[])=> {
       this.items = items;
       console.log(this.items)
     })

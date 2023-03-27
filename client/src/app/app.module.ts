@@ -22,6 +22,7 @@ import { UserService } from './service/user.service';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
+import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 
 
 const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'forbidden', component: ForbiddenComponent },
+  // TODO: catch all undefine routes
 ];
 
 @NgModule({
@@ -64,7 +66,9 @@ const routes: Routes = [
     HttpClientModule,
     CardModule,
     TableModule,
-    ToastModule
+    ToastModule,
+    DataViewModule,
+    DataViewLayoutOptions,
   ],
   providers: [
     AuthGuard,

@@ -10,13 +10,11 @@ export class AppComponent {
   title = 'client';
 
   constructor(private userAuthSvc: UserAuthService) {}
+ 
+  // TODO: onDestroy: purge loccalstorage
 
-  // ngOnDestroy(): void {
+  // @HostListener('window:beforeunload', ['$event'])
+  // clearLocalStorage(event: Event) {
   //   localStorage.clear();
   // }
-  @HostListener('window:beforeunload', ['$event'])
-  clearLocalStorage(event: Event) {
-    localStorage.clear();
-  }
-  // TODO: onDestroy: purge loccalstorage
 }

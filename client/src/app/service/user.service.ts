@@ -32,6 +32,11 @@ export class UserService {
     );
   }
 
+  public getItem() {
+    // return this.http.get<Item[]>(this.API_URL + `/forUser`);
+    return this.http.get<any>(this.API_URL + `/api/items`);
+  }
+
   public getUserItem() {
     // return this.http.get<Item[]>(this.API_URL + `/forUser`);
     return this.http.get<any>(this.API_URL + `/api/forUser`);
