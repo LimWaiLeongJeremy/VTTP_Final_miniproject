@@ -22,7 +22,7 @@ import { UserService } from './service/user.service';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import {ToastModule} from 'primeng/toast';
-import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
+// import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 
 
 const routes: Routes = [
@@ -67,8 +67,8 @@ const routes: Routes = [
     CardModule,
     TableModule,
     ToastModule,
-    DataViewModule,
-    DataViewLayoutOptions,
+    // DataViewModule,
+    // DataViewLayoutOptions,
   ],
   providers: [
     AuthGuard,

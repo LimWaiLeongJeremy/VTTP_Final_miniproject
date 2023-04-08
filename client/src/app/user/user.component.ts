@@ -14,7 +14,7 @@ import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview'
 })
 export class UserComponent implements OnInit {
   
-  products: Item[] = [];
+  items: Item[] = [];
   token!: string;
   tokenSubscription!: Subscription;
   
@@ -26,8 +26,8 @@ export class UserComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.userAuthSvc.getToken());
     this.userSvc.getItem().subscribe((items: Item[])=> {
-      this.products = items;
-      console.log(this.products) 
+      this.items = items;
+      console.log(this.items) 
     })
     // if(!this.userAuthSvc.getToken() === null) {
     //   this.tokenSubscription = this.userAuthSvc

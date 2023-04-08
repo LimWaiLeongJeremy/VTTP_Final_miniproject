@@ -24,7 +24,7 @@ export class UserService {
     this.userName = loginData.userName;
     this.password = loginData.password;
     return this.http.post<AuthResponse>(
-      this.API_URL + '/api/authenticate',
+      '/api/authenticate',
       loginData,
       {
         headers: this.requestHeader,
@@ -34,17 +34,17 @@ export class UserService {
 
   public getItem() {
     // return this.http.get<Item[]>(this.API_URL + `/forUser`);
-    return this.http.get<any>(this.API_URL + `/api/items`);
+    return this.http.get<any>(`/api/items`);
   }
 
   public getUserItem() {
     // return this.http.get<Item[]>(this.API_URL + `/forUser`);
-    return this.http.get<any>(this.API_URL + `/api/forUser`);
+    return this.http.get<any>(`/api/forUser`);
   }
 
   public getAdminItem() {
     // return this.http.get<Item[]>(this.API_URL + `/forUser`);
-    return this.http.get<any>(this.API_URL + `/api/forAdmin`);
+    return this.http.get<any>(`/api/forAdmin`);
   }
 
   public roleMatch(allowedRoles: string | any[]): boolean {
