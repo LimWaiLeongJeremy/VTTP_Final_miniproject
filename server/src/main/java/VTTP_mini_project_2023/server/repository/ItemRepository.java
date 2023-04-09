@@ -36,5 +36,9 @@ public class ItemRepository {
                 ,item.getPrice()
                 ,item.getQuantity());
     }
+
+    public int updateItem(int price, int quantity, String itemID) {
+        return jdbcTemplate.update(SQL_UPDATE_ITEM_TABLE, price, quantity, itemID);
+    }
     
 }

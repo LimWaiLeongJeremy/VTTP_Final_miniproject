@@ -19,7 +19,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,11 +46,11 @@ public class UserController {
         return userSvc.registerNewUser(user);
     }
 
-    @GetMapping({ "/forAdmin" })
+    @PutMapping({ "/updateItem/{price}/{quantity}/{itemId}" })
     @PreAuthorize("hasRole('Admin')")
     @ResponseBody
-    public ResponseEntity<String> forAdmin() {
-        return ResponseEntity.ok(itemSvc.getItem().toString());
+    public ResponseEntity<Integer> updatepdateItem(@PathVariable int price, @PathVariable int quantity, @PathVariable String itemId) {
+        return ResponseEntity.ok(itemSvc.updateItem(price, quantity, itemId));
     }
 
     @GetMapping({ "/forUser" })
@@ -60,7 +62,7 @@ public class UserController {
 
     @GetMapping({ "/items" })
     @ResponseBody
-    public ResponseEntity<String> getItem() {
+    public ResponseEntity<String> getItem() { 
         return ResponseEntity.ok(itemSvc.getItem().toString());
     }
 

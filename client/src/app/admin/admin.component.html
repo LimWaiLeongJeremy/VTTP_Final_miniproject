@@ -10,6 +10,8 @@
     [paginator]="true"
     [rows]="10"
     responsiveLayout="scroll"
+    editMode="row"
+    dataKey="id"
   >
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -30,19 +32,28 @@
         <th></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-rowData let-columns="columns">
-      <tr [pSelectableRow]="rowData">
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-editing="editing" let-ri="rowIndex">
+      <tr [pEditableRow]="rowData">
         <td *ngFor="let col of columns">
-          {{ rowData[col.field] }}
+          <p-cellEditor *ngIf="col.field == 'price' || col.field == 'quantity';else staticTemplate">
+            <ng-template pTemplate="input">
+                <input pInputText type="number" [(ngModel)]="rowData[col.field]" required>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ rowData[col.field] }}
+            </ng-template>
+        </p-cellEditor>
+       <ng-template #staticTemplate>
+           {{ rowData[col.field] }}
+       </ng-template>
+          
         </td>
         <td>
-          <button
-            pButton
-            pRipple
-            type="button"
-            label="Edit"
-            class="p-button-secondary"
-          ></button>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(rowData)" class="p-button-rounded p-button-text"></button>
+            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(rowData)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+          </div>
         </td>
       </tr>
     </ng-template>

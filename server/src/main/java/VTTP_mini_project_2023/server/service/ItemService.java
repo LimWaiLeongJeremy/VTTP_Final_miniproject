@@ -83,6 +83,10 @@ public class ItemService {
         
     }
 
+    public int updateItem(int price, int quantity, String itemID) {
+        return itemRepo.updateItem(price, quantity, itemID);
+    }
+
 
     // @Transactional
     // public List<Hero> search(int limit, int offset) {

@@ -21,7 +21,9 @@ import { AuthInterceptor } from './authenticate/auth.interceptor';
 import { UserService } from './service/user.service';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
-import {ToastModule} from 'primeng/toast';
+import { ToastModule } from 'primeng/toast';
+import { FormsModule } from '@angular/forms';
+
 // import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 
 
@@ -67,6 +69,7 @@ const routes: Routes = [
     CardModule,
     TableModule,
     ToastModule,
+    FormsModule
     // DataViewModule,
     // DataViewLayoutOptions,
   ],
