@@ -72,30 +72,28 @@ export class AdminComponent implements OnInit {
     this.clonedItems[item.itemName] = { ...item };
   }
 
-  onRowEditSave(item: Item) {
-    if (item.price > 0) {
-      delete this.clonedItems[item.itemName];
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Item is updated',
-      });
-    } else {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Invalid Price',
-      });
-    }
-
-    // Send to API the item to update based on item ID
-    // If API save returns status 200/ OK then :
-    //      delete this.clonedItems[item.itemName];
-    //     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Item is updated' });
-    // ELSE if API save fails :
-    //      this.item[index] = this.clonedItems[item.itemName];
-    //      delete this.clonedItems[item.itemName];
-    //      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Price Update failed' });
+  onRowEditSave(item: Item, index: number) {
+    const updateResponse = this.userSvc.updateItem(item);
+    updateResponse.subscribe(
+      response => {
+        if (response == 1) {
+          delete this.clonedItems[item.itemName];
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Item is updated',
+          });
+        } else {
+          this.items[index] = this.clonedItems[item.itemName];
+          delete this.clonedItems[item.itemName];
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Invalid Price',
+          });
+        }
+      }
+    )
   }
 
   onRowEditCancel(item: Item, index: number) {

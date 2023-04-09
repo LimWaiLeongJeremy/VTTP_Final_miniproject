@@ -4,7 +4,7 @@ import { UserAuthService } from './user-auth.service';
 import { AuthResponse } from '../model/authResponse';
 import { Roles } from '../model/roles';
 import { Item } from '../model/item';
-import { firstValueFrom } from 'rxjs';
+import { Observable, catchError, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +14,7 @@ export class UserService {
   userName!: string;
   password!: string;
   items: Item[] = [];
+  body = {} ;
 
   API_URL = 'http://localhost:8080';
   token = this.userAuthSvc.getToken() || '';
@@ -42,9 +43,9 @@ export class UserService {
     return this.http.get<any>(`/api/forUser`);
   }
 
-  public getAdminItem() {
+  public updateItem(item: Item) {
     // return this.http.get<Item[]>(this.API_URL + `/forUser`);
-    return this.http.get<any>(`/api/forAdmin`);
+    return this.http.put<any>(`/api/updateItem/${item.price}/${item.quantity}/${item.id}`, this.body);
   }
 
   public roleMatch(allowedRoles: string | any[]): boolean {
