@@ -33,8 +33,6 @@ public class AppConfig {
     public RedisTemplate<String, String> createRedisTemplate() {
 
         final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        System.out.println("Hello");
-        System.out.println(redisHost + redisPassword + redisDatabase + redisUser + redisPort);
         config.setHostName(redisHost);
         config.setPort(redisPort);
         config.setDatabase(redisDatabase);

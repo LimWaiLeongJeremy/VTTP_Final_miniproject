@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -84,8 +85,16 @@ public class ItemService {
     }
 
     public int updateItem(int price, int quantity, String itemID) {
-        return itemRepo.updateItem(price, quantity, itemID);
+        int updateItem = itemRepo.updateItem(price, quantity, itemID);
+
+        if (itemCache.tableExist("potion")) {
+            itemCache.del("potion");
+            getItem();
+        }
+        return updateItem;
     }
+
+
 
 
     // @Transactional

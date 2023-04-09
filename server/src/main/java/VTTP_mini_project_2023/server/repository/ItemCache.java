@@ -55,5 +55,12 @@ public class ItemCache {
 
         return Optional.of(heros);
     }
+
+    public void del(String key) {
+        redisTemplate.delete(key);
+    }
     
+    public boolean tableExist(String key) {
+        return redisTemplate.hasKey(key);
+    }
 }

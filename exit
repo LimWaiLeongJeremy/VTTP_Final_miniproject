@@ -1,0 +1,149 @@
+[33mcommit 678469cc6467fa1f764310d66b374a9955c4ee30[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sat Apr 8 23:59:34 2023 +0800
+
+    remove passsword
+
+[33mcommit fca23d85fac6e78e97744fabcfd0224fad096b98[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sat Apr 8 23:35:46 2023 +0800
+
+    added docker file
+
+[33mcommit dd41e8e4b759c4330e84372bc5a0560eea79cb05[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Mon Mar 27 21:21:28 2023 +0800
+
+    new user page
+
+[33mcommit 4adedb3381df7e620a0d0baa713fb0883ccb9018[m[33m ([m[1;33mtag: 3.2[m[33m)[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sun Mar 26 23:15:30 2023 +0800
+
+    cached the items, clear localstorage on page close
+
+[33mcommit 819d38f5edcc5d64c7eb5a3c3693c85f38af186e[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sun Mar 26 16:39:41 2023 +0800
+
+    change item id to use the API id
+
+[33mcommit bc5ac22339adbbfa2d45016349c990b98f1c6c0a[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sat Mar 25 18:39:04 2023 +0800
+
+    storing item from API (MySQL)
+
+[33mcommit f9a247e1fd6bbc6681b77dde04b9d2142ff8575b[m[33m ([m[1;33mtag: 3[m[33m)[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Wed Mar 22 20:55:10 2023 +0800
+
+    Get from Harry Potter API and populateed the page
+
+[33mcommit deacc773c9675ae89de0b90c804d529841428422[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sun Mar 19 15:16:43 2023 +0800
+
+    response from herry potter api
+
+[33mcommit fe0ad1507645562ff826caa0d5787b76a007d3d7[m[33m ([m[1;33mtag: 2.2[m[33m)[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sat Mar 18 18:33:32 2023 +0800
+
+    authentication with JWT working
+
+[33mcommit 1ed67422c31ecfff726c7e266a065edb59e7ea1c[m[33m ([m[1;33mtag: 2[m[33m)[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Thu Mar 16 10:21:58 2023 +0800
+
+    JWT Auth full stack
+
+[33mcommit 5a3e1c3b57ceca989220df27775ae209d4b1f927[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Tue Mar 14 10:16:40 2023 +0800
+
+    JWT signing
+
+[33mcommit 841a358e9b2b9186a23fe25d172ad25f2b1a02bc[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Mon Mar 13 00:37:48 2023 +0800
+
+    working on the frontend to use JWT
+
+[33mcommit 97323412543b50805e41e66160d01e4e12aef179[m[33m ([m[1;33mtag: 1.1[m[33m)[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sun Mar 12 16:26:29 2023 +0800
+
+    Backend auth with JWT ready
+
+[33mcommit ef091e2f0037d14aa8e3b61dff3db47ad5aea4b8[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sun Mar 12 01:54:25 2023 +0800
+
+    JWT Authentication and password encryption
+
+[33mcommit bd219eb9a8a5d8d32fc9e5c425dcba794ecf37dc[m[33m ([m[1;33mtag: 1[m[33m)[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Sun Mar 12 00:09:50 2023 +0800
+
+    Implementing authorization
+
+[33mcommit 9aa41839437f92008080e09bcd8b2656976f37f6[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 22:48:26 2023 +0800
+
+    Delete server/src/main/java/VTTP_mini_project_2023/server/service  directory
+
+[33mcommit 6c098cf13b8b13711b6a3e521d73a9c58fa298db[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 14:44:51 2023 +0000
+
+    remove whitespace in foldername
+
+[33mcommit c01651784cf1da2d58dc1792b36db2b17d57566c[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 08:34:54 2023 +0000
+
+    JWT 3rd commit
+
+[33mcommit 1c5ddec0e6b66206e73952adcfdfde548c1b3866[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 08:18:51 2023 +0000
+
+    JWT 3rd commit
+
+[33mcommit d1fb4a303a8f6eb14407e1b9f3e66f07730fdfa9[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 08:03:07 2023 +0000
+
+    JWT 3rd commit
+
+[33mcommit 7779de8d838dd5af09ac034bb6eb77a3bc34a0cc[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 06:34:33 2023 +0000
+
+    JWT 3rd commit
+
+[33mcommit 2c7b12f4e70c08b5388277289eff778f41873a32[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 06:13:47 2023 +0000
+
+    JWT second commit
+
+[33mcommit 0dab87fee4d163b570655b0fe418f4f2bd41cb42[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 04:04:55 2023 +0000
+
+    JWT first commit
+
+[33mcommit 9decf1e478308b132248df03d1fbbffc006c5e71[m
+Author: Jeremy <106659130+LimWaiLeongJeremy@users.noreply.github.com>
+Date:   Wed Mar 8 03:19:45 2023 +0000
+
+    second commit
+
+[33mcommit 7b4d88cf4090fe59af9d2ed6066e3a3d806243fc[m
+Author: LimWaiLeongJeremy <jereremy19995@hotmail.sg>
+Date:   Wed Mar 8 00:13:46 2023 +0800
+
+    first comit
