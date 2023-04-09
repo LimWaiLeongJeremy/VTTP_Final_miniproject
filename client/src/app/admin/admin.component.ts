@@ -55,10 +55,10 @@ export class AdminComponent implements OnInit {
       }
     );
     this.cols = [
-      { field: 'itemName', header: 'Item Name' },
-      { field: 'effect', header: 'Effect' },
-      { field: 'price', header: 'Price' },
-      { field: 'quantity', header: 'Quantity' },
+      { field: 'itemName', header: 'Item Name', size: '20%'},
+      { field: 'effect', header: 'Effect' ,size: '40%'},
+      { field: 'price', header: 'Price' , size: '15%'},
+      { field: 'quantity', header: 'Quantity' ,size: '15%'},
     ];
 
     this.matchModeOptions = [
@@ -79,6 +79,7 @@ export class AdminComponent implements OnInit {
         if (response == 1) {
           delete this.clonedItems[item.itemName];
           this.messageService.add({
+            key: 'adminToast',
             severity: 'success',
             summary: 'Success',
             detail: 'Item is updated',
@@ -87,6 +88,7 @@ export class AdminComponent implements OnInit {
           this.items[index] = this.clonedItems[item.itemName];
           delete this.clonedItems[item.itemName];
           this.messageService.add({
+            key: 'adminToast',
             severity: 'error',
             summary: 'Error',
             detail: 'Invalid Price',

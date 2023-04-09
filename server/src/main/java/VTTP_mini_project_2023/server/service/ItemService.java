@@ -94,6 +94,10 @@ public class ItemService {
         return updateItem;
     }
 
+    public Item getById(String itemId){
+        return itemRepo.getById(itemId);
+    }
+
 
 
 

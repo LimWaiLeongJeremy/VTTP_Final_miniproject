@@ -41,4 +41,17 @@ public class ItemRepository {
         return jdbcTemplate.update(SQL_UPDATE_ITEM_TABLE, price, quantity, itemID);
     }
     
+    public Item getById(String itemId) {
+        final SqlRowSet rs = jdbcTemplate.queryForRowSet(SPL_SELECT_ITEM_BY_ID, itemId);
+        final Item item = new Item();
+        while (rs.next()) { 
+            item.getId();
+            item.getItemName();
+            item.getEffect();
+            item.getImage();
+            item.getPrice();
+            item.getQuantity();
+        }
+        return item;
+    }
 }
