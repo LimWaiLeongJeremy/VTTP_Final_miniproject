@@ -23,11 +23,31 @@ Header:
 
 ========================================
 
-GET localhost:8080/api/forUser
+GET localhost:8080/api/saveCart
 Header:
     {
         "Authorization" "Bearer {token}"
     }
+    
+    body: 
+        [ 
+            {
+                "id": "abc123",
+                "itemName": "happy potion",
+                "effect": "feels happy",
+                "image": "potion.png",
+                "price": "50",
+                "quantity": "600"
+            },
+            {
+                "id": "abc123",
+                "itemName": "happy potion",
+                "effect": "feels happy",
+                "image": "potion.png",
+                "price": "50",
+                "quantity": "600"
+            }
+        ]
 
 ========================================
 

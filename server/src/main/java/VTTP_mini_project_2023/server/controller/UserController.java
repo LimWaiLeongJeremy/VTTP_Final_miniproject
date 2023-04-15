@@ -54,30 +54,32 @@ public class UserController {
     @PutMapping({ "/updateItem/{price}/{quantity}/{itemId}" })
     @PreAuthorize("hasRole('Admin')")
     @ResponseBody
-    public ResponseEntity<Integer> updatepdateItem(@PathVariable int price, @PathVariable int quantity, @PathVariable String itemId) {
+    public ResponseEntity<Integer> updatepdateItem(@PathVariable int price, @PathVariable int quantity,
+            @PathVariable String itemId) {
         return ResponseEntity.ok(itemSvc.updateItem(price, quantity, itemId));
     }
 
-    @PostMapping(value = "/cart") 
+    @PostMapping(value = "/saveCart")
     @PreAuthorize("hasRole('User')")
     @ResponseBody
-    public ResponseEntity<String> forUser(@RequestBody List<Item> carts) {
+    public ResponseEntity<String> forUser() {
+        System.out.println("here");
         // Item item = itemSvc.getById(itemId);
         // User user = new User();
         // item.setQuantity(quantity);
         // user.setUserName(userName);
-        System.out.println(carts.toString());
+        // System.out.println(carts.toString());
         String good = "endpoint hit";
         JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
         String json = jsonObject.toString();
-        
+
         return ResponseEntity.ok(json);
         // return ResponseEntity.ok(cartSvc.addToCart(item, user));
     }
 
     @GetMapping({ "/items" })
     @ResponseBody
-    public ResponseEntity<String> getItem() { 
+    public ResponseEntity<String> getItem() {
         return ResponseEntity.ok(itemSvc.getItem().toString());
     }
 
