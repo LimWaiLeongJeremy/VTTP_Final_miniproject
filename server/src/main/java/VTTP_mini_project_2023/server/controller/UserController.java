@@ -7,13 +7,17 @@ import VTTP_mini_project_2023.server.model.User;
 import VTTP_mini_project_2023.server.service.CartService;
 import VTTP_mini_project_2023.server.service.ItemService;
 import VTTP_mini_project_2023.server.service.UserService;
+import VTTP_mini_project_2023.server.util.JwtUtil;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
 
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -39,6 +43,8 @@ public class UserController {
     private ItemService itemSvc;
     @Autowired
     private CartService cartSvc;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @PostConstruct
     public void initRolesAndUsers() {
@@ -59,21 +65,37 @@ public class UserController {
         return ResponseEntity.ok(itemSvc.updateItem(price, quantity, itemId));
     }
 
-    @PostMapping(value = "/saveCart")
+    @PostMapping(path = {"/saveCart"}, consumes=MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('User')")
     @ResponseBody
-    public ResponseEntity<String> forUser() {
-        System.out.println("here");
+    public ResponseEntity<String> forUser(HttpServletRequest request, @RequestBody List<Item> cart) {
+        String header = request.getHeader("Authorization");
+        String jwtToken = header.substring(7);
+        String userName = jwtUtil.getUserNameFromToken(jwtToken);
+
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+        for (Item item : cart) {
+            User user = new User();
+            JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
+                .add("id", item.getId())
+                .add("itemName", item.getItemName())
+                .add("effect", item.getEffect())
+                .add("image", item.getImage())
+                .add("price", item.getPrice())
+                .add("quantity", item.getQuantity());
+                
+            arrayBuilder.add(objectBuilder.build());
+        }
+        JsonArray jsonArray = arrayBuilder.build();
+        cartSvc.addToCart(cart, userName);
+        
         // Item item = itemSvc.getById(itemId);
         // User user = new User();
         // item.setQuantity(quantity);
         // user.setUserName(userName);
         // System.out.println(carts.toString());
-        String good = "endpoint hit";
-        JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
-        String json = jsonObject.toString();
 
-        return ResponseEntity.ok(json);
+        return ResponseEntity.ok(jsonArray.toString());
         // return ResponseEntity.ok(cartSvc.addToCart(item, user));
     }
 

@@ -1,5 +1,7 @@
 package VTTP_mini_project_2023.server.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ public class CartService {
     @Autowired
     private CartRepository cartRepo;
 
-    public int addToCart (Item item, User user) {
-        return cartRepo.insertIntoCart(item, user);
+    public void addToCart (List<Item> items, String userName) {
+        cartRepo.insertIntoCart(items, userName);
     }
 }

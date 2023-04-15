@@ -1,4 +1,4 @@
-FROM node:19 as angular
+FROM node:18 as angular
 
 WORKDIR /app
 
@@ -36,7 +36,7 @@ WORKDIR /app
 COPY --from=springboot /app/target/server-0.0.1-SNAPSHOT.jar server.jar
 
 ENV PORT=8080
-ENV SPRINGBOOT_DATASOURCE_PASSWORD=AVNS_4adBZafc0wwLpujFjsW
+ENV SPRING_DATASOURCE_PASSWORD=AVNS_4adBZafc0wwLpujFjsW
 ENV SPRING_REDIS_PASSWORD=vlTmLvegQwQxcvYkKnrJZjqu9HrS7YIM
 
 
