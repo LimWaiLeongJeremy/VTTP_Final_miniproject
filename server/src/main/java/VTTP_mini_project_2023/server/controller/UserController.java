@@ -87,7 +87,7 @@ public class UserController {
             arrayBuilder.add(objectBuilder.build());
         }
         JsonArray jsonArray = arrayBuilder.build();
-        cartSvc.addToCart(cart, userName);
+        cartSvc.saveToCart(cart, userName);
         
         // Item item = itemSvc.getById(itemId);
         // User user = new User();

@@ -4,5 +4,5 @@ export interface Item {
   effect: string;
   image: string;
   price: number;
-  quantity: string;
+  quantity: number;
 }

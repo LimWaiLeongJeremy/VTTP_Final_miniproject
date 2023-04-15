@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserAuthService } from '../service/user-auth.service';
@@ -12,7 +12,8 @@ import { UserService } from '../service/user.service';
 export class HeaderComponent {
   items!: MenuItem[];
   loggedIn: boolean = false;
-  username: any = this.userAuthSvc.getUserName();
+  // username: any = this.userAuthSvc.getUserName();
+  username = '';
 
   constructor(
     private userAuthSvc: UserAuthService,
@@ -29,6 +30,15 @@ export class HeaderComponent {
         title: 'Potter Potions~!',
       },
     ];
+    const storedName = localStorage.getItem('userName');
+    if (storedName) {
+      this.username = storedName;
+    }
+
+    this.userAuthSvc.userName$.subscribe((name) => {
+      this.username = name;
+      console.log('name',name)
+    });
   }
 
   public authenticated() {

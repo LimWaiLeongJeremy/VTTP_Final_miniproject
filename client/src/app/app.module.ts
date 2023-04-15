@@ -24,7 +24,8 @@ import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
-// import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
+import { DataViewModule } from 'primeng/dataview';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 const routes: Routes = [
@@ -70,9 +71,9 @@ const routes: Routes = [
     TableModule,
     ToastModule,
     FormsModule,
-    TooltipModule
-    // DataViewModule,
-    // DataViewLayoutOptions,
+    TooltipModule,
+    DataViewModule,
+    DropdownModule,
   ],
   providers: [
     AuthGuard,

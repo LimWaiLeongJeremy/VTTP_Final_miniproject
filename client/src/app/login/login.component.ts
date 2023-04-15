@@ -19,7 +19,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   credential!: Credential;
   sub!: Subscription;
-
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -38,9 +37,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.sub = this.userSvc.login(this.credential).subscribe(
       (response: AuthResponse) => {
+        const username = response.user.firstName +' ' + response.user.lastName;
         this.userAuthSvc.setRole(response.user.role);
         this.userAuthSvc.setToken(response.jwtToken);
-        this.userAuthSvc.setUserName(response.user.firstName +' ' + response.user.lastName)
+        localStorage.clear;
+        this.userAuthSvc.setUserName(username);
         const role = this.userAuthSvc.getRoles();
         console.log('roles: ', role);
         if (role[0].role === 'Admin') {

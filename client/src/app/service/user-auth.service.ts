@@ -8,7 +8,9 @@ import { Roles } from '../model/roles';
 export class UserAuthService {
   private token!: string;
   private tokenSubject = new Subject<string>();
+  private usernameSubject = new Subject<string>();
   token$ = this.tokenSubject.asObservable();
+  userName$ = this.usernameSubject.asObservable();
   
   constructor() {}
 
@@ -37,11 +39,14 @@ export class UserAuthService {
   }
 
   public setUserName(userName: string) {
+    this.usernameSubject.next(userName);
     localStorage.setItem('userName', userName);
   }
 
   public getUserName() {
+    console.log(localStorage.getItem('userName'))
     return localStorage.getItem('userName');
+
   }
 
   public clear() {

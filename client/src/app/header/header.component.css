@@ -2,7 +2,11 @@
     margin-right: 20px;
 }
 
-:host ::ng-deep .p-button-danger{
+/* :host ::ng-deep .p-button-danger{
     height: 25px;
     margin-top: 10px;
+} */
+
+.blueBtn{
+    margin-right:10px;
 }
