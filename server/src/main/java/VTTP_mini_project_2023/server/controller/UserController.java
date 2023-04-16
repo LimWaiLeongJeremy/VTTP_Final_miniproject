@@ -76,10 +76,16 @@ public class UserController {
 
         Optional<int[]> saveCart = cartSvc.saveToCart(cart, userName);
         if (saveCart.isEmpty()) {
-            return ResponseEntity.ok("Error saving cart for user " + userName);
+            String good = "Error saving cart for user " + userName;
+            JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
+            String json = jsonObject.toString();
+            return ResponseEntity.ok(json);
         }
 
-        return ResponseEntity.ok("Cart saved");
+        String good = "Cart saved";
+        JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
+        String json = jsonObject.toString();
+        return ResponseEntity.ok(json);
     }
 
     @GetMapping({ "/items" })
