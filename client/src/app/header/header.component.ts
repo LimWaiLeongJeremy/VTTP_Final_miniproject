@@ -17,7 +17,7 @@ export class HeaderComponent {
 
   constructor(
     private userAuthSvc: UserAuthService,
-    private router: Router,
+    public router: Router,
     private userSvc: UserService
   ) {}
 

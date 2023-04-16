@@ -2,3 +2,13 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@font-face {
+    font-family: hpFont;
+    src: url(assets/magic-school-font/MagicSchoolOne-ovYz.ttf) ;
+  }
+
+  @font-face {
+    font-family: hpFont2;
+    src: url(assets/magic-school-font/MagicSchoolTwo-4n5D.ttf) ;
+  }

@@ -68,35 +68,15 @@ public class UserController {
     @PostMapping(path = {"/saveCart"}, consumes=MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('User')")
     @ResponseBody
-    public ResponseEntity<String> forUser(HttpServletRequest request, @RequestBody List<Item> cart) {
+    public ResponseEntity<String> saveCart(HttpServletRequest request, @RequestBody List<Item> cart) {
         String header = request.getHeader("Authorization");
         String jwtToken = header.substring(7);
         String userName = jwtUtil.getUserNameFromToken(jwtToken);
 
-        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        for (Item item : cart) {
-            User user = new User();
-            JsonObjectBuilder objectBuilder = Json.createObjectBuilder()
-                .add("id", item.getId())
-                .add("itemName", item.getItemName())
-                .add("effect", item.getEffect())
-                .add("image", item.getImage())
-                .add("price", item.getPrice())
-                .add("quantity", item.getQuantity());
-                
-            arrayBuilder.add(objectBuilder.build());
-        }
-        JsonArray jsonArray = arrayBuilder.build();
+        System.out.println(cart);
         cartSvc.saveToCart(cart, userName);
-        
-        // Item item = itemSvc.getById(itemId);
-        // User user = new User();
-        // item.setQuantity(quantity);
-        // user.setUserName(userName);
-        // System.out.println(carts.toString());
 
-        return ResponseEntity.ok(jsonArray.toString());
-        // return ResponseEntity.ok(cartSvc.addToCart(item, user));
+        return ResponseEntity.ok("1");
     }
 
     @GetMapping({ "/items" })

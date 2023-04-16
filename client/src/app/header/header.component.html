@@ -2,7 +2,7 @@
   <ng-template pTemplate="start"> </ng-template>
   <ng-template pTemplate="end">
     <button
-      *ngIf="!authenticated()"
+      *ngIf="!authenticated() && router.url != '/login'"
       pButton
       type="button"
       class="p-button-success"
@@ -14,7 +14,7 @@
       <p-button class="blueBtn" type="text" icon="pi pi-user" *ngIf="authenticated()" [label]="username" >
       </p-button>
 
-      <p-button class="blueBtn" type="text" icon="pi pi-shopping-cart"></p-button>
+      <p-button class="blueBtn" type="text" icon="pi pi-shopping-cart" *ngIf="authenticated()" ></p-button>
   
       <button
         *ngIf="authenticated()"

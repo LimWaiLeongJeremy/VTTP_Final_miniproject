@@ -34,17 +34,15 @@ export class UserService {
   }
 
   public getItem() {
-    // return this.http.get<Item[]>(this.API_URL + `/forUser`);
     return this.http.get<any>(`/api/items`);
   }
 
-  public getUserItem() {
-    // return this.http.get<Item[]>(this.API_URL + `/forUser`);
-    return this.http.get<any>(`/api/forUser`);
+  public saveUserCart(items: Item[]) {
+    console.log('save Cart ', items)
+    return this.http.post<any>('/api/saveCart', items);
   }
 
   public updateItem(item: Item) {
-    // return this.http.get<Item[]>(this.API_URL + `/forUser`);
     return this.http.put<any>(`/api/updateItem/${item.price}/${item.quantity}/${item.id}`, this.body);
   }
 

@@ -62,13 +62,17 @@ export class UserComponent implements OnInit {
               severity: 'error',
               summary: 'Out Of Stock',
               detail:
-                'You have added the max quantity in stock.',
+              'You have added the max quantity in stock.',
             })
           }
           
         }
       })
     }
+    this.userSvc.saveUserCart(this.cart).subscribe( a =>{
+      console.log(a)
+    })
+    console.info("cart saved")
   }
 
   public checkIfAddDisabled(item: Item){
@@ -97,8 +101,8 @@ export class UserComponent implements OnInit {
 }
   
 
-  // ngOnDestroy() {
-  //   this.tokenSubscription.unsubscribe();
-  // }
+  ngOnDestroy() {
+    console.log("user page destroied")
+  }
 
 }

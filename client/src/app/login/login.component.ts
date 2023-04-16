@@ -75,6 +75,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.fb.control<string>('', Validators.required),
     });
   }
+
+  get userName() { return this.form.get('userName'); }
+  get password() { return this.form.get('password'); }
 }
 
 // submit() {

@@ -1,29 +1,43 @@
 <p-toast key="loginToast"></p-toast>
-<form [formGroup]="form" (submit)="submit()">
-  <span class="p-float-label">
-    <input
-      type="text"
-      name="userName"
-      pInputText
-      class="ng-invalid ng-dirty"
-      formControlName="userName"
-      id="userName"
-    />
-    <label for="float-input-invalid">Username</label>
-  </span>
+<div class="text-center">
+  <h1 style="padding: 20px">Welcome to Potion Potter</h1>
+  <h4>All your potion needs in one potter</h4>
+</div>
+<div id="formDiv">
+  <form [formGroup]="form" (submit)="submit()">
+    <span class="p-float-label">
+      <input
+        type="text"
+        name="userName"
+        pInputText
+        formControlName="userName"
+        id="userName"
+        [ngClass]="userName?.invalid && (userName?.dirty || userName?.touched) ? 'ng-invalid ng-dirty' : ''"
+      />
+      <label for="username">Username</label>
+    </span>
 
-  <span class="p-float-label">
-    <input
-      type="password"
-      name="password"
-      pInputText
-      class="ng-invalid ng-dirty"
-      formControlName="password"
-      id="password"
-    />
-    <label for="float-input-invalid">Password</label>
-  </span>
-  <span>
-    <p-button type="submit" label="Login"></p-button>
-  </span>
-</form>
+    <span class="p-float-label">
+      <input
+        type="password"
+        name="password"
+        pInputText
+        formControlName="password"
+        id="password"
+        [ngClass]="password?.invalid && (password?.dirty || password?.touched) ? 'ng-invalid ng-dirty' : ''"
+      />
+      <label for="password">Password</label>
+    </span>
+    <p-button id="loginBtn" type="submit" label="Login"></p-button>
+  </form>
+
+<div *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)"
+    class="errorMsg">
+    Username must not be empty.
+</div>
+
+<div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+  class="errorMsg">
+  Password must not be empty.
+</div>
+</div>
