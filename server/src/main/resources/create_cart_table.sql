@@ -14,3 +14,5 @@ CREATE TABLE "cart" (
   CONSTRAINT "cart_ibfk_2" FOREIGN KEY ("user_name") REFERENCES "user" ("user_name")
 );
 
+CREATE VIEW userCartView AS SELECT c.user_name,c.item_id, i.item_name, i.effect, i.price ,c.quantity FROM cart c LEFT JOIN item i ON c.item_id = i.item_id
+

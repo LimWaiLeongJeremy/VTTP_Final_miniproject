@@ -40,6 +40,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         const username = response.user.firstName +' ' + response.user.lastName;
         this.userAuthSvc.setRole(response.user.role);
         this.userAuthSvc.setToken(response.jwtToken);
+        sessionStorage.clear;
+        sessionStorage.setItem('token', response.jwtToken);
         localStorage.clear;
         this.userAuthSvc.setUserName(username);
         const role = this.userAuthSvc.getRoles();

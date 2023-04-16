@@ -17,4 +17,8 @@ export class AppComponent {
   // clearLocalStorage(event: Event) {
   //   localStorage.clear();
   // }
+
+  headerViewCartClicked(event: any){
+    console.log("appcomp clicked", event)
+  }
 }

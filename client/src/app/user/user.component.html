@@ -59,3 +59,48 @@
       </ng-template>
   </p-dataView>
 </div>
+
+
+<p-sidebar [(visible)]="sidebarVisible" position="right" styleClass="p-sidebar-lg">
+  <h3>Your Cart</h3>
+  
+  <p-table
+  #cartTable
+  [value]="cart"
+  [rows]="10"
+  [scrollable]="true" scrollHeight="70%"
+  [rowHover]="true"
+  [columns]="cartCols"
+>
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns">
+          {{ col.header }}
+        </th>
+        <th></th>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+      
+          <td>{{ rowData['itemName'] }}</td>
+          <td>{{ rowData['effect'] }}</td>
+          <td>{{ rowData['price'] | currency}}</td>
+          <td>{{ rowData['quantity'] }}</td>
+          <td>
+              <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteFromCart(rowData)"></button>
+          </td>
+      </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+        <td colspan="5">Your cart is empty.</td>
+    </tr>
+</ng-template>
+  <ng-template pTemplate="summary">
+    <div class="flex align-items-center justify-content-between">Total Amount: {{ itemSum | currency}} </div>
+</ng-template>
+</p-table>
+<p-button id="checkoutBtn" label="Checkout" [disabled]="cart.length == 0" ></p-button>
+</p-sidebar>
+<p-button  icon="pi pi-arrow-right"></p-button>

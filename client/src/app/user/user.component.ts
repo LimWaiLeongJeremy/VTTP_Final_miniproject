@@ -20,6 +20,8 @@ export class UserComponent implements OnInit {
   token!: string;
   tokenSubscription!: Subscription;
   isMaxStock: boolean = false;
+  sidebarVisible: boolean = false;
+  itemSum: number = 0;
   
   //DataView Variables
     sortOptions: any[] = [
@@ -29,6 +31,12 @@ export class UserComponent implements OnInit {
     sortOrder!: number;
     sortField!: string;
 
+     cartCols = [
+      { field: 'itemName', header: 'Potion', size: '20%'},
+      { field: 'effect', header: 'Effect' ,size: '40%'},
+      { field: 'price', header: 'Price' , size: '15%'},
+      { field: 'quantity', header: 'Quantity' ,size: '15%'},
+    ];
 
   constructor(
     private userSvc: UserService,
@@ -40,6 +48,14 @@ export class UserComponent implements OnInit {
     console.log(this.userAuthSvc.getToken());
     this.userSvc.getItem().subscribe((items: Item[])=> {
       this.items = items;
+    })
+
+    this.userSvc.getCartEvent().subscribe(show => {
+      this.sidebarVisible = show;
+    })
+    this.userSvc.getUserCart().subscribe(userCart => {
+      this.cart = userCart;
+      this.sumOfCartItems()
     })
   }
   
@@ -65,16 +81,22 @@ export class UserComponent implements OnInit {
               'You have added the max quantity in stock.',
             })
           }
-          
         }
       })
     }
-    this.userSvc.saveUserCart(this.cart).subscribe( a =>{
-      console.log(a)
-    })
-    console.info("cart saved")
+    this.sumOfCartItems();
+    // console.info("cart saved")
   }
-
+  
+  public deleteFromCart(item : Item){
+    for(var i=0; i < this.cart.length; i++){
+      if(this.cart[i].id == item.id){
+        this.cart.splice(i, 1);
+      }
+    }
+    this.sumOfCartItems();
+  }
+  
   public checkIfAddDisabled(item: Item){
     let disabled = false;
     this.cart.forEach(i => {
@@ -86,23 +108,35 @@ export class UserComponent implements OnInit {
     })
     return disabled;
   }
-
+  
   onSortChange(event: any) {
     let value = event.value;
-
+    
     if (value.indexOf('!') === 0) {
-        this.sortOrder = -1;
-        this.sortField = value.substring(1, value.length);
+      this.sortOrder = -1;
+      this.sortField = value.substring(1, value.length);
     }
     else {
-        this.sortOrder = 1;
+      this.sortOrder = 1;
         this.sortField = value;
     }
-}
+  }
   
-
+  detectShowCart(event: any){
+    console.log('Clicked!', event)
+  }
+  
+  sumOfCartItems(){
+    this.itemSum = 0;
+    this.itemSum = this.cart.map(c=> c.price * c.quantity).reduce((a, b) => a + b, 0);
+  }
+  
+  
   ngOnDestroy() {
+    this.userSvc.saveUserCart(this.cart).subscribe( a =>{
+      console.log(a)
+    })
     console.log("user page destroied")
   }
-
+  
 }

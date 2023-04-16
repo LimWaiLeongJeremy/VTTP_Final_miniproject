@@ -15,6 +15,7 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -73,10 +74,12 @@ public class UserController {
         String jwtToken = header.substring(7);
         String userName = jwtUtil.getUserNameFromToken(jwtToken);
 
-        System.out.println(cart);
-        cartSvc.saveToCart(cart, userName);
+        Optional<int[]> saveCart = cartSvc.saveToCart(cart, userName);
+        if (saveCart.isEmpty()) {
+            return ResponseEntity.ok("Error saving cart for user " + userName);
+        }
 
-        return ResponseEntity.ok("1");
+        return ResponseEntity.ok("Cart saved");
     }
 
     @GetMapping({ "/items" })
@@ -85,4 +88,14 @@ public class UserController {
         return ResponseEntity.ok(itemSvc.getItem().toString());
     }
 
+    @GetMapping({ "/userCart" })
+    @PreAuthorize("hasRole('User')")
+    @ResponseBody
+    public ResponseEntity<String> getUserCart(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        String jwtToken = header.substring(7);
+        String userName = jwtUtil.getUserNameFromToken(jwtToken);
+        System.out.println("get user cart: " + userName);
+        return ResponseEntity.ok(cartSvc.getUserCart(userName).toString());
+    }
 }

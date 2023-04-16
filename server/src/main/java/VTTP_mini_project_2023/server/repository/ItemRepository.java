@@ -42,7 +42,7 @@ public class ItemRepository {
     }
     
     public Item getById(String itemId) {
-        final SqlRowSet rs = jdbcTemplate.queryForRowSet(SPL_SELECT_ITEM_BY_ID, itemId);
+        final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_SELECT_ITEM_BY_ID, itemId);
         final Item item = new Item();
         while (rs.next()) { 
             item.getId();

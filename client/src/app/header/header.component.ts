@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserAuthService } from '../service/user-auth.service';
@@ -12,8 +12,8 @@ import { UserService } from '../service/user.service';
 export class HeaderComponent {
   items!: MenuItem[];
   loggedIn: boolean = false;
-  // username: any = this.userAuthSvc.getUserName();
   username = '';
+  @Output() eventEmitter = new EventEmitter();
 
   constructor(
     private userAuthSvc: UserAuthService,
@@ -48,5 +48,11 @@ export class HeaderComponent {
   public loggedOut() {
     localStorage.clear();
     this.router.navigateByUrl('/home');
+  }
+
+  public viewCart() {
+    this.userSvc.emitShowCartEvent();
+    console.log("header click")
+    // this.eventEmitter.emit(true);
   }
 }

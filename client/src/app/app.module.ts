@@ -26,7 +26,8 @@ import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
-
+import { SidebarModule } from 'primeng/sidebar';
+import { OrderListModule } from 'primeng/orderlist';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -74,6 +75,8 @@ const routes: Routes = [
     TooltipModule,
     DataViewModule,
     DropdownModule,
+    SidebarModule,
+    OrderListModule
   ],
   providers: [
     AuthGuard,

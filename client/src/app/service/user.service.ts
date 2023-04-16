@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserAuthService } from './user-auth.service';
 import { AuthResponse } from '../model/authResponse';
 import { Roles } from '../model/roles';
 import { Item } from '../model/item';
-import { Observable, catchError, firstValueFrom } from 'rxjs';
+import { Observable, Subject, catchError, firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,10 @@ export class UserService {
   userName!: string;
   password!: string;
   items: Item[] = [];
+  private cart: Item[] = [];
   body = {} ;
+  private cartSubject = new Subject<any>();
+  // saveCartHeader = new HttpHeaders();
 
   API_URL = 'http://localhost:8080';
   token = this.userAuthSvc.getToken() || '';
@@ -37,9 +40,21 @@ export class UserService {
     return this.http.get<any>(`/api/items`);
   }
 
-  public saveUserCart(items: Item[]) {
+  emitShowCartEvent(){
+    this.cartSubject.next(true);
+  }
+
+  getCartEvent() {
+    return this.cartSubject.asObservable();
+  }
+
+  public saveUserCart(items: Item[]){
     console.log('save Cart ', items)
-    return this.http.post<any>('/api/saveCart', items);
+    const token = sessionStorage.getItem('token');
+    const saveCartHeader = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post<any>('/api/saveCart', items, {headers: saveCartHeader});
   }
 
   public updateItem(item: Item) {
@@ -63,4 +78,13 @@ export class UserService {
     }
     return isMatch;
   }
+
+  public getUserCart(){
+    return this.http.get<any>(`/api/userCart`);
+  }
+
+  // public saveUserCartBeforeLogout(): Observable<any> {
+  //   const cart = this.getCart();
+  //   return this.saveUserCart(cart);
+  // }
 }
