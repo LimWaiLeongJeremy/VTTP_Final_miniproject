@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -75,5 +76,9 @@ public class UserService {
 
     private String idGenerator() {
         return UUID.randomUUID().toString().substring(0, 8);
+    }
+
+    public Optional<String> getEmailByUsername(String username) {
+        return userRepo.getEmailByUsername(username);
     }
 }

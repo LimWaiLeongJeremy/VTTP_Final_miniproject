@@ -2,6 +2,8 @@ package VTTP_mini_project_2023.server.repository;
 
 public class Queries {
 
+    // for user 
+    public static String SQL_SELECT_EMAIL_BY_USERNAME = "SELECT email FROM user WHERE user_name = ?;";
     // for item
     public static String SQL_SELECT_ALL_ITEM = "SELECT * FROM item;";
     public static String SQL_INSERT_INTO_ITEM = "INSERT INTO item VALUES (?, ?, ?, ?, ?, ?);";

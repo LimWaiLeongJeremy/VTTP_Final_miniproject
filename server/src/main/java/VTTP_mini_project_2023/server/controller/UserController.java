@@ -8,6 +8,7 @@ import VTTP_mini_project_2023.server.service.CartService;
 import VTTP_mini_project_2023.server.service.ItemService;
 import VTTP_mini_project_2023.server.service.UserService;
 import VTTP_mini_project_2023.server.util.JwtUtil;
+import VTTP_mini_project_2023.server.util.Mail;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
@@ -46,6 +47,8 @@ public class UserController {
     private CartService cartSvc;
     @Autowired
     private JwtUtil jwtUtil;
+    @Autowired
+    private Mail mail;
 
     @PostConstruct
     public void initRolesAndUsers() {
@@ -103,5 +106,18 @@ public class UserController {
         String userName = jwtUtil.getUserNameFromToken(jwtToken);
         System.out.println("get user cart: " + userName);
         return ResponseEntity.ok(cartSvc.getUserCart(userName).toString());
+    }
+
+    @GetMapping({ "/checkOut" })
+    @PreAuthorize("hasRole('User')")
+    @ResponseBody
+    public ResponseEntity<String> checkOut(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        String jwtToken = header.substring(7);
+        String userName = jwtUtil.getUserNameFromToken(jwtToken);
+        Optional<String> email = userSvc.getEmailByUsername(userName);
+        System.out.println(">>>>> user email: " + email);
+        mail.sendMail("jereremy19995@hotmail.sg");
+        return ResponseEntity.ok("ok");
     }
 }
