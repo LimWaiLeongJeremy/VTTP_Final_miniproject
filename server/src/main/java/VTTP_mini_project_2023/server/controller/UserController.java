@@ -1,19 +1,14 @@
 package VTTP_mini_project_2023.server.controller;
 
-import org.springframework.web.bind.annotation.RestController;
-
 import VTTP_mini_project_2023.server.model.Item;
 import VTTP_mini_project_2023.server.model.User;
 import VTTP_mini_project_2023.server.service.CartService;
 import VTTP_mini_project_2023.server.service.ItemService;
 import VTTP_mini_project_2023.server.service.UserService;
+import VTTP_mini_project_2023.server.util.EmailService;
 import VTTP_mini_project_2023.server.util.JwtUtil;
-import VTTP_mini_project_2023.server.util.Mail;
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
-import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
-import jakarta.json.JsonObjectBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,8 +41,9 @@ public class UserController {
     private CartService cartSvc;
     @Autowired
     private JwtUtil jwtUtil;
+
     @Autowired
-    private Mail mail;
+    private EmailService mail;
 
     @PostConstruct
     public void initRolesAndUsers() {
@@ -73,22 +68,13 @@ public class UserController {
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> saveCart(HttpServletRequest request, @RequestBody List<Item> cart) {
-        String header = request.getHeader("Authorization");
-        String jwtToken = header.substring(7);
-        String userName = jwtUtil.getUserNameFromToken(jwtToken);
-
+        String userName = getUsername(request);
         Optional<int[]> saveCart = cartSvc.saveToCart(cart, userName);
         if (saveCart.isEmpty()) {
-            String good = "Error saving cart for user " + userName;
-            JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
-            String json = jsonObject.toString();
-            return ResponseEntity.ok(json);
+            return ResponseEntity.ok(jsontify("Error saving cart for user " + userName));
         }
 
-        String good = "Cart saved";
-        JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
-        String json = jsonObject.toString();
-        return ResponseEntity.ok(json);
+        return ResponseEntity.ok(jsontify("Cart saved"));
     }
 
     @GetMapping({ "/items" })
@@ -101,23 +87,29 @@ public class UserController {
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> getUserCart(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        String jwtToken = header.substring(7);
-        String userName = jwtUtil.getUserNameFromToken(jwtToken);
-        System.out.println("get user cart: " + userName);
-        return ResponseEntity.ok(cartSvc.getUserCart(userName).toString());
+        return ResponseEntity.ok(cartSvc.getUserCart(getUsername(request)).toString());
     }
 
     @GetMapping({ "/checkOut" })
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> checkOut(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        String jwtToken = header.substring(7);
-        String userName = jwtUtil.getUserNameFromToken(jwtToken);
-        Optional<String> email = userSvc.getEmailByUsername(userName);
+        Optional<String> email = userSvc.getEmailByUsername(getUsername(request));
         System.out.println(">>>>> user email: " + email);
         mail.sendMail("jereremy19995@hotmail.sg");
-        return ResponseEntity.ok("ok");
+        
+        return ResponseEntity.ok(jsontify("An order confirmation email will be sent to you shortly."));
+    }
+
+    private String getUsername(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        String jwtToken = header.substring(7);
+        return jwtUtil.getUserNameFromToken(jwtToken);
+    }
+
+    private String jsontify(String message) {
+        String good = message;
+        JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
+        return jsonObject.toString();
     }
 }
