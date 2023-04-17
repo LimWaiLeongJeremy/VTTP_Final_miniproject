@@ -19,7 +19,7 @@ public class JwtUtil {
     // private static final String SECRET_KEY = "Most_secret_secret_key";
     private static final String SECRET_KEY = UUID.randomUUID().toString();
 
-    private static final int TOKEN_VALIDITY = 3600 * 5;
+    private static final int TOKEN_VALIDITY = 600 * 5;
 
     public String getUserNameFromToken(String token) {
         return getClaim(token, Claims::getSubject);
