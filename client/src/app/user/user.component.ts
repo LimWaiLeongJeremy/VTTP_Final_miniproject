@@ -5,6 +5,7 @@ import { UserAuthService } from '../service/user-auth.service';
 import { UserService } from '../service/user.service';
 import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview'
 import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class UserComponent implements OnInit {
   constructor(
     private userSvc: UserService,
     private userAuthSvc: UserAuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    public router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -109,6 +111,10 @@ export class UserComponent implements OnInit {
     return disabled;
   }
   
+  onCheckOut() {
+    this.router.navigateByUrl('/checkOut');
+  }
+
   onSortChange(event: any) {
     let value = event.value;
     

@@ -101,6 +101,6 @@
     <div class="flex align-items-center justify-content-between">Total Amount: {{ itemSum | currency}} </div>
 </ng-template>
 </p-table>
-<p-button id="checkoutBtn" label="Checkout" [disabled]="cart.length == 0" ></p-button>
+<p-button id="checkoutBtn" label="Checkout" [disabled]="cart.length == 0" (onClick) = onCheckOut()></p-button>
 </p-sidebar>
 <p-button  icon="pi pi-arrow-right"></p-button>

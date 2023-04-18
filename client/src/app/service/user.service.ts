@@ -5,6 +5,7 @@ import { AuthResponse } from '../model/authResponse';
 import { Roles } from '../model/roles';
 import { Item } from '../model/item';
 import { Observable, Subject, catchError, firstValueFrom } from 'rxjs';
+import { CheckOutComponent } from '../check-out/check-out.component';
 
 @Injectable({
   providedIn: 'root',
@@ -82,9 +83,4 @@ export class UserService {
   public getUserCart(){
     return this.http.get<any>(`/api/userCart`);
   }
-
-  // public saveUserCartBeforeLogout(): Observable<any> {
-  //   const cart = this.getCart();
-  //   return this.saveUserCart(cart);
-  // }
 }

@@ -1,0 +1,14 @@
+<p>check-out works!</p>
+
+<p-card header=`TEST`  [style]="{ width: '360px' }">
+    <ng-template pTemplate="header">
+        <!-- <img alt="Card" src=`{{ paymentOrderItem.image }}` /> -->
+        <h1>Test</h1>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <p-button label="Pay" icon="pi pi-check" (click)="pay()"></p-button>
+        <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>
+    </ng-template>
+</p-card>
+
+

@@ -28,9 +28,13 @@ import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { OrderListModule } from 'primeng/orderlist';
+import { CancelComponent } from './cancel/cancel.component';
+import { SucessComponent } from './sucess/sucess.component';
+import { CheckOutComponent } from './check-out/check-out.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   {
     path: 'admin',
     component: AdminComponent,
@@ -43,7 +47,21 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['User'] },
   },
-  { path: 'login', component: LoginComponent },
+  { path: 'checkOut', 
+    component: CheckOutComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['User'] }
+  },
+  { path: 'cancel', 
+    component: CancelComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['User'] } 
+  },
+  { path: 'success', 
+    component: SucessComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['User'] } 
+  },
   { path: 'forbidden', component: ForbiddenComponent },
   // TODO: catch all undefine routes
 ];
@@ -57,6 +75,9 @@ const routes: Routes = [
     LoginComponent,
     HeaderComponent,
     ForbiddenComponent,
+    CancelComponent,
+    SucessComponent,
+    CheckOutComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +97,7 @@ const routes: Routes = [
     DataViewModule,
     DropdownModule,
     SidebarModule,
-    OrderListModule
+    OrderListModule,
   ],
   providers: [
     AuthGuard,
