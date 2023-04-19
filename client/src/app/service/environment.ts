@@ -1,5 +1,5 @@
 export const emvironment = {
     production: false,
-    stripe: 'pk_live_51MyFbpBEWg41wi31ZqzUSZxXHOOVf0MWAy2ynwmovihFQPtIIVhhETmSg31UYpX8PK2GFPqQeptR4ElK27PYSpQL00Den5Zn1c',
+    stripe: 'pk_test_51MyFbpBEWg41wi31Pm6NSjceo75NbtJ6WhOrTP3KO0wuWxrXz5Mw0XNTehTCC1mLAtCVhdJ6eIaoIJAiZpJfoCaD00Albjtrt2',
     serverUrl: '/api',
 };
