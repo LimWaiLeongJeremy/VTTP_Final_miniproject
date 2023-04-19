@@ -22,6 +22,10 @@ export class HeaderComponent {
   ) {}
 
   ngOnInit() {
+    // while (this.userAuthSvc.authenticated) {
+    //   if (this.userAuthSvc.getRoles === "User")
+      
+    // }
     this.items = [
       {
         label: 'Home',

@@ -41,19 +41,25 @@ public class UserController {
     private CartService cartSvc;
     @Autowired
     private JwtUtil jwtUtil;
-
+    
     @Autowired
     private EmailService mail;
-
+    
     @PostConstruct
     public void initRolesAndUsers() {
         userSvc.initRolesAndUser();
     }
-
+    
     @PostMapping({ "/registerNewUser" })
     @ResponseBody
     public User registerNewUser(@RequestBody User user) {
         return userSvc.registerNewUser(user);
+    }
+
+    @GetMapping({ "/items" })
+    @ResponseBody
+    public ResponseEntity<String> getItem() {
+        return ResponseEntity.ok(itemSvc.getItem().toString());
     }
 
     @PutMapping({ "/updateItem/{price}/{quantity}/{itemId}" })
@@ -77,12 +83,6 @@ public class UserController {
         return ResponseEntity.ok(jsontify("Cart saved"));
     }
 
-    @GetMapping({ "/items" })
-    @ResponseBody
-    public ResponseEntity<String> getItem() {
-        return ResponseEntity.ok(itemSvc.getItem().toString());
-    }
-
     @GetMapping({ "/userCart" })
     @PreAuthorize("hasRole('User')")
     @ResponseBody
@@ -90,15 +90,26 @@ public class UserController {
         return ResponseEntity.ok(cartSvc.getUserCart(getUsername(request)).toString());
     }
 
-    @GetMapping({ "/checkOut" })
+    @GetMapping({ "/sendMail" })
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> checkOut(HttpServletRequest request) {
         Optional<String> email = userSvc.getEmailByUsername(getUsername(request));
         System.out.println(">>>>> user email: " + email);
+        // TODO: change email
         mail.sendMail("jereremy19995@hotmail.sg");
         
         return ResponseEntity.ok(jsontify("An order confirmation email will be sent to you shortly."));
+    }
+
+    @GetMapping({ "/deleteCart" })
+    @PreAuthorize("hasRole('User')")
+    @ResponseBody
+    public ResponseEntity<String> deleteByUsername(HttpServletRequest request) {
+        String username = getUsername(request);
+        cartSvc.deleteByUsername(username);
+        
+        return ResponseEntity.ok(jsontify("Cart have been deleted for user " + username));
     }
 
     private String getUsername(HttpServletRequest request) {

@@ -27,4 +27,14 @@ public class CartService {
 
         return Cart.setJArr(items);
     }
+
+    public List<Item> getCheckOut(String userName) {
+        List<Item> items = new LinkedList<>();
+        items = cartRepo.getUserCart(userName);
+        return items;
+    }
+
+    public void deleteByUsername(String username) {
+        cartRepo.deleteByUsername(username);
+    }
 }

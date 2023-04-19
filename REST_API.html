@@ -61,7 +61,7 @@ Body:
 
 ========================================
 
-localhost:8080/userCart
+localhost:8080/api/userCart
 Header:
     {
         "Authorization" "Bearer {token}"
@@ -69,8 +69,34 @@ Header:
 
 ========================================
 
-localhost:8080/checkOut
+localhost:8080/api/sendMail
 
 ========================================
 
-localhost:8080/createNewRole
+localhost:8080/api/payment
+Header:
+    {
+        "Authorization" "Bearer {token}"
+    }
+Body:
+    {
+        "userName": "tan",
+        "password": "tan",
+        "firstName": "tan",
+        "lastName": "ah gao",
+        "email": "gao@mail.com"
+    }
+
+========================================
+
+localhost:8080/api/getStripe
+Header:
+    {
+        "Authorization" "Bearer {token}"
+    }
+
+========================================
+
+localhost:8080/deleteCart
+
+========================================

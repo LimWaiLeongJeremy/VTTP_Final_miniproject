@@ -1,6 +1,5 @@
 
-export const emvironment = {
+export const environment = {
     production: false,
-    stripe: '',
     serverUrl: '/api',
 };

@@ -1,8 +1,13 @@
 package VTTP_mini_project_2023.server.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,6 +25,9 @@ import com.stripe.param.checkout.SessionCreateParams;
 
 
 import VTTP_mini_project_2023.server.model.Item;
+import VTTP_mini_project_2023.server.service.CartService;
+import VTTP_mini_project_2023.server.service.JwtService;
+import VTTP_mini_project_2023.server.util.JwtUtil;
 import jakarta.json.Json;
 import jakarta.json.JsonBuilderFactory;
 import jakarta.json.JsonObject;
@@ -31,32 +39,38 @@ import jakarta.json.spi.JsonProvider;
 @RequestMapping( value = "/api")
 public class StripeController {
 
-    @Value("${stripe.apikey}")
-    private static String stripeKey;
-    @Value("${stripe.secret}")
-    private static String secret;
-
+    @Autowired
+    private JwtUtil jwtUtil;
+    @Autowired
+    private CartService cartSvc;
+    
+    @Value("${stripe.publicKey}")
+    private String publicKey;
+    @Value("${stripe.secretKey}")
+    private String secretKey;
 
     @PostMapping("/payment")
     @PreAuthorize("hasRole('User')")
-    public String payment(Item item) throws StripeException{
-        System.out.println(">>>>>>>>>>>>>>>>>stripe apikey: " +stripeKey);
-        Stripe.apiKey = stripeKey;
+    public String payment(HttpServletRequest request) throws StripeException{
+        Stripe.apiKey = secretKey;
+
+        String username = getUsername(request);
+        List<Item> items = cartSvc.getCheckOut(username);
+        List<SessionCreateParams.LineItem> lineItemList = new ArrayList<>();
+
+        for(Item item: items){
+            lineItemList.add(buildSessionParam(item));
+        }
+        System.out.println(lineItemList.toString());
+        
+
+
         SessionCreateParams param = SessionCreateParams.builder()
             .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
             .setMode(SessionCreateParams.Mode.PAYMENT)
             .setSuccessUrl("http://localhost:4200/success")
-            .setCancelUrl("http://localhost:4200/cancel")
-            .addLineItem(SessionCreateParams.LineItem.builder()
-                .setQuantity(1L)
-                    .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
-                        .setCurrency("SGD")
-                        .setUnitAmount(2000L)
-                        .setProductData(SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                        .setName("potion")
-                        .build())
-                    .build())
-                .build())
+            .setCancelUrl("http://localhost:4200/checkOut")
+            .addAllLineItem(lineItemList)
             .build();
         Session sess = Session.create(param);
         Map<String, String> respData = new HashMap<>();
@@ -69,7 +83,7 @@ public class StripeController {
         for (Map.Entry<String, String> entry : respData.entrySet()) {
             builder.add(entry.getKey(), entry.getValue());
         }
-
+        System.out.println(builder.toString());
         return (builder.build().toString());
     }
 
@@ -77,10 +91,27 @@ public class StripeController {
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> getSecret() {
-        System.out.println(">>>> Stripe API KEY: " + stripeKey);
-        System.out.println(">>>> Stripe secret: " + secret);
-        JsonObject jsonObject = Json.createObjectBuilder().add("message", secret).build();
+        JsonObject jsonObject = Json.createObjectBuilder().add("message", publicKey).build();
         return ResponseEntity.ok(jsonObject.toString());
+    }
+
+    private String getUsername(HttpServletRequest request) {
+        String header = request.getHeader("Authorization");
+        String jwtToken = header.substring(7);
+        return jwtUtil.getUserNameFromToken(jwtToken);
+    }
+
+    private SessionCreateParams.LineItem buildSessionParam(Item item){
+         return SessionCreateParams.LineItem.builder()
+                .setQuantity(Long.valueOf(item.getQuantity()))
+                    .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
+                        .setCurrency("SGD")
+                        .setUnitAmount((long) item.getPrice() * 100)
+                        .setProductData(SessionCreateParams.LineItem.PriceData.ProductData.builder()
+                        .setName(item.getItemName())
+                        .build())
+                        .build())
+                        .build();
     }
 
 }

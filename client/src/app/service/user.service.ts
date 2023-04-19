@@ -82,4 +82,16 @@ export class UserService {
   public getUserCart(){
     return this.http.get<any>(`/api/userCart`);
   }
+
+  public deleteUserCart() {
+    console.log("delete")
+
+    return this.http.get<any>(`/api/deleteCart`)
+  }
+
+  public sendMail() {
+    console.log("mail")
+
+    return this.http.get<any>(`/api/sendMail`)
+  }
 }

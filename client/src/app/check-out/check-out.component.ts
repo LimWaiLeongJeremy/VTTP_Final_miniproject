@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { emvironment } from '../service/environment';
+import { environment } from '../service/environment';
 import { loadStripe } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
 import { StripeServiceService } from '../service/stripe-service.service';
+import { UserService } from '../service/user.service';
+import { Item } from '../model/item';
 
 @Component({
   selector: 'app-check-out',
@@ -11,36 +13,37 @@ import { StripeServiceService } from '../service/stripe-service.service';
 })
 export class CheckOutComponent {
   secret!: string;
-  constructor(private http: HttpClient, private stripeSvc: StripeServiceService) {}
-  
-  stripePromise = loadStripe( stripe: this.stripeSvc.getStripe.message );
-  
-  getSecret() {
-    const emvironment = {
-      production: false,
-      stripe: '',
-      serverUrl: '/api',
-  ``};
-    ``
-  }
-  async pay(): Promise<void> {
-    const paymentOrderItem = {
-      id: '058f70c9-6d90-4b0b-a7e3-e504efaf3eae',
-      itemName: 'Mopsus Potion',
-      effect: 'string',
-      image: 'string',
-      price: '3204',
-      quntity: 1,
-    };
+  constructor(private http: HttpClient, private stripeSvc: StripeServiceService, private userSvc: UserService) {}
 
+  itemSum: number = 0;
+  cart: Item[] = [];
+  stripePromise :any;
+  
+  ngOnInit(): void{
+    this.stripeSvc.getStripe().subscribe(ds =>{
+      // this.secret = ds.message;
+      this.stripePromise = loadStripe(ds.message);
+    })
+    this.userSvc.getUserCart().subscribe(userCart => {
+      this.cart = userCart;
+      this.sumOfCartItems()
+    })
+  }
+
+  async pay(): Promise<void> {
     const stripe = await this.stripePromise;
     this.http
-      .post(`${emvironment.serverUrl}/payment`, paymentOrderItem)
+      .post(`${environment.serverUrl}/payment`, null)
       .subscribe((data: any) => {
         stripe?.redirectToCheckout({
           sessionId: data.id,
         });
       });
+  }
+
+  sumOfCartItems(){
+    this.itemSum = 0;
+    this.itemSum = this.cart.map(c=> c.price * c.quantity).reduce((a, b) => a + b, 0);
   }
 
 }

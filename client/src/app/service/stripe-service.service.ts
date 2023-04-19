@@ -9,14 +9,6 @@ export class StripeServiceService {
   constructor(private http: HttpClient) { }
 
   public getStripe(){
-    return this.http.get<any>(`/api/getStripe`).subscribe(
-      (response) => {
-        const message = response.message;
-        console.log(message); // prints "something"
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    return this.http.get<any>(`/api/getStripe`);
   }
 }

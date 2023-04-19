@@ -28,7 +28,6 @@ import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { OrderListModule } from 'primeng/orderlist';
-import { CancelComponent } from './cancel/cancel.component';
 import { SucessComponent } from './sucess/sucess.component';
 import { CheckOutComponent } from './check-out/check-out.component';
 
@@ -52,11 +51,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { roles: ['User'] }
   },
-  { path: 'cancel', 
-    component: CancelComponent,
-    canActivate: [AuthGuard],
-    data: { roles: ['User'] } 
-  },
   { path: 'success', 
     component: SucessComponent,
     canActivate: [AuthGuard],
@@ -75,7 +69,6 @@ const routes: Routes = [
     LoginComponent,
     HeaderComponent,
     ForbiddenComponent,
-    CancelComponent,
     SucessComponent,
     CheckOutComponent,
   ],

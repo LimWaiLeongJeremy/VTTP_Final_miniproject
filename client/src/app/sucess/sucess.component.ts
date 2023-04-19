@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../service/user.service';
 
 @Component({
   selector: 'app-sucess',
@@ -6,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sucess.component.css']
 })
 export class SucessComponent implements OnInit {
+
+  constructor(private userSvc: UserService) {}
+
   ngOnInit(): void {
     // TODO: clear user cart
-    throw new Error('Method not implemented.');
+    this.userSvc.deleteUserCart().subscribe(delCart => { });
+    this.userSvc.sendMail().subscribe( mail => { });
   }
 
 }

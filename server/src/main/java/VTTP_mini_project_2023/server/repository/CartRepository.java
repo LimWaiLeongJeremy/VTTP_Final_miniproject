@@ -25,7 +25,7 @@ public class CartRepository {
     @Transactional
     public Optional<int[]> insertIntoCart(List<Item> items, String userName) {
         try {
-            jdbcTemplate.update(SQL_DELETE_CART_BY_USERNAME, userName);
+            deleteByUsername(userName);
             List<Object[]> data = items.stream()
                     .map(li -> {
                         Object[] l = new Object[3];
@@ -52,5 +52,9 @@ public class CartRepository {
             result.add(Cart.setModelFromSql(rs));
         }
         return result;
+    }
+    
+    public void deleteByUsername(String userName) {
+        jdbcTemplate.update(SQL_DELETE_CART_BY_USERNAME, userName);
     }
 }
