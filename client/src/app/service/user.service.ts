@@ -20,7 +20,6 @@ export class UserService {
   private cartSubject = new Subject<any>();
   // saveCartHeader = new HttpHeaders();
 
-  API_URL = 'http://localhost:8080';
   token = this.userAuthSvc.getToken() || '';
   constructor(private http: HttpClient, private userAuthSvc: UserAuthService) {}
 

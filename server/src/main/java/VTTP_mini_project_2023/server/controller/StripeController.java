@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +20,9 @@ import com.stripe.param.checkout.SessionCreateParams;
 
 
 import VTTP_mini_project_2023.server.model.Item;
+import jakarta.json.Json;
 import jakarta.json.JsonBuilderFactory;
+import jakarta.json.JsonObject;
 import jakarta.json.JsonObjectBuilder;
 import jakarta.json.spi.JsonProvider;
 
@@ -28,9 +31,11 @@ import jakarta.json.spi.JsonProvider;
 @RequestMapping( value = "/api")
 public class StripeController {
 
-    // @Value("${spring.stripe.apikey}")
-    private static String stripeKey = "sk_test_51MyFbpBEWg41wi31MMBiRZwinEGaYgv2PoeUeKB7IRyICLv5PIazBjQ2cZDBavD4atxLuczUslRZh4R8DkQoFNTr00tIDvjerI";
-    // private static Gson gson = new Gson();
+    @Value("${stripe.apikey}")
+    private static String stripeKey;
+    @Value("${stripe.secret}")
+    private static String secret;
+
 
     @PostMapping("/payment")
     @PreAuthorize("hasRole('User')")
@@ -68,14 +73,14 @@ public class StripeController {
         return (builder.build().toString());
     }
 
-    @GetMapping({ "/userCart" })
+    @GetMapping({ "/getStripe" })
     @PreAuthorize("hasRole('User')")
-    @ResponseEntity
-    public String getSecret() {
-        String good = message;
-        JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
-        return ResponseEntity.ok(itemSvc.getItem().toString());
-         jsonObject.toString();
+    @ResponseBody
+    public ResponseEntity<String> getSecret() {
+        System.out.println(">>>> Stripe API KEY: " + stripeKey);
+        System.out.println(">>>> Stripe secret: " + secret);
+        JsonObject jsonObject = Json.createObjectBuilder().add("message", secret).build();
+        return ResponseEntity.ok(jsonObject.toString());
     }
 
 }
