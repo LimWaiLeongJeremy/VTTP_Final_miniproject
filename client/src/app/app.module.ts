@@ -30,8 +30,13 @@ import { SidebarModule } from 'primeng/sidebar';
 import { OrderListModule } from 'primeng/orderlist';
 import { SucessComponent } from './sucess/sucess.component';
 import { CheckOutComponent } from './check-out/check-out.component';
+import { AvatarModule } from 'primeng/avatar';
+import { CarouselModule } from 'primeng/carousel';
+// import { AgmCoreModule } from "@agm/core";
 
+// TODO: add meniofest
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   {
@@ -91,6 +96,12 @@ const routes: Routes = [
     DropdownModule,
     SidebarModule,
     OrderListModule,
+    AvatarModule,
+    CarouselModule,
+    // AgmCoreModule.forRoot({
+    //   apiKey: 'AIzaSyBZzT0kiPzAEUjF7BJd0FHfu2wzDmc8EX0'
+    // }),
+    
   ],
   providers: [
     AuthGuard,

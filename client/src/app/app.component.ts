@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserAuthService } from './service/user-auth.service';
 
 @Component({
@@ -6,10 +6,17 @@ import { UserAuthService } from './service/user-auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'client';
 
   constructor(private userAuthSvc: UserAuthService) {}
+  ngOnInit(): void {
+    window.onload = () => {
+      if (this.userAuthSvc.authenticated()) {
+        this.userAuthSvc.clear
+      }
+    }
+  }
  
   // TODO: onDestroy: purge loccalstorage
 

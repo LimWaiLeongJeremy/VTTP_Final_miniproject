@@ -1,5 +1,9 @@
-<div>
-    <p-card [style]="{ width: '360px' }">
+<div *ngIf="loading; else cartList">
+    hello
+</div>
+
+<ng-template #cartList>
+    <p-card >
         <ng-template pTemplate="header">
         <p-table [value]="cart" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header">
@@ -11,7 +15,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-cart>
                 <tr>
-                    <td>{{ cart.name }}</td>
+                    <td>{{ cart.itemName }}</td>
                     <td>{{ cart.quantity }}</td>
                     <td>{{ cart.price }}</td>
                 </tr>
@@ -23,9 +27,8 @@
         </ng-template>
         <ng-template pTemplate="footer">
             <p-button label="Pay" icon="pi pi-check" (click)="pay()"></p-button>
-            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{ 'margin-left': '.5em' }"></p-button>
+            <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" (click)="cancel()" [style]="{ 'margin-left': '.5em' }"></p-button>
         </ng-template>
     </p-card>
-</div>
-
+</ng-template>
 

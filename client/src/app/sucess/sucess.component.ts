@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sucess',
@@ -8,12 +9,15 @@ import { UserService } from '../service/user.service';
 })
 export class SucessComponent implements OnInit {
 
-  constructor(private userSvc: UserService) {}
+  
+    constructor(private userSvc: UserService,   public router: Router ) {}
 
   ngOnInit(): void {
     // TODO: clear user cart
     this.userSvc.deleteUserCart().subscribe(delCart => { });
     this.userSvc.sendMail().subscribe( mail => { });
   }
-
+  userRoute() {
+    this.router.navigateByUrl('/user');
+  }
 }

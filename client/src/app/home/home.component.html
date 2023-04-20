@@ -2,3 +2,18 @@
   <h1 style="padding: 20px">Welcome to potion potter</h1>
   <h4>All your potion needs in one potter</h4>
 </div>
+<div class="card">
+  <p-carousel [value]="products" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+      <ng-template let-product pTemplate="item">
+          <div class="border-1 surface-border border-round m-2 text-center py-5 px-3">
+              <div class="mb-3">
+                  <img class="image" alt="Image" [src]="product.image"/>
+              </div>
+              <div>
+                  <h4 class="mb-1">{{ product.itemName }}</h4>
+                  <h6 class="mt-0 mb-3">{{ '$' + product.price }}</h6>
+              </div>
+          </div>
+      </ng-template>
+  </p-carousel>
+</div>

@@ -61,6 +61,7 @@ export class UserComponent implements OnInit {
     })
   }
   
+  // TODO: add item and toast the item been added
   public addToCart(item: Item) {
     console.log("Item ", item , this.cart)
     if(this.cart.filter(c => c.id == item.id).length == 0){
@@ -142,6 +143,7 @@ export class UserComponent implements OnInit {
     this.userSvc.saveUserCart(this.cart).subscribe( a =>{
       console.log(a)
     })
+    sessionStorage.setItem('cart', JSON.stringify(this.cart));
     console.log("user page destroied")
   }
   

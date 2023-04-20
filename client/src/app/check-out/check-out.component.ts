@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { StripeServiceService } from '../service/stripe-service.service';
 import { UserService } from '../service/user.service';
 import { Item } from '../model/item';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-check-out',
@@ -12,22 +13,28 @@ import { Item } from '../model/item';
   styleUrls: ['./check-out.component.css'],
 })
 export class CheckOutComponent {
+  constructor(
+    private http: HttpClient, 
+    private stripeSvc: StripeServiceService, 
+    private userSvc: UserService,
+    public router: Router,
+    ) {}
+    
   secret!: string;
-  constructor(private http: HttpClient, private stripeSvc: StripeServiceService, private userSvc: UserService) {}
-
   itemSum: number = 0;
   cart: Item[] = [];
   stripePromise :any;
+  loading: boolean = false;
   
+  // BUG: fresh cart not loading
   ngOnInit(): void{
     this.stripeSvc.getStripe().subscribe(ds =>{
-      // this.secret = ds.message;
       this.stripePromise = loadStripe(ds.message);
-    })
+    });
     this.userSvc.getUserCart().subscribe(userCart => {
       this.cart = userCart;
-      this.sumOfCartItems()
-    })
+      this.sumOfCartItems();  
+    });
   }
 
   async pay(): Promise<void> {
@@ -44,6 +51,10 @@ export class CheckOutComponent {
   sumOfCartItems(){
     this.itemSum = 0;
     this.itemSum = this.cart.map(c=> c.price * c.quantity).reduce((a, b) => a + b, 0);
+  }
+
+  cancel() { 
+    this.router.navigateByUrl('/user');
   }
 
 }
