@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -8,28 +8,29 @@ import { UserComponent } from './user/user.component';
 import { LoginComponent } from './login/login.component';
 import { HeaderComponent } from './header/header.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
+import { SucessComponent } from './sucess/sucess.component';
+import { CheckOutComponent } from './check-out/check-out.component';
+import { AuthGuard } from './authenticate/auth.guard';
+import { AuthInterceptor } from './authenticate/auth.interceptor';
+import { UserService } from './service/user.service';
 import { Routes, RouterModule } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { AccordionModule } from 'primeng/accordion'; //accordion and accordion tab
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthGuard } from './authenticate/auth.guard';
-import { AuthInterceptor } from './authenticate/auth.interceptor';
-import { UserService } from './service/user.service';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { FormsModule } from '@angular/forms';
 import { TooltipModule } from 'primeng/tooltip';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { SidebarModule } from 'primeng/sidebar';
 import { OrderListModule } from 'primeng/orderlist';
-import { SucessComponent } from './sucess/sucess.component';
-import { CheckOutComponent } from './check-out/check-out.component';
 import { AvatarModule } from 'primeng/avatar';
 import { CarouselModule } from 'primeng/carousel';
 // import { AgmCoreModule } from "@agm/core";
@@ -98,6 +99,12 @@ const routes: Routes = [
     OrderListModule,
     AvatarModule,
     CarouselModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
     // AgmCoreModule.forRoot({
     //   apiKey: 'AIzaSyBZzT0kiPzAEUjF7BJd0FHfu2wzDmc8EX0'
     // }),

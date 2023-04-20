@@ -2,6 +2,8 @@ import { Component,OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { Item } from '../model/item';
 import { Loader } from '@googlemaps/js-api-loader';
+import { Router } from '@angular/router';
+import { UserAuthService } from '../service/user-auth.service';
 
 @Component({
   selector: 'app-home',
@@ -10,16 +12,15 @@ import { Loader } from '@googlemaps/js-api-loader';
 })
 export class HomeComponent implements OnInit{
 
-  constructor(private userSvc: UserService) {}
+  constructor(private userSvc: UserService, private userAuthSvc: UserAuthService, private router: Router ) {}
 
+  role!: string
   products: Item[] = []
   responsiveOptions!: any[];
 
   lat: number = 51.678418;
   lng: number = 7.809007;
   
-
-  // TODO: click on item route to login if not auth else user page
   ngOnInit(): void {
     this.userSvc.getItem().subscribe((items: Item[])=> {
       this.products = items;
@@ -41,5 +42,9 @@ export class HomeComponent implements OnInit{
           numScroll: 1
         }
       ];
+    }
+
+    public routeToLogin() {
+      this.router.navigateByUrl('/user');
     }
 }

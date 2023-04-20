@@ -22,7 +22,7 @@ export class UserAuthService {
   public getRoles() {
     let role;
     try {
-      const roleString = sessionStorage.getItem('roles') || '{}';
+      const roleString = sessionStorage.getItem('roles') || '';
       role = JSON.parse(roleString);
     } catch (error) {
       console.log(error);

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output,OnInit, DoCheck } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserAuthService } from '../service/user-auth.service';
 import { UserService } from '../service/user.service';
@@ -9,8 +9,9 @@ import { UserService } from '../service/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit, DoCheck{
+export class HeaderComponent implements OnInit{
   loggedIn: boolean = false;
+  showButton = true;
   userRole: string | null = null;
   username = '';
   items: MenuItem[] = [
@@ -41,7 +42,13 @@ export class HeaderComponent implements OnInit, DoCheck{
     private userAuthSvc: UserAuthService,
     public router: Router,
     private userSvc: UserService
-  ) {}
+  ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showButton = this.router.url.includes('checkOut');
+      }
+    })
+  }
 
   ngOnInit() {
     const storedName = this.userAuthSvc.getUserName();
@@ -54,19 +61,18 @@ export class HeaderComponent implements OnInit, DoCheck{
       console.log('name',name)
     });
   }
-
-  ngDoCheck() {
-    if (this.authenticated()) {
-      this.userRole = this.role()
-    }
-  }
-
+  // TODO: hide cart btn from admin
   public authenticated() {
+    this.userRole = this.role();
     return this.userAuthSvc.authenticated();
   }
 
   public role() {
     return this.userAuthSvc.getRoles();
+  }
+
+  public isUser() {
+    return this.userAuthSvc.getRoles() == "User";
   }
 
   public loggedOut() {
@@ -80,4 +86,5 @@ export class HeaderComponent implements OnInit, DoCheck{
     console.log("header click")
     // this.eventEmitter.emit(true);
   }
+
 }

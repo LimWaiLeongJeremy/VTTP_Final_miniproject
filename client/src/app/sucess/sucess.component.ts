@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 export class SucessComponent implements OnInit {
 
   
-    constructor(private userSvc: UserService,   public router: Router ) {}
+    constructor(private userSvc: UserService, private router: Router ) {}
 
   ngOnInit(): void {
 

@@ -17,13 +17,6 @@ export class AppComponent implements OnInit{
       }
     }
   }
- 
-  // TODO: onDestroy: purge loccalstorage
-
-  // @HostListener('window:beforeunload', ['$event'])
-  // clearLocalStorage(event: Event) {
-  //   localStorage.clear();
-  // }
 
   headerViewCartClicked(event: any){
     console.log("appcomp clicked", event)
