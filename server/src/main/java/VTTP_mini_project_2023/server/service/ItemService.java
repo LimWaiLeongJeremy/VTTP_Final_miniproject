@@ -97,4 +97,8 @@ public class ItemService {
     public Item getById(String itemId){
         return itemRepo.getById(itemId);
     }
+
+    public List<String> getCarouselImages(){
+        return itemRepo.getCarouselImages();
+    }
 }

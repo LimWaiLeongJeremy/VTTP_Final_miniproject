@@ -41,6 +41,15 @@ public class ItemRepository {
         return jdbcTemplate.update(SQL_UPDATE_ITEM_TABLE, price, quantity, itemID);
     }
     
+    public List<String> getCarouselImages() {
+        final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_SELECT_TOP_10_IMAGES);
+        final List<String> result = new LinkedList<>();
+        while (rs.next()) { 
+            result.add(rs.getString("image"));
+        }
+        return result;
+    }
+
     public Item getById(String itemId) {
         final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_SELECT_ITEM_BY_ID, itemId);
         final Item item = new Item();

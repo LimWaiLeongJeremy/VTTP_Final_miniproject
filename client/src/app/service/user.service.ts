@@ -40,6 +40,13 @@ export class UserService {
     return this.http.get<any>(`/api/items`);
   }
 
+  public getCarouselImages() {
+    return this.http.get<any>('/api/carouselImages',{
+      headers: this.requestHeader,
+    });
+  }
+
+
   emitShowCartEvent(){
     this.cartSubject.next(true);
   }

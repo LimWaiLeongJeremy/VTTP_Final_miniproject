@@ -11,7 +11,7 @@ import { UserService } from '../service/user.service';
 })
 export class HeaderComponent implements OnInit{
   loggedIn: boolean = false;
-  showButton = true;
+  showButton = false;
   userRole: string | null = null;
   username = '';
   items: MenuItem[] = [
@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit{
     },
   ];
   @Output() eventEmitter = new EventEmitter();
+  // TODO: hide cart button for check out
 // TODO: showing button by role
   constructor(
     private userAuthSvc: UserAuthService,
@@ -60,6 +61,9 @@ export class HeaderComponent implements OnInit{
       this.username = name;
       console.log('name',name)
     });
+    if (this.role()[0].role == "User") {
+      this.showButton = true;
+    };
   }
   // TODO: hide cart btn from admin
   public authenticated() {

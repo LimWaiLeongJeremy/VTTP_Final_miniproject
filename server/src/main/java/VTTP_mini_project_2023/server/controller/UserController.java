@@ -62,6 +62,12 @@ public class UserController {
         return ResponseEntity.ok(itemSvc.getItem().toString());
     }
 
+    @GetMapping({ "/carouselImages" })
+    @ResponseBody
+    public ResponseEntity<String> getImagesForCarousel() {
+        return ResponseEntity.ok(itemSvc.getCarouselImages().toString());
+    }
+
     @PutMapping({ "/updateItem/{price}/{quantity}/{itemId}" })
     @PreAuthorize("hasRole('Admin')")
     @ResponseBody

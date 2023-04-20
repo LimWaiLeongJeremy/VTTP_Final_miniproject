@@ -1,7 +1,7 @@
 import { Component,OnInit } from '@angular/core';
 import { UserService } from '../service/user.service';
 import { Item } from '../model/item';
-import { Loader } from '@googlemaps/js-api-loader';
+// import { Loader } from '@googlemaps/js-api-loader';
 import { Router } from '@angular/router';
 import { UserAuthService } from '../service/user-auth.service';
 
@@ -16,15 +16,20 @@ export class HomeComponent implements OnInit{
 
   role!: string
   products: Item[] = []
+  // products:[] = []
   responsiveOptions!: any[];
 
   lat: number = 51.678418;
   lng: number = 7.809007;
   
   ngOnInit(): void {
-    this.userSvc.getItem().subscribe((items: Item[])=> {
-      this.products = items;
-    }),
+    // this.userSvc.getCarouselImages().subscribe(img => {
+    //   this.products = img;
+    // }),
+    this.userSvc.getItem().subscribe((item : Item[]) =>{
+      this.products = item;
+    })
+
     this.responsiveOptions = [
       {
         breakpoint: '1199px',

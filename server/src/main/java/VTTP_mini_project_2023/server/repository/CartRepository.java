@@ -21,7 +21,6 @@ public class CartRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
     
-    // TODO: change userName -> username
     @Transactional
     public Optional<int[]> insertIntoCart(List<Item> items, String userName) {
         try {
