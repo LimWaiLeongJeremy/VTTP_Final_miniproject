@@ -37,12 +37,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.sub = this.userSvc.login(this.credential).subscribe(
       (response: AuthResponse) => {
-        const username = response.user.firstName +' ' + response.user.lastName;
+        const username = response.user.firstName + ' ' + response.user.lastName;
         this.userAuthSvc.setRole(response.user.role);
         this.userAuthSvc.setToken(response.jwtToken);
-        sessionStorage.clear;
-        sessionStorage.setItem('token', response.jwtToken);
         localStorage.clear;
+        localStorage.setItem('token', response.jwtToken);
+        this.userAuthSvc.clear();
         this.userAuthSvc.setUserName(username);
         const role = this.userAuthSvc.getRoles();
         console.log('roles: ', role);

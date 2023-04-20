@@ -13,7 +13,7 @@ export class SucessComponent implements OnInit {
     constructor(private userSvc: UserService,   public router: Router ) {}
 
   ngOnInit(): void {
-    // TODO: clear user cart
+
     this.userSvc.deleteUserCart().subscribe(delCart => { });
     this.userSvc.sendMail().subscribe( mail => { });
   }

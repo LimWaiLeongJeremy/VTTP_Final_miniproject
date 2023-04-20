@@ -62,7 +62,7 @@ const routes: Routes = [
     data: { roles: ['User'] } 
   },
   { path: 'forbidden', component: ForbiddenComponent },
-  // TODO: catch all undefine routes
+  { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 
 @NgModule({

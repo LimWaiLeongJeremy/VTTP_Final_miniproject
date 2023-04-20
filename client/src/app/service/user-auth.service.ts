@@ -16,15 +16,15 @@ export class UserAuthService {
 
 
   public setRole(roles: Roles[]) {
-    localStorage.setItem('roles', JSON.stringify(roles));
+    sessionStorage.setItem('roles', JSON.stringify(roles));
   }
 
   public getRoles() {
-    return JSON.parse(localStorage.getItem('roles') || '');
+    return JSON.parse(sessionStorage.getItem('roles') || '');
   }
 
   public setToken(jwtToken: string) {
-    localStorage.setItem('jwtToken', jwtToken);
+    sessionStorage.setItem('jwtToken', jwtToken);
     console.log(jwtToken);
     this.token = jwtToken;
     this.tokenSubject.next(jwtToken);
@@ -35,26 +35,26 @@ export class UserAuthService {
   }
 
   public getToken() {
-    return localStorage.getItem('jwtToken');
+    return sessionStorage.getItem('jwtToken');
   }
 
   public setUserName(userName: string) {
     this.usernameSubject.next(userName);
-    localStorage.setItem('userName', userName);
+    sessionStorage.setItem('userName', userName);
   }
 
   public getUserName() {
-    console.log(localStorage.getItem('userName'))
-    return localStorage.getItem('userName');
+    console.log(sessionStorage.getItem('userName'))
+    return sessionStorage.getItem('userName');
 
   }
 
   public clear() {
-    localStorage.clear();
+    sessionStorage.clear();
   }
 
   public authenticated() {
-    const token = localStorage.getItem('jwtToken');
+    const token = sessionStorage.getItem('jwtToken');
     return this.getToken() && this.getRoles();
   }
 }

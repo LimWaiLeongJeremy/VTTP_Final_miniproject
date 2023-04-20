@@ -11,7 +11,7 @@ export class AppComponent implements OnInit{
 
   constructor(private userAuthSvc: UserAuthService) {}
   ngOnInit(): void {
-    window.onload = () => {
+    window.onbeforeunload = () => {
       if (this.userAuthSvc.authenticated()) {
         this.userAuthSvc.clear
       }

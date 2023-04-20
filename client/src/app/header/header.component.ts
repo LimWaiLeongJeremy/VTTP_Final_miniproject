@@ -44,7 +44,7 @@ export class HeaderComponent implements OnInit, DoCheck{
   ) {}
 
   ngOnInit() {
-    const storedName = localStorage.getItem('userName');
+    const storedName = this.userAuthSvc.getUserName();
     if (storedName) {
       this.username = storedName;
     }
@@ -70,7 +70,7 @@ export class HeaderComponent implements OnInit, DoCheck{
   }
 
   public loggedOut() {
-    localStorage.clear();
+    this.userAuthSvc.clear();
     this.userRole = null
     this.router.navigateByUrl('/home');
   }

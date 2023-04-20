@@ -39,7 +39,7 @@ export class AuthGuard implements CanActivate {
         }
       }
     }
-    localStorage.clear
+    this.userAuthSvc.clear();
     this.router.navigate(['/login']);
     return false;
   }

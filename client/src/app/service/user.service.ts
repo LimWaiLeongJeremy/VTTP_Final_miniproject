@@ -50,7 +50,8 @@ export class UserService {
 
   public saveUserCart(items: Item[]){
     console.log('save Cart ', items)
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    localStorage.clear()
     const saveCartHeader = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });

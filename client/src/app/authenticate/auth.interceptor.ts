@@ -51,6 +51,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => {
         if (err.status === 401) {
           console.info('login with error: ' + err.message);
+          this.userAuthSvc.clear();
           this.router.navigate(['/login']);
           return throwError('Unauthorized');
         } else if (err.status === 403) {
