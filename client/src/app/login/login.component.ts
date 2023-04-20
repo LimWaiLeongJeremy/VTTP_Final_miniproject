@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { firstValueFrom, from, lastValueFrom, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthResponse } from '../model/authResponse';
 import { Credential } from '../model/credentials';
 import { UserAuthService } from '../service/user-auth.service';
@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private messageService: MessageService
   ) {}
-// BUG: login with diffrent user might not route to user page
+// TODO: login with diffrent user might not route to user page
   ngOnInit(): void {
     this.form = this.createCredential();
   }
@@ -38,12 +38,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.sub = this.userSvc.login(this.credential).subscribe(
       (response: AuthResponse) => {
         const username = response.user.firstName + ' ' + response.user.lastName;
+        sessionStorage.clear();
+        this.userAuthSvc.setUserName(username);
         this.userAuthSvc.setRole(response.user.role);
         this.userAuthSvc.setToken(response.jwtToken);
-        localStorage.clear;
+        localStorage.clear();
         localStorage.setItem('token', response.jwtToken);
-        this.userAuthSvc.clear();
-        this.userAuthSvc.setUserName(username);
         const role = this.userAuthSvc.getRoles();
         console.log('roles: ', role);
         if (role[0].role === 'Admin') {
@@ -81,21 +81,3 @@ export class LoginComponent implements OnInit, OnDestroy {
   get userName() { return this.form.get('userName'); }
   get password() { return this.form.get('password'); }
 }
-
-// submit() {
-//   this.userSvc.login(this.form.value as Credential).subscribe({
-//     next: (response: any) => {
-//       console.info(response)
-
-//       this.userAuthSvc.setUserName(response.user.userName);
-//       this.userAuthSvc.setPassword(response.user.password);
-//       this.userAuthSvc.setRole(response.user.role);
-//       this.userAuthSvc.setToken(response.jwtToken);
-//       const roleType =response.user.role[0].role;
-//       console.log(this.userAuthSvc.getToken())
-//       console.log(this.userAuthSvc.getRoles())
-//       this.router.navigateByUrl(roleType === 'Admin' ? '/admin' : '/user');
-//     },
-//     error: (err) => console.info(err),
-//   });
-// }

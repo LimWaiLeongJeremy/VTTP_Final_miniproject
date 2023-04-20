@@ -20,7 +20,14 @@ export class UserAuthService {
   }
 
   public getRoles() {
-    return JSON.parse(sessionStorage.getItem('roles') || '');
+    let role;
+    try {
+      const roleString = sessionStorage.getItem('roles') || '{}';
+      role = JSON.parse(roleString);
+    } catch (error) {
+      console.log(error);
+    }
+    return role;
   }
 
   public setToken(jwtToken: string) {
