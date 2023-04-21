@@ -15,7 +15,7 @@ import VTTP_mini_project_2023.server.service.JwtService;
 
 @RestController
 @RequestMapping(path = "/api")
-// @CrossOrigin
+@CrossOrigin(origins = "*")
 public class JwtController {
 
     @Autowired

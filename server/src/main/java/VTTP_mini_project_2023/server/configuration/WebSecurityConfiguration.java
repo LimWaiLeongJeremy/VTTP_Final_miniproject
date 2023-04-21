@@ -41,7 +41,22 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/authenticate", "/api/registerNewUser", "/api/items", "/api/carouselImages")
+                .antMatchers("/api/authenticate", 
+                                            "/api/registerNewUser", 
+                                            "/api/items", 
+                                            "/api/carouselImages", 
+                                            "/",
+                                            "/main.39065fc0f423e610.js",
+                                            "/runtime.7ae29a296d479790.js",
+                                            "/polyfills.4709fd955acb2242.js",
+                                            "/styles.41c54b6ad15f0066.css",
+                                            "/favicon.ico",
+                                            "/primeicons.ba3f916dfb64be8c.woff2",
+                                            "/primeicons.f8b9e8a4e401b603.woff",
+                                            "/primeicons.0112589c5695a9ed.ttf",
+                                            "/MagicSchoolOne-ovYz.15d6133b93580769.ttf",
+                                            "/MagicSchoolTwo-4n5D.fdf54a87aee5a26d.ttf"
+                                            )
                 .permitAll()
                 .antMatchers(HttpHeaders.ALLOW)
                 .permitAll()

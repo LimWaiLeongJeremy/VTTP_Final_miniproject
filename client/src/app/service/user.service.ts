@@ -11,7 +11,9 @@ import { CheckOutComponent } from '../check-out/check-out.component';
   providedIn: 'root',
 })
 export class UserService {
+  endPoint = 'potter-potion-production.up.railway.app';
   requestHeader = new HttpHeaders({ 'No-Auth': 'true' });
+  endpoint: string = "localhost:8080"
   userName!: string;
   password!: string;
   items: Item[] = [];
@@ -28,7 +30,7 @@ export class UserService {
     this.userName = loginData.userName;
     this.password = loginData.password;
     return this.http.post<AuthResponse>(
-      '/api/authenticate',
+      this.endPoint + '/api/authenticate',
       loginData,
       {
         headers: this.requestHeader,
@@ -37,11 +39,11 @@ export class UserService {
   }
 
   public getItem() {
-    return this.http.get<any>(`/api/items`);
+    return this.http.get<any>(this.endPoint + `/api/items`);
   }
 
   public getCarouselImages() {
-    return this.http.get<any>('/api/carouselImages',{
+    return this.http.get<any>(this.endPoint + '/api/carouselImages',{
       headers: this.requestHeader,
     });
   }
@@ -62,11 +64,11 @@ export class UserService {
     const saveCartHeader = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post<any>('/api/saveCart', items, {headers: saveCartHeader});
+    return this.http.post<any>(this.endPoint + '/api/saveCart', items, {headers: saveCartHeader});
   }
 
   public updateItem(item: Item) {
-    return this.http.put<any>(`/api/updateItem/${item.price}/${item.quantity}/${item.id}`, this.body);
+    return this.http.put<any>(this.endPoint + `/api/updateItem/${item.price}/${item.quantity}/${item.id}`, this.body);
   }
 
   public roleMatch(allowedRoles: string | any[]): boolean {
@@ -88,18 +90,18 @@ export class UserService {
   }
 
   public getUserCart(){
-    return this.http.get<any>(`/api/userCart`);
+    return this.http.get<any>(this.endPoint + `/api/userCart`);
   }
 
   public deleteUserCart() {
     console.log("delete")
 
-    return this.http.get<any>(`/api/deleteCart`)
+    return this.http.get<any>(this.endPoint + `/api/deleteCart`)
   }
 
   public sendMail() {
     console.log("mail")
 
-    return this.http.get<any>(`/api/sendMail`)
+    return this.http.get<any>(this.endPoint + `/api/sendMail`)
   }
 }

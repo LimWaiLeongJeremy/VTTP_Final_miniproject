@@ -35,6 +35,7 @@ export class CheckOutComponent {
       this.cart = userCart;
       this.sumOfCartItems();  
     });
+    console.log(this.router.url)
   }
 
   async pay(): Promise<void> {
