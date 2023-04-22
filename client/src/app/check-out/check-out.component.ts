@@ -26,7 +26,6 @@ export class CheckOutComponent {
   stripePromise :any;
   loading: boolean = false;
   
-  // TODO: fresh cart not loading
   ngOnInit(): void{
     this.stripeSvc.getStripe().subscribe(ds =>{
       console.log("stripe key ", ds)

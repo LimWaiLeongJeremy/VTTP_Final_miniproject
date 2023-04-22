@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit{
     },
   ];
   @Output() eventEmitter = new EventEmitter();
-  // TODO: hide cart button for check out
+
 // TODO: showing button by role
   constructor(
     private userAuthSvc: UserAuthService,
@@ -61,11 +61,35 @@ export class HeaderComponent implements OnInit{
       this.username = name;
       console.log('name',name)
     });
-    if (this.role()[0].role == "User") {
-      this.showButton = true;
-    };
+    this.userAuthSvc.getNewRole().subscribe(newRole => {
+      console.log(newRole)
+      this.userRole = newRole;
+
+      this.items = [
+        {
+          label: 'Home',
+          icon: 'pi pi-fw pi-home',
+          routerLink: '/home',
+          title: 'Potter Potions~!',
+        },
+        {
+          label: 'Shop',
+          icon: 'pi pi-shopping-bag',
+          routerLink: '/user',
+          title: 'User',
+          visible: newRole === "User" || this.userRole === "User"
+        },
+        {
+          label: 'Dashboard',
+          icon: 'pi pi-cog',
+          routerLink: '/admin',
+          title: 'admin',
+          visible: newRole === "Admin" || this.userRole === "Admin"
+        },
+      ];
+    })
   }
-  // TODO: hide cart btn from admin
+  
   public authenticated() {
     this.userRole = this.role();
     return this.userAuthSvc.authenticated();
