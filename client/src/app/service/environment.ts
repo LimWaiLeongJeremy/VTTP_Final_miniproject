@@ -1,5 +1,5 @@
 
 export const environment = {
     production: false,
-    serverUrl: '/api',
+    serverUrl: 'https://potter-potion-production.up.railway.app/api',
 };
