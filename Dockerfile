@@ -24,7 +24,7 @@ COPY server/mvnw.cmd .
 COPY server/pom.xml .
 COPY server/src ./src
 
-COPY --from=angular /app/dist/client ./scr/main/resource/static
+COPY --from=angular /app/dist/client ./src/main/resource/static
 
 
 RUN mvn package -Dmaven.test.skip=true
