@@ -20,21 +20,7 @@ export class HeaderComponent implements OnInit{
       icon: 'pi pi-fw pi-home',
       routerLink: '/home',
       title: 'Potter Potions~!',
-    },
-    {
-      label: 'User',
-      icon: 'pi pi-fw pi-home',
-      routerLink: '/user',
-      title: 'User',
-      visible: this.userRole === "User"
-    },
-    {
-      label: 'Admin',
-      icon: 'pi pi-fw pi-home',
-      routerLink: '/{admin}',
-      title: 'admin',
-      visible: this.userRole === "Admin"
-    },
+    }
   ];
   @Output() eventEmitter = new EventEmitter();
 
