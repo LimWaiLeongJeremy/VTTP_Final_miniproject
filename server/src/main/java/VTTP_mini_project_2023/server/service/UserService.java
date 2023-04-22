@@ -78,7 +78,7 @@ public class UserService {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
-    public Optional<String> getEmailByUsername(String username) {
+    public String getEmailByUsername(String username) {
         return userRepo.getEmailByUsername(username);
     }
 }

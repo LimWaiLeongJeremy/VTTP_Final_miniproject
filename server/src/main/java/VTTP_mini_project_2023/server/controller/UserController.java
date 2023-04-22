@@ -102,10 +102,10 @@ public class UserController {
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> checkOut(HttpServletRequest request) {
-        Optional<String> email = userSvc.getEmailByUsername(getUsername(request));
+        String email = userSvc.getEmailByUsername(getUsername(request));
         System.out.println(">>>>> user email: " + email);
-        // TODO: change email
-        mail.sendMail("jereremy19995@hotmail.sg");
+
+        mail.sendMail(email);
         
         return ResponseEntity.ok(jsontify("An order confirmation email will be sent to you shortly."));
     }
