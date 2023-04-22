@@ -32,20 +32,14 @@ export class CheckOutComponent {
       console.log("stripe key ", ds)
       this.stripePromise = loadStripe(ds.message);
     });
-    this.userSvc.getUserCart().subscribe(userCart => {
-      this.cart = userCart;
-
-      this.sumOfCartItems();  
-    });
-
     this.userSvc.getSaveCartEvent().subscribe(e => {
-        this.userSvc.getUserCart().subscribe(userCart => {
-          this.cart = userCart;
-          console.log(e);
-    
-          this.sumOfCartItems();  
-        });
-      })
+      this.userSvc.getUserCart().subscribe(userCart => {
+        this.cart = userCart;
+        console.log(e);
+
+        this.sumOfCartItems();  
+      });
+    })
   }
 
   async pay(): Promise<void> {
