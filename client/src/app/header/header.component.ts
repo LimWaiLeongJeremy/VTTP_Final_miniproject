@@ -92,6 +92,7 @@ export class HeaderComponent implements OnInit{
   public loggedOut() {
     this.userAuthSvc.clear();
     this.userRole = null
+    this.userAuthSvc.emitRoleChange(null);
     this.router.navigateByUrl('/home');
   }
 
