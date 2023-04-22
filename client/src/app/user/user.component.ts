@@ -142,6 +142,7 @@ export class UserComponent implements OnInit {
   ngOnDestroy() {
     this.userSvc.saveUserCart(this.cart).subscribe( a =>{
       console.log(a)
+      this.userSvc.emitSaveCartEvent();
     })
     sessionStorage.setItem('cart', JSON.stringify(this.cart));
     console.log("user page destroied")

@@ -13,7 +13,7 @@ import { CheckOutComponent } from '../check-out/check-out.component';
 export class UserService {
   endPoint = 'https://potter-potion-production.up.railway.app';
   requestHeader = new HttpHeaders({ 'No-Auth': 'true' });
-  endpoint: string = "localhost:8080"
+  //endpoint: string = "localhost:8080"
   userName!: string;
   password!: string;
   items: Item[] = [];
@@ -56,6 +56,10 @@ export class UserService {
 
   getCartEvent() {
     return this.cartSubject.asObservable();
+  }
+
+  emitSaveCartEvent(){
+    this.saveCartSubject.next(true);
   }
 
   getSaveCartEvent() {
