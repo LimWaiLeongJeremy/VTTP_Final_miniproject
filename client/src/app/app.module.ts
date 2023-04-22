@@ -33,6 +33,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { OrderListModule } from 'primeng/orderlist';
 import { AvatarModule } from 'primeng/avatar';
 import { CarouselModule } from 'primeng/carousel';
+import { ServiceWorkerModule } from '@angular/service-worker';
 // import { AgmCoreModule } from "@agm/core";
 
 // TODO: add meniofest
@@ -99,6 +100,12 @@ const routes: Routes = [
     OrderListModule,
     AvatarModule,
     CarouselModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
     // ServiceWorkerModule.register('ngsw-worker.js', {
     //   enabled: !isDevMode(),
     //   // Register the ServiceWorker as soon as the application is stable
