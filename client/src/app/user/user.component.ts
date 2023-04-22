@@ -62,8 +62,7 @@ export class UserComponent implements OnInit {
       this.sumOfCartItems()
     })
   }
-  
-  // TODO: add item and toast the item been added
+
   public addToCart(item: Item) {
     console.log("Item ", item , this.cart)
     if(this.cart.filter(c => c.id == item.id).length == 0){

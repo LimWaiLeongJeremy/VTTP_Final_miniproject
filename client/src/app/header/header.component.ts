@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit{
   ];
   @Output() eventEmitter = new EventEmitter();
 
-// TODO: showing button by role
   constructor(
     private userAuthSvc: UserAuthService,
     public router: Router,

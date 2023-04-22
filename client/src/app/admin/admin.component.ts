@@ -27,12 +27,14 @@ export class AdminComponent implements OnInit {
   cols!: any[];
   matchModeOptions!: SelectItem[];
   clonedItems: { [s: string]: Item } = {};
+  loading: boolean = true;
 
   ngOnInit(): void {
     console.log(this.userAuthSvc.getToken());
     this.userSvc.getItem().subscribe((items: Item[]) => {
       this.items = items;
       console.log(this.items);
+      this.loading = false;
     });
 
     const customFilterName = 'custom-equals';
