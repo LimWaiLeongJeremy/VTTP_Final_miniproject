@@ -38,7 +38,7 @@ import jakarta.json.spi.JsonProvider;
 
 @RestController
 @RequestMapping( value = "/api")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class StripeController {
 
     @Autowired
@@ -70,8 +70,8 @@ public class StripeController {
         SessionCreateParams param = SessionCreateParams.builder()
             .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
             .setMode(SessionCreateParams.Mode.PAYMENT)
-            .setSuccessUrl("http://localhost:4200/success")
-            .setCancelUrl("http://localhost:4200/checkOut")
+            .setSuccessUrl("https://vttp-final-miniproject-hu9i.vercel.app/success")
+            .setCancelUrl("https://vttp-final-miniproject-hu9i.vercel.app/checkOut")
             .addAllLineItem(lineItemList)
             .build();
         Session sess = Session.create(param);
