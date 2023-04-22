@@ -38,7 +38,7 @@ import jakarta.json.spi.JsonProvider;
 
 @RestController
 @RequestMapping( value = "/api")
-@CrossOrigin(origins = "*")
+@CrossOrigin
 public class StripeController {
 
     @Autowired

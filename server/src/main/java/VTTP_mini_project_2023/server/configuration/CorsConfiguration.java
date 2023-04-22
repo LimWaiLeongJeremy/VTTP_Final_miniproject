@@ -20,10 +20,9 @@ public class CorsConfiguration implements WebMvcConfigurer {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("https://potter-potion-production.up.railway.app/**")
                         .allowedMethods(GET, PUT, POST, DELETE)
                         .allowedHeaders("*")
-                        .allowedOriginPatterns("*")
+                        .allowedOriginPatterns("*","https://potter-potion-production.up.railway.app/")
                         .allowCredentials(true);
             }
         };
