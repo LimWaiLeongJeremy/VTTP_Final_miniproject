@@ -11,7 +11,7 @@ import { CheckOutComponent } from '../check-out/check-out.component';
   providedIn: 'root',
 })
 export class UserService {
-  endPoint = 'potter-potion-production.up.railway.app';
+  endPoint = 'https://potter-potion-production.up.railway.app';
   requestHeader = new HttpHeaders({ 'No-Auth': 'true' });
   endpoint: string = "localhost:8080"
   userName!: string;
