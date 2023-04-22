@@ -14,7 +14,7 @@
       <p-button class="blueBtn" type="text" icon="pi pi-user" *ngIf="authenticated()" [label]="username" >
       </p-button>
       
-      <p-button class="blueBtn" type="text" icon="pi pi-shopping-cart" *ngIf="authenticated()" (onClick)="viewCart()" ></p-button>
+      <p-button class="blueBtn" type="text" icon="pi pi-shopping-cart" *ngIf="authenticated() && router.url != '/checkOut" (onClick)="viewCart()" ></p-button>
   
       <button
         *ngIf="authenticated()"
