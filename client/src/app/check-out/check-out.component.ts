@@ -29,6 +29,7 @@ export class CheckOutComponent {
   // TODO: fresh cart not loading
   ngOnInit(): void{
     this.stripeSvc.getStripe().subscribe(ds =>{
+      console.log("stripe key ", ds)
       this.stripePromise = loadStripe(ds.message);
     });
     this.userSvc.getUserCart().subscribe(userCart => {
@@ -43,6 +44,7 @@ export class CheckOutComponent {
     this.http
       .post(`${environment.serverUrl}/payment`, null)
       .subscribe((data: any) => {
+        console.log("stripe data ", data)
         stripe?.redirectToCheckout({
           sessionId: data.id,
         });
