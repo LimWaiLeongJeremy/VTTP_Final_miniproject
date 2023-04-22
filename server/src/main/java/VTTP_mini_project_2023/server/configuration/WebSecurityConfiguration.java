@@ -46,16 +46,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                                             "/api/items", 
                                             "/api/carouselImages", 
                                             "/",
-                                            "/main.39065fc0f423e610.js",
-                                            "/runtime.7ae29a296d479790.js",
-                                            "/polyfills.4709fd955acb2242.js",
-                                            "/styles.41c54b6ad15f0066.css",
                                             "/favicon.ico",
-                                            "/primeicons.ba3f916dfb64be8c.woff2",
-                                            "/primeicons.f8b9e8a4e401b603.woff",
-                                            "/primeicons.0112589c5695a9ed.ttf",
-                                            "/MagicSchoolOne-ovYz.15d6133b93580769.ttf",
-                                            "/MagicSchoolTwo-4n5D.fdf54a87aee5a26d.ttf"
+                                            "index.html",
+                                            "/MagicSchoolOne-ovYz.ttf",
+                                            "/MagicSchoolTwo-4n5D.ttf",
+                                            "/main.js",
+                                            "/polyfills.js",
+                                            "/primeicons.eot",
+                                            "/primeicons.svg",
+                                            "/primeicons.ttf",
+                                            "/primeicons.woff",
+                                            "/primeicons.woff2",
+                                            "/runtime.js",
+                                            "/styles.css"
                                             )
                 .permitAll()
                 .antMatchers(HttpHeaders.ALLOW)
