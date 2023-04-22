@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StripeServiceService {
-  endPoint = 'potter-potion-production.up.railway.app';
+  endPoint = 'https://potter-potion-production.up.railway.app';
   secret!: string;
   constructor(private http: HttpClient) { }
 

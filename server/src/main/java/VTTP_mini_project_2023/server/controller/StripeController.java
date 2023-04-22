@@ -93,6 +93,7 @@ public class StripeController {
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> getSecret() {
+        System.out.println("get");
         JsonObject jsonObject = Json.createObjectBuilder().add("message", publicKey).build();
         return ResponseEntity.ok(jsonObject.toString());
     }
