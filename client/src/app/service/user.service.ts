@@ -20,6 +20,7 @@ export class UserService {
   private cart: Item[] = [];
   body = {} ;
   private cartSubject = new Subject<any>();
+  private saveCartSubject = new Subject<any>();
   // saveCartHeader = new HttpHeaders();
 
   token = this.userAuthSvc.getToken() || '';
@@ -55,6 +56,10 @@ export class UserService {
 
   getCartEvent() {
     return this.cartSubject.asObservable();
+  }
+
+  getSaveCartEvent() {
+    return this.saveCartSubject.asObservable();
   }
 
   public saveUserCart(items: Item[]){

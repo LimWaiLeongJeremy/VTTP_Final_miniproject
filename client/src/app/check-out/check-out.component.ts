@@ -34,9 +34,18 @@ export class CheckOutComponent {
     });
     this.userSvc.getUserCart().subscribe(userCart => {
       this.cart = userCart;
+
       this.sumOfCartItems();  
     });
-    console.log(this.router.url)
+
+    this.userSvc.getSaveCartEvent().subscribe(e => {
+        this.userSvc.getUserCart().subscribe(userCart => {
+          this.cart = userCart;
+          console.log(e);
+    
+          this.sumOfCartItems();  
+        });
+      })
   }
 
   async pay(): Promise<void> {

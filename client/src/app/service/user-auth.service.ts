@@ -64,4 +64,5 @@ export class UserAuthService {
     const token = sessionStorage.getItem('jwtToken');
     return this.getToken() && this.getRoles();
   }
+
 }
