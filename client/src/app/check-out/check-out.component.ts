@@ -24,7 +24,7 @@ export class CheckOutComponent {
   itemSum: number = 0;
   cart: Item[] = [];
   stripePromise :any;
-  loading: boolean = false;
+  loading: boolean = true;
   
   ngOnInit(): void{
     this.stripeSvc.getStripe().subscribe(ds =>{
@@ -35,6 +35,7 @@ export class CheckOutComponent {
       this.cart = userCart;
 
       this.sumOfCartItems();  
+      this.loading = false;
     });
 
     this.userSvc.getSaveCartEvent().subscribe(e => {
@@ -43,6 +44,7 @@ export class CheckOutComponent {
           console.log(e);
     
           this.sumOfCartItems();  
+          this.loading = false;
         });
       })
   }

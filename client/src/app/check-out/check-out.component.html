@@ -5,7 +5,7 @@
 <ng-template #cartList>
     <p-card >
         <ng-template pTemplate="header">
-        <p-table [value]="cart" [tableStyle]="{ 'min-width': '50rem' }">
+        <p-table [value]="cart" [loading]="loading" [tableStyle]="{ 'min-width': '50rem' }">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Name</th>

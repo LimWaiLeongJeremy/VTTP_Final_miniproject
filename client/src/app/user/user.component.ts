@@ -23,6 +23,7 @@ export class UserComponent implements OnInit {
   isMaxStock: boolean = false;
   sidebarVisible: boolean = false;
   itemSum: number = 0;
+  loading: boolean = true;
   
   //DataView Variables
     sortOptions: any[] = [
@@ -50,6 +51,7 @@ export class UserComponent implements OnInit {
     console.log(this.userAuthSvc.getToken());
     this.userSvc.getItem().subscribe((items: Item[])=> {
       this.items = items;
+      this.loading = false;
     })
 
     this.userSvc.getCartEvent().subscribe(show => {
@@ -68,11 +70,13 @@ export class UserComponent implements OnInit {
       const itemCopy: typeof item = {... item};
       itemCopy.quantity = 1;
       this.cart.push(itemCopy);
+      this.showSuccessAddToast(item.itemName);
     } else{
       this.cart.forEach(i => {
         if(i.id == item.id){
           if(i.quantity < item.quantity){
             i.quantity += 1;
+            this.showSuccessAddToast(item.itemName);
           } else{
             
             i.quantity = item.quantity;
@@ -89,6 +93,16 @@ export class UserComponent implements OnInit {
     }
     this.sumOfCartItems();
     // console.info("cart saved")
+  }
+
+  public showSuccessAddToast(name: string){
+    this.messageService.add({
+      key: 'userToast',
+      severity: 'success',
+      summary: 'Item Added!',
+      detail:
+      'You have added ' +name + ' to your cart.',
+    })
   }
   
   public deleteFromCart(item : Item){
