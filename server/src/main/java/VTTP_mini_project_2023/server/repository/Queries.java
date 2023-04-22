@@ -14,4 +14,5 @@ public class Queries {
     public static String SQL_INSERT_INTO_CART = "INSERT INTO cart (item_id, quantity, user_name) VALUES (?, ?, ?);";
     public static String SQL_DELETE_CART_BY_USERNAME = "DELETE FROM cart WHERE user_name = ?;";
     public static String SQL_SELECT_CART_BY_USERNAME = "SELECT * FROM userCartView WHERE user_name = ?;";
+    // testing
 }
