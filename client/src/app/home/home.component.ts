@@ -16,18 +16,16 @@ export class HomeComponent implements OnInit{
 
   role!: string
   products: Item[] = []
-  // products:[] = []
+  loading: boolean = true;
   responsiveOptions!: any[];
 
   lat: number = 51.678418;
   lng: number = 7.809007;
   
   ngOnInit(): void {
-    // this.userSvc.getCarouselImages().subscribe(img => {
-    //   this.products = img;
-    // }),
     this.userSvc.getItem().subscribe((item : Item[]) =>{
       this.products = item;
+      this.loading = false;
     })
 
     this.responsiveOptions = [
