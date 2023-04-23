@@ -45,9 +45,17 @@ export class HomeComponent implements OnInit{
           numScroll: 1
         }
       ];
+
+      this.userAuthSvc.getRoles().subscribe( (role : any)=> {
+         this.role = role[0].role;
+      })
     }
 
     public routeToLogin() {
-      this.router.navigateByUrl('/user');
+      if(this.role == 'Admin'){
+        this.router.navigateByUrl('/admin');
+      }else {
+        this.router.navigateByUrl('/user');
+      }
     }
 }

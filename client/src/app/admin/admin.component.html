@@ -53,13 +53,7 @@
                   type="number" 
                   [(ngModel)]="rowData[col.field]" 
                   maxLength="12" min="1" 
-                  [max]="col.field == 'price' ? 1000000 
-                  : col.field == 'quantity' ? 1000 
-                  : ''" [pTooltip]="col.field == 'price' 
-                  && rowData[col.field] > 1000000 ? 'Price must be < 1000000' 
-                  : col.field == 'quantity' 
-                  && rowData[col.field] > 1000 ? 'Qty must be < 1000' 
-                  : ''" tooltipPosition="top" required
+                  [max]="col.field == 'price' ? 1000000 : col.field == 'quantity' ? 1000 : ''" [pTooltip]="col.field == 'price' && rowData[col.field] > 1000000 ? 'Price must be < 1000000' : col.field == 'quantity' && rowData[col.field] > 1000 ? 'Qty must be < 1000' : ''" tooltipPosition="top" required
                 >
             </ng-template>
             <ng-template pTemplate="output">
