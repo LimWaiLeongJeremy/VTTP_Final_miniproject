@@ -113,4 +113,12 @@ export class HeaderComponent implements OnInit{
     // this.eventEmitter.emit(true);
   }
 
+  public isCartButtonVisible(){
+    if(this.router.url == '/home' || this.router.url == '/about' || this.router.url == '/admin' || this.router.url == '/checkOut' || this.router.url == '/forbidden'){
+      return false;
+    } else{
+      return true;
+    }
+  }
+
 }

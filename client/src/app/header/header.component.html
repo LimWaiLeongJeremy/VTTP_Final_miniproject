@@ -15,7 +15,7 @@
       </p-button>
       
       <p-button class="blueBtn" type="text" icon="pi pi-shopping-cart" 
-      *ngIf="authenticated() && router.url != '/admin' && router.url != '/checkOut' && router.url != '/forbidden' && router.url != '/home'&& router.url != '/about'"  (onClick)="viewCart()" ></p-button>
+      *ngIf="authenticated() && isCartButtonVisible()"  (onClick)="viewCart()" ></p-button>
   
       <button
         *ngIf="authenticated()"
