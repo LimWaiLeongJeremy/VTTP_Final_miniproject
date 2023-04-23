@@ -12,7 +12,7 @@ export class ForbiddenComponent {
   constructor( private userAuthSvc: UserAuthService, private router: Router ) { }
 
   public logout() {
-    this.userAuthSvc.clear
+    this.userAuthSvc.clear()
     this.router.navigateByUrl("/home")
   }
 }
