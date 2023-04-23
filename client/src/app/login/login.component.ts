@@ -45,7 +45,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         localStorage.clear();
         localStorage.setItem('token', response.jwtToken);
         const role = this.userAuthSvc.getRoles();
-        console.log('roles: ', role);
         this.userAuthSvc.emitRoleChange(response.user.role[0].role);
         if (role[0].role === 'Admin') {
           this.router.navigateByUrl('/admin');

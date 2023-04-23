@@ -19,8 +19,4 @@ export class AppComponent implements OnInit{
       }
     }
   }
-
-  headerViewCartClicked(event: any){
-    console.log("appcomp clicked", event)
-  }
 }

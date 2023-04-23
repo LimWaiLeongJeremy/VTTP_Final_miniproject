@@ -29,27 +29,21 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        System.out.println(request.getHeader("Authorization"));
-        System.out.println(request.getRequestURL());
         if (request.getHeader("Authorization") != null) {
-            // Do something with the Authorization header
             System.out.println(request.getHeader("Authorization"));
         } else {
             System.out.println("token is null");
         }
 
         final String header = request.getHeader("Authorization");
-        // System.out.println("request filter: " + header);
 
         String jwtToken = null;
         String userName = null;
         if (header != null && header.startsWith("Bearer ")) {
             jwtToken = header.substring(7);
-            System.out.println(jwtToken);
 
             try {
                 userName = jwtUtil.getUserNameFromToken(jwtToken);
-                System.out.println("request filter: " + userName);
             } catch (IllegalArgumentException e) {
                 System.out.println("Unable to get JWT token");
             } catch (ExpiredJwtException e) {
@@ -63,7 +57,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             UserDetails userDetails = jwtSvc.loadUserByUsername(userName);
 
             if (jwtUtil.validate(jwtToken, userDetails)) {
-                System.out.println("JWT validation passed");
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

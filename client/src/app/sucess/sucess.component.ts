@@ -17,8 +17,6 @@ export class SucessComponent implements OnInit {
                   private router: Router ) {}
 
   ngOnInit(): void {
-    console.log(sessionStorage.getItem('jwtToken'))
-    // this.userAuthSvc.setToken(localStorage.getItem('token') || "")
     this.userSvc.deleteUserCart().subscribe(delCart => { });
     this.userSvc.sendMail().subscribe( mail => { });
   }

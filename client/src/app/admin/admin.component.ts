@@ -30,10 +30,8 @@ export class AdminComponent implements OnInit {
   clonedItems: { [s: string]: Item } = {};
 
   ngOnInit(): void {
-    console.log(this.userAuthSvc.getToken());
     this.userSvc.getItem().subscribe((items: Item[]) => {
       this.items = items;
-      console.log(this.items);
       this.loading = false;
     });
 

@@ -31,7 +31,6 @@ export class AuthInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    console.log(req);
     if (req.headers.get('No-Auth') === 'True') {
       return next.handle(req.clone());
     }
@@ -58,7 +57,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.router.navigate(['/forbidden']);
           return throwError('Access Denied');
         } else {
-          console.log(err);
+          console.info(err);
           return throwError(err.error);
         }
       })

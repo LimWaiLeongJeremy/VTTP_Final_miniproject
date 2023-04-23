@@ -63,9 +63,6 @@ public class StripeController {
         for(Item item: items){
             lineItemList.add(buildSessionParam(item));
         }
-        System.out.println(lineItemList.toString());
-        
-
 
         SessionCreateParams param = SessionCreateParams.builder()
             .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
@@ -85,7 +82,6 @@ public class StripeController {
         for (Map.Entry<String, String> entry : respData.entrySet()) {
             builder.add(entry.getKey(), entry.getValue());
         }
-        System.out.println(builder.toString());
         return (builder.build().toString());
     }
 
@@ -93,7 +89,6 @@ public class StripeController {
     @PreAuthorize("hasRole('User')")
     @ResponseBody
     public ResponseEntity<String> getSecret() {
-        System.out.println("get");
         JsonObject jsonObject = Json.createObjectBuilder().add("message", publicKey).build();
         return ResponseEntity.ok(jsonObject.toString());
     }

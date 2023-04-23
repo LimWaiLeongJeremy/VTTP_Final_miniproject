@@ -103,7 +103,6 @@ public class UserController {
     @ResponseBody
     public ResponseEntity<String> checkOut(HttpServletRequest request) {
         String email = userSvc.getEmailByUsername(getUsername(request));
-        System.out.println(">>>>> user email: " + email);
 
         mail.sendMail(email);
         

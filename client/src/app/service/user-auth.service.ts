@@ -24,7 +24,7 @@ export class UserAuthService {
       const roleString = sessionStorage.getItem('roles') || '{}';
       role = JSON.parse(roleString);
     } catch (error) {
-      console.log(error);
+      console.info(error);
     }
     return role;
   }
@@ -39,7 +39,6 @@ export class UserAuthService {
 
   public setToken(jwtToken: string) {
     sessionStorage.setItem('jwtToken', jwtToken);
-    console.log(jwtToken);
     this.token = jwtToken;
     this.tokenSubject.next(jwtToken);
   }
@@ -58,7 +57,6 @@ export class UserAuthService {
   }
 
   public getUserName() {
-    console.log(sessionStorage.getItem('userName'))
     return sessionStorage.getItem('userName');
 
   }

@@ -48,7 +48,6 @@ export class UserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.userAuthSvc.getToken());
     this.userSvc.getItem().subscribe((items: Item[])=> {
       this.items = items;
       this.loading = false;
@@ -64,7 +63,6 @@ export class UserComponent implements OnInit {
   }
 
   public addToCart(item: Item) {
-    console.log("Item ", item , this.cart)
     if(this.cart.filter(c => c.id == item.id).length == 0){
       const itemCopy: typeof item = {... item};
       itemCopy.quantity = 1;
@@ -91,7 +89,6 @@ export class UserComponent implements OnInit {
       })
     }
     this.sumOfCartItems();
-    // console.info("cart saved")
   }
 
   public showSuccessAddToast(name: string){
@@ -142,10 +139,6 @@ export class UserComponent implements OnInit {
     }
   }
   
-  detectShowCart(event: any){
-    console.log('Clicked!', event)
-  }
-  
   sumOfCartItems(){
     this.itemSum = 0;
     this.itemSum = this.cart.map(c=> c.price * c.quantity).reduce((a, b) => a + b, 0);
@@ -154,11 +147,9 @@ export class UserComponent implements OnInit {
   
   ngOnDestroy() {
     this.userSvc.saveUserCart(this.cart).subscribe( a =>{
-      console.log(a)
       this.userSvc.emitSaveCartEvent();
     })
     sessionStorage.setItem('cart', JSON.stringify(this.cart));
-    console.log("user page destroied")
   }
   
 }

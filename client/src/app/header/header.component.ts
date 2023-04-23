@@ -50,10 +50,8 @@ export class HeaderComponent implements OnInit{
 
     this.userAuthSvc.userName$.subscribe((name) => {
       this.username = name;
-      console.log('name',name)
     });
     this.userAuthSvc.getNewRole().subscribe(newRole => {
-      console.log(newRole)
       this.userRole = newRole;
 
       this.items = [
@@ -109,8 +107,6 @@ export class HeaderComponent implements OnInit{
 
   public viewCart() {
     this.userSvc.emitShowCartEvent();
-    console.log("header click")
-    // this.eventEmitter.emit(true);
   }
 
   public isCartButtonVisible(){

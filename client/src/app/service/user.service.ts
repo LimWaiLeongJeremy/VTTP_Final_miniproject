@@ -27,7 +27,6 @@ export class UserService {
   constructor(private http: HttpClient, private userAuthSvc: UserAuthService) {}
 
   public login(loginData: any) {
-    console.log('login');
     this.userName = loginData.userName;
     this.password = loginData.password;
     return this.http.post<AuthResponse>(
@@ -60,7 +59,6 @@ export class UserService {
   }
 
   public saveUserCart(items: Item[]){
-    console.log('save Cart ', items)
     const token = localStorage.getItem('token');
     localStorage.clear()
     const saveCartHeader = new HttpHeaders({
@@ -79,7 +77,6 @@ export class UserService {
     if (userRoles != null && userRoles) {
       for (let i = 0; i < userRoles.length; i++) {
         for (let j = 0; j < allowedRoles.length; j++) {
-          console.log("role",userRoles[i], allowedRoles[j])
           if (userRoles[i].role === allowedRoles[j]) {
             isMatch = true;
             return isMatch;
@@ -97,14 +94,10 @@ export class UserService {
   }
 
   public deleteUserCart() {
-    console.log("delete")
-
     return this.http.get<any>(this.endPoint + `/api/deleteCart`)
   }
 
   public sendMail() {
-    console.log("mail")
-
     return this.http.get<any>(this.endPoint + `/api/sendMail`)
   }
 }

@@ -50,7 +50,6 @@ export class HomeComponent implements OnInit{
     }
 
     public routeToLogin() {
-      console.log('route role ', this.role)
       if(this.role == undefined){
         this.router.navigateByUrl('/login');
       }else if(this.role[0].role == 'Admin'){

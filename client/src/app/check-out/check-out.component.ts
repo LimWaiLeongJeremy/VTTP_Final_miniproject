@@ -28,7 +28,6 @@ export class CheckOutComponent {
   
   ngOnInit(): void{
     this.stripeSvc.getStripe().subscribe(ds =>{
-      console.log("stripe key ", ds)
       this.stripePromise = loadStripe(ds.message);
     });
     this.userSvc.getUserCart().subscribe(userCart => {
@@ -41,8 +40,7 @@ export class CheckOutComponent {
     this.userSvc.getSaveCartEvent().subscribe(e => {
         this.userSvc.getUserCart().subscribe(userCart => {
           this.cart = userCart;
-          console.log(e);
-    
+          console.info(e);    
           this.sumOfCartItems();  
           this.loading = false;
         });
@@ -54,7 +52,6 @@ export class CheckOutComponent {
     this.http
       .post(`${environment.serverUrl}/payment`, null)
       .subscribe((data: any) => {
-        console.log("stripe data ", data)
         stripe?.redirectToCheckout({
           sessionId: data.id,
         });
