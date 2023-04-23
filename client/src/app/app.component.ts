@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserAuthService } from './service/user-auth.service';
-import { SwUpdate } from "@angular/service-worker";
 
 @Component({
   selector: 'app-root',
@@ -10,12 +9,8 @@ import { SwUpdate } from "@angular/service-worker";
 export class AppComponent implements OnInit{
   title = 'client';
 
-  constructor( private userAuthSvc: UserAuthService, private updates: SwUpdate) {
-    if (updates.isEnabled) {
-      updates.versionUpdates.subscribe(event => {
-        updates.activateUpdate().then(() => window.location.reload());
-      })
-    }
+  constructor( private userAuthSvc: UserAuthService ) {
+
   }
   ngOnInit(): void {
     window.onbeforeunload = () => {
