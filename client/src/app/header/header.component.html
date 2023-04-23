@@ -11,8 +11,7 @@
       Login
     </button>
 
-      <p-button class="blueBtn" type="text" icon="pi pi-user" *ngIf="authenticated()" [label]="username" >
-      </p-button>
+      <label  *ngIf="authenticated()" ><i class="pi pi-user" style="font-size: 0.7rem">{{username}}</i></label>
       
       <p-button class="blueBtn" type="text" icon="pi pi-shopping-cart" 
       *ngIf="authenticated() && isCartButtonVisible()"  (onClick)="viewCart()" ></p-button>
