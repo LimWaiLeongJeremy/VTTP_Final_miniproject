@@ -66,23 +66,26 @@ const routes: Routes = [
   {
     path: 'user',
     component: UserComponent,
+    title: "Store",
     canActivate: [AuthGuard],
     data: { roles: ['User'] },
   },
   { path: 'checkOut', 
     component: CheckOutComponent,
+    title: "Check Out",
     canActivate: [AuthGuard],
-    data: { roles: ['Check Out'] }
+    data: { roles: ['User'] }
   },
   { path: 'success', 
     component: SucessComponent,
+    title: "Success",
     canActivate: [AuthGuard],
-    data: { roles: ['Success'] } 
+    data: { roles: ['User'] } 
   },
   { 
     path: 'forbidden', 
-    component: ForbiddenComponent,
-    data: { roles: ['Success'] }  
+    title: "Forbidden",
+    component: ForbiddenComponent, 
   },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
