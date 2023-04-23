@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserAuthService } from '../service/user-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-forbidden',
@@ -8,9 +9,10 @@ import { UserAuthService } from '../service/user-auth.service';
 })
 export class ForbiddenComponent {
   
-  constructor( private userAuthSvc: UserAuthService ) { }
+  constructor( private userAuthSvc: UserAuthService, private router: Router ) { }
 
   public logout() {
     this.userAuthSvc.clear
+    this.router.navigateByUrl("/home")
   }
 }
