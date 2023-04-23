@@ -1,20 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { 
-    margin: 0; 
-    font-family: Roboto, "Helvetica Neue", sans-serif;
-    background:  url('src/assets/background.png');
-    background-repeat: no-repeat;
-    background-size: cover;
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: url("src/assets/background.png");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 @font-face {
-    font-family: hpFont;
-    src: url(assets/magic-school-font/MagicSchoolOne-ovYz.ttf) ;
-  }
+  font-family: hpFont;
+  src: url(assets/magic-school-font/MagicSchoolOne-ovYz.ttf);
+}
 
-  @font-face {
-    font-family: hpFont2;
-    src: url(assets/magic-school-font/MagicSchoolTwo-4n5D.ttf) ;
-  }
+@font-face {
+  font-family: hpFont2;
+  src: url(assets/magic-school-font/MagicSchoolTwo-4n5D.ttf);
+}

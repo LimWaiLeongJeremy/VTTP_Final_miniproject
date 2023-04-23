@@ -5,75 +5,125 @@
 </div>
 
 <form #adminForm="ngForm">
-<div>
-  <p-table
-    #dt
-    [columns]="cols"
-    [value]="items"
-    [loading]="loading"
-    [paginator]="true"
-    [rows]="10"
-    responsiveLayout="scroll"
-    editMode="row"
-    dataKey="id"
-  >
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngFor="let col of columns">
-          {{ col.header }}
-        </th>
-        <th></th>
-      </tr>
-      <tr>
-        <th *ngFor="let col of columns" [style]="{'width':col.size}">
-          <p-columnFilter
-            type="text"
-            [field]="col.field"
-            [matchModeOptions]="matchModeOptions"
-            [matchMode]="'custom-equals'"
-          ></p-columnFilter>
-        </th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template 
-      pTemplate="body" 
-      let-rowData 
-      let-columns="columns" 
-      let-editing="editing" 
-      let-ri="rowIndex"
+  <div>
+    <p-table
+      #dt
+      [columns]="cols"
+      [value]="items"
+      [loading]="loading"
+      [paginator]="true"
+      [rows]="10"
+      responsiveLayout="scroll"
+      editMode="row"
+      dataKey="id"
     >
-      <tr [pEditableRow]="rowData">
-        <td *ngFor="let col of columns" [style]="{'width':col.size}">
-          <p-cellEditor *ngIf="col.field == 'price' || col.field == 'quantity';else staticTemplate">
-            <ng-template pTemplate="input">
-                <input 
-                  pInputText [style]="{'width':'80%'}" 
-                  name="{{col.field +'input'}}" 
-                  type="number" 
-                  [(ngModel)]="rowData[col.field]" 
-                  maxLength="12" min="1" 
-                  [max]="col.field == 'price' ? 1000000 : col.field == 'quantity' ? 1000 : ''" [pTooltip]="col.field == 'price' && rowData[col.field] > 1000000 ? 'Price must be < 1000000' : col.field == 'quantity' && rowData[col.field] > 1000 ? 'Qty must be < 1000' : ''" tooltipPosition="top" required
-                >
-            </ng-template>
-            <ng-template pTemplate="output">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+          <th></th>
+        </tr>
+        <tr>
+        <th *ngFor="let col of columns" [style]="{'width':col.size}">
+            <p-columnFilter
+              type="text"
+              [field]="col.field"
+              [matchModeOptions]="matchModeOptions"
+              [matchMode]="'custom-equals'"
+            ></p-columnFilter>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template
+        pTemplate="body"
+        let-rowData
+        let-columns="columns"
+        let-editing="editing"
+        let-ri="rowIndex"
+      >
+        <tr [pEditableRow]="rowData">
+          <td *ngFor="let col of columns" [style]="{ 'width': col.size }">
+            <p-cellEditor
+              *ngIf="
+                col.field == 'price' || col.field == 'quantity';
+                else staticTemplate
+              "
+            >
+              <ng-template pTemplate="input">
+                <input
+                  pInputText
+                  [style]="{ 'width': '80%' }"
+                  name="{{ col.field + 'input' }}"
+                  type="number"
+                  [(ngModel)]="rowData[col.field]"
+                  maxLength="12"
+                  min="1"
+                  [max]="
+                    col.field == 'price'
+                      ? 1000000
+                      : col.field == 'quantity'
+                      ? 1000
+                      : ''
+                  "
+                  [pTooltip]="
+                    col.field == 'price' && rowData[col.field] > 1000000
+                      ? 'Price must be < 1000000'
+                      : col.field == 'quantity' && rowData[col.field] > 1000
+                      ? 'Qty must be < 1000'
+                      : ''
+                  "
+                  tooltipPosition="top"
+                  required
+                />
+              </ng-template>
+              <ng-template pTemplate="output">
+                {{ rowData[col.field] }}
+              </ng-template>
+            </p-cellEditor>
+
+            <ng-template #staticTemplate>
               {{ rowData[col.field] }}
             </ng-template>
-        </p-cellEditor>
-
-      <ng-template #staticTemplate>
-        {{ rowData[col.field] }}
-      </ng-template>  
-        </td>
-        <td [style]="{'width':'10%'}">
-          <div class="flex align-items-center justify-content-center gap-2">
-            <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(rowData)" class="p-button-rounded p-button-text"></button>
-            <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(rowData, ri)" class="p-button-rounded p-button-text p-button-success mr-2" [disabled]="!adminForm.valid"></button>
-            <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(rowData, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
-          </div>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
+          </td>
+          <td [style]="{ width: '10%' }">
+            <div class="flex align-items-center justify-content-center gap-2">
+              <button
+                *ngIf="!editing"
+                pButton
+                pRipple
+                type="button"
+                pInitEditableRow
+                icon="pi pi-pencil"
+                (click)="onRowEditInit(rowData)"
+                class="p-button-rounded p-button-text"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                pRipple
+                type="button"
+                pSaveEditableRow
+                icon="pi pi-check"
+                (click)="onRowEditSave(rowData, ri)"
+                class="p-button-rounded p-button-text p-button-success mr-2"
+                [disabled]="!adminForm.valid"
+              ></button>
+              <button
+                *ngIf="editing"
+                pButton
+                pRipple
+                type="button"
+                pCancelEditableRow
+                icon="pi pi-times"
+                (click)="onRowEditCancel(rowData, ri)"
+                class="p-button-rounded p-button-text p-button-danger"
+              ></button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </form>

@@ -1,27 +1,40 @@
-<p-card >
-    <ng-template pTemplate="header">
-    <p-table [value]="cart" [loading]="loading" [tableStyle]="{ 'min-width': '50rem' }">
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-cart>
-            <tr>
-                <td>{{ cart.itemName }}</td>
-                <td>{{ cart.quantity }}</td>
-                <td>{{ cart.price }}</td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-between">Total Amount: {{ itemSum | currency}} </div>
-        </ng-template>
+<p-card>
+  <ng-template pTemplate="header">
+    <p-table
+      [value]="cart"
+      [loading]="loading"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-cart>
+        <tr>
+          <td>{{ cart.itemName }}</td>
+          <td>{{ cart.quantity }}</td>
+          <td>{{ cart.price }}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total Amount: {{ itemSum | currency }}
+        </div>
+      </ng-template>
     </p-table>
-    </ng-template>
-    <ng-template pTemplate="footer">
-        <p-button label="Pay" icon="pi pi-check" (click)="pay()"></p-button>
-        <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" (click)="cancel()" [style]="{ 'margin-left': '.5em' }"></p-button>
-    </ng-template>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <p-button label="Pay" icon="pi pi-check" (click)="pay()"> </p-button>
+    <p-button
+      label="Cancel"
+      icon="pi pi-times"
+      styleClass="p-button-secondary"
+      (click)="cancel()"
+      [style]="{ 'margin-left': '.5em' }"
+    >
+    </p-button>
+  </ng-template>
 </p-card>

@@ -1,4 +1,9 @@
-import { Component, EventEmitter, Output,OnInit, DoCheck } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  OnInit,
+} from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserAuthService } from '../service/user-auth.service';
@@ -9,7 +14,7 @@ import { UserService } from '../service/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   loggedIn: boolean = false;
   showButton = false;
   userRole: string | null = null;
@@ -25,8 +30,8 @@ export class HeaderComponent implements OnInit{
       label: 'About Us',
       icon: 'pi pi-moon',
       routerLink: '/about',
-      title: 'Find us!'
-}
+      title: 'Find us!',
+    },
   ];
   @Output() eventEmitter = new EventEmitter();
 
@@ -35,11 +40,11 @@ export class HeaderComponent implements OnInit{
     public router: Router,
     private userSvc: UserService
   ) {
-    this.router.events.subscribe(event => {
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.showButton = this.router.url.includes('checkOut');
       }
-    })
+    });
   }
 
   ngOnInit() {
@@ -51,7 +56,7 @@ export class HeaderComponent implements OnInit{
     this.userAuthSvc.userName$.subscribe((name) => {
       this.username = name;
     });
-    this.userAuthSvc.getNewRole().subscribe(newRole => {
+    this.userAuthSvc.getNewRole().subscribe((newRole) => {
       this.userRole = newRole;
 
       this.items = [
@@ -66,25 +71,25 @@ export class HeaderComponent implements OnInit{
           icon: 'pi pi-shopping-bag',
           routerLink: '/user',
           title: 'User',
-          visible: newRole === "User" || this.userRole === "User"
+          visible: newRole === 'User' || this.userRole === 'User',
         },
         {
           label: 'Dashboard',
           icon: 'pi pi-cog',
           routerLink: '/admin',
           title: 'admin',
-          visible: newRole === "Admin" || this.userRole === "Admin"
+          visible: newRole === 'Admin' || this.userRole === 'Admin',
         },
         {
           label: 'About Us',
           icon: 'pi pi-moon',
           routerLink: '/about',
-          title: 'Find us!'
-        }
+          title: 'Find us!',
+        },
       ];
-    })
+    });
   }
-  
+
   public authenticated() {
     this.userRole = this.role();
     return this.userAuthSvc.authenticated();
@@ -95,12 +100,12 @@ export class HeaderComponent implements OnInit{
   }
 
   public isUser() {
-    return this.userAuthSvc.getRoles() == "User";
+    return this.userAuthSvc.getRoles() == 'User';
   }
 
   public loggedOut() {
     this.userAuthSvc.clear();
-    this.userRole = null
+    this.userRole = null;
     this.userAuthSvc.emitRoleChange(null);
     this.router.navigateByUrl('/home');
   }
@@ -109,12 +114,17 @@ export class HeaderComponent implements OnInit{
     this.userSvc.emitShowCartEvent();
   }
 
-  public isCartButtonVisible(){
-    if(this.router.url == '/home' || this.router.url == '/about' || this.router.url == '/admin' || this.router.url == '/checkOut' || this.router.url == '/forbidden'){
+  public isCartButtonVisible() {
+    if (
+      this.router.url == '/home' ||
+      this.router.url == '/about' ||
+      this.router.url == '/admin' ||
+      this.router.url == '/checkOut' ||
+      this.router.url == '/forbidden'
+    ) {
       return false;
-    } else{
+    } else {
       return true;
     }
   }
-
 }

@@ -13,7 +13,7 @@ import { UserService } from '../service/user.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
@@ -78,6 +78,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  get userName() { return this.form.get('userName'); }
-  get password() { return this.form.get('password'); }
+  get userName() {
+    return this.form.get('userName');
+  }
+  get password() {
+    return this.form.get('password');
+  }
 }

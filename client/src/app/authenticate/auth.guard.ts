@@ -6,7 +6,7 @@ import {
   ActivatedRouteSnapshot,
   CanActivate,
   Router,
-  UrlTree
+  UrlTree,
 } from '@angular/router';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
     private userSvc: UserService
   ) {}
   canActivate(
-    route: ActivatedRouteSnapshot,
+    route: ActivatedRouteSnapshot
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>

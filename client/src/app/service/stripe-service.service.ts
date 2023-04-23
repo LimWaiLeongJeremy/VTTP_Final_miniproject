@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StripeServiceService {
   endPoint = 'https://potter-potion-production.up.railway.app';
   secret!: string;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  public getStripe(){
+  public getStripe() {
     return this.http.get<any>(this.endPoint + `/api/getStripe`);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, IterableDiffers, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Item } from '../model/item';
 import { UserService } from '../service/user.service';
 import {
@@ -13,7 +13,7 @@ import { UserAuthService } from '../service/user-auth.service';
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
-  providers: [MessageService]
+  providers: [MessageService],
 })
 export class AdminComponent implements OnInit {
   constructor(
@@ -55,10 +55,10 @@ export class AdminComponent implements OnInit {
       }
     );
     this.cols = [
-      { field: 'itemName', header: 'Item Name', size: '20%'},
-      { field: 'effect', header: 'Effect' ,size: '40%'},
-      { field: 'price', header: 'Price' , size: '15%'},
-      { field: 'quantity', header: 'Quantity' ,size: '15%'},
+      { field: 'itemName', header: 'Item Name', size: '20%' },
+      { field: 'effect', header: 'Effect', size: '40%' },
+      { field: 'price', header: 'Price', size: '15%' },
+      { field: 'quantity', header: 'Quantity', size: '15%' },
     ];
 
     this.matchModeOptions = [
@@ -74,33 +74,30 @@ export class AdminComponent implements OnInit {
 
   onRowEditSave(item: Item, index: number) {
     const updateResponse = this.userSvc.updateItem(item);
-    updateResponse.subscribe(
-      response => {
-        if (response == 1) {
-          delete this.clonedItems[item.itemName];
-          this.messageService.add({
-            key: 'adminToast',
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Item is updated',
-          });
-        } else {
-          this.items[index] = this.clonedItems[item.itemName];
-          delete this.clonedItems[item.itemName];
-          this.messageService.add({
-            key: 'adminToast',
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Invalid Price',
-          });
-        }
+    updateResponse.subscribe((response) => {
+      if (response == 1) {
+        delete this.clonedItems[item.itemName];
+        this.messageService.add({
+          key: 'adminToast',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Item is updated',
+        });
+      } else {
+        this.items[index] = this.clonedItems[item.itemName];
+        delete this.clonedItems[item.itemName];
+        this.messageService.add({
+          key: 'adminToast',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Invalid Price',
+        });
       }
-    )
+    });
   }
 
   onRowEditCancel(item: Item, index: number) {
     this.items[index] = this.clonedItems[item.itemName];
     delete this.clonedItems[item.itemName];
   }
-  
 }

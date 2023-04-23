@@ -11,19 +11,25 @@
       Login
     </button>
 
-      <label *ngIf="authenticated()" ><i class="pi pi-user" style="font-size: 0.8rem"></i>{{username}}</label>
-      <p-button class="blueBtn" type="text" icon="pi pi-shopping-cart" 
-      *ngIf="authenticated() && isCartButtonVisible()"  (onClick)="viewCart()" ></p-button>
-  
-      <button
-        *ngIf="authenticated()"
-        pButton
-        type="button"
-        class="p-button-danger"
-        (click)="loggedOut()"
-      >
-        Logout
-      </button>
+    <label *ngIf="authenticated()"
+      ><i class="pi pi-user" style="font-size: 0.8rem"></i>{{ username }}</label
+    >
+    <p-button
+      class="blueBtn"
+      type="text"
+      icon="pi pi-shopping-cart"
+      *ngIf="authenticated() && isCartButtonVisible()"
+      (onClick)="viewCart()"
+    ></p-button>
 
+    <button
+      *ngIf="authenticated()"
+      pButton
+      type="button"
+      class="p-button-danger"
+      (click)="loggedOut()"
+    >
+      Logout
+    </button>
   </ng-template>
 </p-menubar>

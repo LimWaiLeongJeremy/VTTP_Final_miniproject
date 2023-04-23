@@ -18,7 +18,7 @@ export class UserService {
   password!: string;
   items: Item[] = [];
   private cart: Item[] = [];
-  body = {} ;
+  body = {};
   private cartSubject = new Subject<any>();
   private saveCartSubject = new Subject<any>();
   // saveCartHeader = new HttpHeaders();
@@ -42,7 +42,7 @@ export class UserService {
     return this.http.get<any>(this.endPoint + `/api/items`);
   }
 
-  emitShowCartEvent(){
+  emitShowCartEvent() {
     this.cartSubject.next(true);
   }
 
@@ -50,7 +50,7 @@ export class UserService {
     return this.cartSubject.asObservable();
   }
 
-  emitSaveCartEvent(){
+  emitSaveCartEvent() {
     this.saveCartSubject.next(true);
   }
 
@@ -58,17 +58,23 @@ export class UserService {
     return this.saveCartSubject.asObservable();
   }
 
-  public saveUserCart(items: Item[]){
+  public saveUserCart(items: Item[]) {
     const token = localStorage.getItem('token');
-    localStorage.clear()
+    localStorage.clear();
     const saveCartHeader = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
-    return this.http.post<any>(this.endPoint + '/api/saveCart', items, {headers: saveCartHeader});
+    return this.http.post<any>(this.endPoint + '/api/saveCart', items, {
+      headers: saveCartHeader,
+    });
   }
 
   public updateItem(item: Item) {
-    return this.http.put<any>(this.endPoint + `/api/updateItem/${item.price}/${item.quantity}/${item.id}`, this.body);
+    return this.http.put<any>(
+      this.endPoint +
+        `/api/updateItem/${item.price}/${item.quantity}/${item.id}`,
+        this.body
+    );
   }
 
   public roleMatch(allowedRoles: string | any[]): boolean {
@@ -89,15 +95,15 @@ export class UserService {
     return isMatch;
   }
 
-  public getUserCart(){
+  public getUserCart() {
     return this.http.get<any>(this.endPoint + `/api/userCart`);
   }
 
   public deleteUserCart() {
-    return this.http.get<any>(this.endPoint + `/api/deleteCart`)
+    return this.http.get<any>(this.endPoint + `/api/deleteCart`);
   }
 
   public sendMail() {
-    return this.http.get<any>(this.endPoint + `/api/sendMail`)
+    return this.http.get<any>(this.endPoint + `/api/sendMail`);
   }
 }

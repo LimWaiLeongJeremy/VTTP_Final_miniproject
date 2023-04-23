@@ -12,7 +12,6 @@ export class UserAuthService {
   token$ = this.tokenSubject.asObservable();
   userName$ = this.usernameSubject.asObservable();
   private roleChange = new Subject<any>();
-  
 
   public setRole(roles: Roles[]) {
     sessionStorage.setItem('roles', JSON.stringify(roles));
@@ -29,7 +28,7 @@ export class UserAuthService {
     return role;
   }
 
-  emitRoleChange(role: any){
+  emitRoleChange(role: any) {
     this.roleChange.next(role);
   }
 
@@ -58,7 +57,6 @@ export class UserAuthService {
 
   public getUserName() {
     return sessionStorage.getItem('userName');
-
   }
 
   public clear() {
@@ -69,5 +67,4 @@ export class UserAuthService {
     const token = sessionStorage.getItem('jwtToken');
     return this.getToken() && this.getRoles();
   }
-
 }

@@ -10,13 +10,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import {
-  Observable,
-  throwError,
-  catchError,
-  switchMap,
-  from,
-} from 'rxjs';
+import { Observable, throwError, catchError, switchMap, from } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -29,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(
     req: HttpRequest<any>,
-    next: HttpHandler,
+    next: HttpHandler
   ): Observable<HttpEvent<any>> {
     if (req.headers.get('No-Auth') === 'True') {
       return next.handle(req.clone());
@@ -37,7 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
     const token = this.userAuthSvc.getToken() || '';
 
-    if(token){
+    if (token) {
       req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
@@ -86,19 +80,18 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return from(this.userSvc.login(credential)).pipe(
       switchMap((authResponse: AuthResponse) => {
-        if(authResponse.jwtToken){
+        if (authResponse.jwtToken) {
           const authReq = req.clone({
             setHeaders: {
               Authorization: `Bearer ${authResponse.jwtToken}`,
             },
           });
           return next.handle(authReq);
-        }else{
+        } else {
           console.error('Not authenticated');
           this.router.navigate(['/login']);
-          return  next.handle(req);
+          return next.handle(req);
         }
-      
       }),
       catchError((err) => {
         console.error(err);
