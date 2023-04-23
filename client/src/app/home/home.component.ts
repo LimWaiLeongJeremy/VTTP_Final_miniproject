@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit{
 
   constructor(private userSvc: UserService, private userAuthSvc: UserAuthService, private router: Router ) {}
 
-  role!: string
+  role!: any
   products: Item[] = []
   loading: boolean = true;
   responsiveOptions!: any[];
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit{
 
     public routeToLogin() {
       console.log('route role ', this.role)
-      if(this.role == 'Admin'){
+      if(this.role[0].role == 'Admin'){
         this.router.navigateByUrl('/admin');
       }else {
         this.router.navigateByUrl('/user');
