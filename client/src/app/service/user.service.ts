@@ -79,6 +79,7 @@ export class UserService {
     if (userRoles != null && userRoles) {
       for (let i = 0; i < userRoles.length; i++) {
         for (let j = 0; j < allowedRoles.length; j++) {
+          console.log("role",userRoles[i], allowedRoles[j])
           if (userRoles[i].role === allowedRoles[j]) {
             isMatch = true;
             return isMatch;
