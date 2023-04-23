@@ -46,10 +46,7 @@ export class HomeComponent implements OnInit{
         }
       ];
 
-      this.userAuthSvc.getRoles().subscribe( (role : any)=> {
-        console.log('home role ',role)
-         this.role = role.role;
-      })
+      this.role = this.userAuthSvc.getRoles();
     }
 
     public routeToLogin() {
