@@ -47,11 +47,13 @@ export class HomeComponent implements OnInit{
       ];
 
       this.userAuthSvc.getRoles().subscribe( (role : any)=> {
-         this.role = role[0].role;
+        console.log('home role ',role)
+         this.role = role.role;
       })
     }
 
     public routeToLogin() {
+      console.log('route role ', this.role)
       if(this.role == 'Admin'){
         this.router.navigateByUrl('/admin');
       }else {
