@@ -5,3 +5,12 @@
 .blueBtn{
     margin-right:10px;
 }
+
+i.pi.pi-user {
+    margin-right: 6px !important;
+}
+
+label {
+    margin-right:12px;
+    font-size: 1.3rem;
+}
