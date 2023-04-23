@@ -1,6 +1,11 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule, isDevMode } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Routes, RouterModule } from '@angular/router';
+import { GoogleMapsModule } from "@angular/google-maps";
 import { BrowserModule } from '@angular/platform-browser';
-
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
@@ -13,37 +18,44 @@ import { CheckOutComponent } from './check-out/check-out.component';
 import { AuthGuard } from './authenticate/auth.guard';
 import { AuthInterceptor } from './authenticate/auth.interceptor';
 import { UserService } from './service/user.service';
-import { Routes, RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
-// import { ServiceWorkerModule } from '@angular/service-worker';
-import { AccordionModule } from 'primeng/accordion'; //accordion and accordion tab
-import { MenubarModule } from 'primeng/menubar';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { ButtonModule } from 'primeng/button';
+import { AvatarModule } from 'primeng/avatar';
+import { MenubarModule } from 'primeng/menubar';
 import { TooltipModule } from 'primeng/tooltip';
+import { SidebarModule } from 'primeng/sidebar';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
-import { SidebarModule } from 'primeng/sidebar';
-import { OrderListModule } from 'primeng/orderlist';
-import { AvatarModule } from 'primeng/avatar';
 import { CarouselModule } from 'primeng/carousel';
+import { AccordionModule } from 'primeng/accordion'; 
+import { InputTextModule } from 'primeng/inputtext';
+import { OrderListModule } from 'primeng/orderlist';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AboutUsComponent } from './about-us/about-us.component';
-import { GoogleMapsModule } from "@angular/google-maps";
 
-// TODO: add meniofest
-//TODO: Change titles for each page
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: 'home', title: "Find Potter Potions!", component: HomeComponent },
-  { path: 'login', title: "Find Potter Potions!",component: LoginComponent },
-  { path: 'about', title: "Find Potter Potions!", component: AboutUsComponent },
+  { 
+    path: '', 
+    title: "Potter Potions!", 
+    component: HomeComponent 
+  },
+  { 
+    path: 'home', 
+    title: "Potter Potions!", 
+    component: HomeComponent 
+  },
+  {  
+    path: 'login', 
+    title: "Login",
+    component: LoginComponent 
+  },
+  { 
+    path: 'about', 
+    title: "About Potter Potions!", 
+    component: AboutUsComponent 
+  },
   {
     path: 'admin',
     component: AdminComponent,
@@ -60,14 +72,18 @@ const routes: Routes = [
   { path: 'checkOut', 
     component: CheckOutComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['User'] }
+    data: { roles: ['Check Out'] }
   },
   { path: 'success', 
     component: SucessComponent,
     canActivate: [AuthGuard],
-    data: { roles: ['User'] } 
+    data: { roles: ['Success'] } 
   },
-  { path: 'forbidden', component: ForbiddenComponent },
+  { 
+    path: 'forbidden', 
+    component: ForbiddenComponent,
+    data: { roles: ['Success'] }  
+  },
   { path: '**', redirectTo: '/', pathMatch: 'full' }
 ];
 
@@ -105,13 +121,13 @@ const routes: Routes = [
     OrderListModule,
     AvatarModule,
     CarouselModule,
+    GoogleMapsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    }),
-    GoogleMapsModule    
+    })
   ],
   providers: [
     AuthGuard,

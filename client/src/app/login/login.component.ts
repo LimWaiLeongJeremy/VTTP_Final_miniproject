@@ -27,8 +27,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private messageService: MessageService
   ) {}
-// TODO: login with diffrent user might not route to user page
-    // Issue on backend not parsing role over
+
   ngOnInit(): void {
     this.form = this.createCredential();
   }
