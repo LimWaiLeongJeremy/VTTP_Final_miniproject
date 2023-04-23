@@ -34,16 +34,20 @@ import { OrderListModule } from 'primeng/orderlist';
 import { AvatarModule } from 'primeng/avatar';
 import { CarouselModule } from 'primeng/carousel';
 import { ServiceWorkerModule } from '@angular/service-worker';
-// import { AgmCoreModule } from "@agm/core";
+import { AboutUsComponent } from './about-us/about-us.component';
+import { GoogleMapsModule } from "@angular/google-maps";
 
 // TODO: add meniofest
+//TODO: Change titles for each page
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'home', title: "Find Potter Potions!", component: HomeComponent },
+  { path: 'login', title: "Find Potter Potions!",component: LoginComponent },
+  { path: 'about', title: "Find Potter Potions!", component: AboutUsComponent },
   {
     path: 'admin',
     component: AdminComponent,
+    title: "Admin DashBoard",
     canActivate: [AuthGuard],
     data: { roles: ['Admin'] },
   },
@@ -78,6 +82,7 @@ const routes: Routes = [
     ForbiddenComponent,
     SucessComponent,
     CheckOutComponent,
+    AboutUsComponent,
   ],
   imports: [
     BrowserModule,
@@ -106,16 +111,7 @@ const routes: Routes = [
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    // ServiceWorkerModule.register('ngsw-worker.js', {
-    //   enabled: !isDevMode(),
-    //   // Register the ServiceWorker as soon as the application is stable
-    //   // or after 30 seconds (whichever comes first).
-    //   registrationStrategy: 'registerWhenStable:30000'
-    // }),
-    // AgmCoreModule.forRoot({
-    //   apiKey: 'AIzaSyBZzT0kiPzAEUjF7BJd0FHfu2wzDmc8EX0'
-    // }),
-    
+    GoogleMapsModule    
   ],
   providers: [
     AuthGuard,

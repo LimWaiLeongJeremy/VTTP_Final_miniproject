@@ -20,7 +20,13 @@ export class HeaderComponent implements OnInit{
       icon: 'pi pi-fw pi-home',
       routerLink: '/home',
       title: 'Potter Potions~!',
-    }
+    },
+    {
+      label: 'About Us',
+      icon: 'pi pi-moon',
+      routerLink: '/about',
+      title: 'Find us!'
+}
   ];
   @Output() eventEmitter = new EventEmitter();
 
@@ -56,6 +62,12 @@ export class HeaderComponent implements OnInit{
           icon: 'pi pi-fw pi-home',
           routerLink: '/home',
           title: 'Potter Potions~!',
+        },
+        {
+          label: 'About Us',
+          icon: 'pi pi-moon',
+          routerLink: '/about',
+          title: 'Find us!'
         },
         {
           label: 'Shop',
