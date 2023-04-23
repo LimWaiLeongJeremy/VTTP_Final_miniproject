@@ -59,15 +59,16 @@ public class UserService {
         userRepo.save(adminUser);
 
         User user = new User();
-        user.setFirstName("tan");
-        user.setLastName("ah gao");
+        user.setFirstName("Tan");
+        user.setLastName("Ah Gao");
         user.setUserName("tan");
-        user.setEmail("jereremy19995@hotmail.sg");
+        user.setEmail("tan@mail.com");
         user.setPassword(encoderPassword("tan"));
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
         user.setRole(userRoles);
         userRepo.save(user);
+
     }
 
     public String encoderPassword(String password) {
