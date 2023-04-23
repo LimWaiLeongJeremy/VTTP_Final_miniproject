@@ -23,11 +23,11 @@ export class AdminComponent implements OnInit {
     private messageService: MessageService
   ) {}
 
-  items!: Item[];
   cols!: any[];
+  items!: Item[];
+  loading: boolean = true;
   matchModeOptions!: SelectItem[];
   clonedItems: { [s: string]: Item } = {};
-  loading: boolean = true;
 
   ngOnInit(): void {
     console.log(this.userAuthSvc.getToken());

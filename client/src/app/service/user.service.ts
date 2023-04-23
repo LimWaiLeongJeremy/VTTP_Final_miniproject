@@ -43,13 +43,6 @@ export class UserService {
     return this.http.get<any>(this.endPoint + `/api/items`);
   }
 
-  public getCarouselImages() {
-    return this.http.get<any>(this.endPoint + '/api/carouselImages',{
-      headers: this.requestHeader,
-    });
-  }
-
-
   emitShowCartEvent(){
     this.cartSubject.next(true);
   }
@@ -86,6 +79,7 @@ export class UserService {
     if (userRoles != null && userRoles) {
       for (let i = 0; i < userRoles.length; i++) {
         for (let j = 0; j < allowedRoles.length; j++) {
+          console.log("role",userRoles[i], allowedRoles[j])
           if (userRoles[i].role === allowedRoles[j]) {
             isMatch = true;
             return isMatch;

@@ -64,12 +64,6 @@ export class HeaderComponent implements OnInit{
           title: 'Potter Potions~!',
         },
         {
-          label: 'About Us',
-          icon: 'pi pi-moon',
-          routerLink: '/about',
-          title: 'Find us!'
-        },
-        {
           label: 'Shop',
           icon: 'pi pi-shopping-bag',
           routerLink: '/user',
@@ -83,6 +77,12 @@ export class HeaderComponent implements OnInit{
           title: 'admin',
           visible: newRole === "Admin" || this.userRole === "Admin"
         },
+        {
+          label: 'About Us',
+          icon: 'pi pi-moon',
+          routerLink: '/about',
+          title: 'Find us!'
+        }
       ];
     })
   }
