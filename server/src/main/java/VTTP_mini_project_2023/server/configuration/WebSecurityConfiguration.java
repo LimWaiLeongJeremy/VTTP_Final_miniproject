@@ -22,67 +22,77 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    @Autowired
-    private JwtRequestFilter jwtRequestFilter;
-    @Autowired
-    private UserDetailsService jwtSvc;
+  @Autowired
+  private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+  @Autowired
+  private JwtRequestFilter jwtRequestFilter;
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.cors();
-        httpSecurity.csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/api/authenticate", 
-                                            "/api/registerNewUser", 
-                                            "/api/items", 
-                                            "/api/carouselImages", 
-                                            "/",
-                                            "/favicon.ico",
-                                            "index.html",
-                                            "/MagicSchoolOne-ovYz.ttf",
-                                            "/MagicSchoolTwo-4n5D.ttf",
-                                            "/main.js",
-                                            "/polyfills.js",
-                                            "/primeicons.eot",
-                                            "/primeicons.svg",
-                                            "/primeicons.ttf",
-                                            "/primeicons.woff",
-                                            "/primeicons.woff2",
-                                            "/runtime.js",
-                                            "/styles.css"
-                                            )
-                .permitAll()
-                .antMatchers(HttpHeaders.ALLOW)
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+  @Autowired
+  private UserDetailsService jwtSvc;
 
-        httpSecurity.addFilterBefore(jwtRequestFilter,
-                UsernamePasswordAuthenticationFilter.class);
-    }
+  @Bean
+  @Override
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  @Override
+  protected void configure(HttpSecurity httpSecurity) throws Exception {
+    httpSecurity.cors();
+    httpSecurity
+      .csrf()
+      .disable()
+      .authorizeRequests()
+      .antMatchers(
+        "/api/authenticate",
+        "/api/registerNewUser",
+        "/api/items",
+        "/api/carouselImages",
+        "/",
+        "/favicon.ico",
+        "index.html",
+        "/MagicSchoolOne-ovYz.ttf",
+        "/MagicSchoolTwo-4n5D.ttf",
+        "/main.js",
+        "/polyfills.js",
+        "/primeicons.eot",
+        "/primeicons.svg",
+        "/primeicons.ttf",
+        "/primeicons.woff",
+        "/primeicons.woff2",
+        "/runtime.js",
+        "/styles.css"
+      )
+      .permitAll()
+      .antMatchers(HttpHeaders.ALLOW)
+      .permitAll()
+      .anyRequest()
+      .authenticated()
+      .and()
+      .exceptionHandling()
+      .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+      .and()
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        authenticationManagerBuilder.userDetailsService(jwtSvc).passwordEncoder(passwordEncoder());
-    }
+    httpSecurity.addFilterBefore(
+      jwtRequestFilter,
+      UsernamePasswordAuthenticationFilter.class
+    );
+  }
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
+
+  @Autowired
+  public void configureGlobal(
+    AuthenticationManagerBuilder authenticationManagerBuilder
+  ) throws Exception {
+    authenticationManagerBuilder
+      .userDetailsService(jwtSvc)
+      .passwordEncoder(passwordEncoder());
+  }
 }

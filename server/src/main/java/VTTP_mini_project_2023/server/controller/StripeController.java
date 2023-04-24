@@ -1,12 +1,23 @@
 package VTTP_mini_project_2023.server.controller;
 
+import VTTP_mini_project_2023.server.model.Item;
+import VTTP_mini_project_2023.server.service.CartService;
+import VTTP_mini_project_2023.server.service.JwtService;
+import VTTP_mini_project_2023.server.util.JwtUtil;
+import com.stripe.Stripe;
+import com.stripe.exception.StripeException;
+import com.stripe.model.checkout.Session;
+import com.stripe.param.checkout.SessionCreateParams;
+import jakarta.json.Json;
+import jakarta.json.JsonBuilderFactory;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
+import jakarta.json.spi.JsonProvider;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -19,97 +30,92 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
-import com.stripe.model.checkout.Session;
-import com.stripe.param.checkout.SessionCreateParams;
-
-
-import VTTP_mini_project_2023.server.model.Item;
-import VTTP_mini_project_2023.server.service.CartService;
-import VTTP_mini_project_2023.server.service.JwtService;
-import VTTP_mini_project_2023.server.util.JwtUtil;
-import jakarta.json.Json;
-import jakarta.json.JsonBuilderFactory;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonObjectBuilder;
-import jakarta.json.spi.JsonProvider;
-
-
 @RestController
-@RequestMapping( value = "/api")
+@RequestMapping(value = "/api")
 @CrossOrigin(originPatterns = "*")
 public class StripeController {
 
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    private CartService cartSvc;
-    
-    @Value("${stripe.publicKey}")
-    private String publicKey;
-    @Value("${stripe.secretKey}")
-    private String secretKey;
+  @Autowired
+  private JwtUtil jwtUtil;
 
-    @PostMapping("/payment")
-    @PreAuthorize("hasRole('User')")
-    public String payment(HttpServletRequest request) throws StripeException{
-        Stripe.apiKey = secretKey;
+  @Autowired
+  private CartService cartSvc;
 
-        String username = getUsername(request);
-        List<Item> items = cartSvc.getCheckOut(username);
-        List<SessionCreateParams.LineItem> lineItemList = new ArrayList<>();
+  @Value("${stripe.publicKey}")
+  private String publicKey;
 
-        for(Item item: items){
-            lineItemList.add(buildSessionParam(item));
-        }
+  @Value("${stripe.secretKey}")
+  private String secretKey;
 
-        SessionCreateParams param = SessionCreateParams.builder()
-            .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
-            .setMode(SessionCreateParams.Mode.PAYMENT)
-            .setSuccessUrl("https://vttp-final-miniproject-hu9i.vercel.app/success")
-            .setCancelUrl("https://vttp-final-miniproject-hu9i.vercel.app/checkOut")
-            .addAllLineItem(lineItemList)
-            .build();
-        Session sess = Session.create(param);
-        Map<String, String> respData = new HashMap<>();
-        respData.put("id", sess.getId());
+  @PostMapping("/payment")
+  @PreAuthorize("hasRole('User')")
+  public String payment(HttpServletRequest request) throws StripeException {
+    Stripe.apiKey = secretKey;
 
+    String username = getUsername(request);
+    List<Item> items = cartSvc.getCheckOut(username);
+    List<SessionCreateParams.LineItem> lineItemList = new ArrayList<>();
 
-
-        JsonBuilderFactory factory = JsonProvider.provider().createBuilderFactory(null);
-        JsonObjectBuilder builder = factory.createObjectBuilder();
-        for (Map.Entry<String, String> entry : respData.entrySet()) {
-            builder.add(entry.getKey(), entry.getValue());
-        }
-        return (builder.build().toString());
+    for (Item item : items) {
+      lineItemList.add(buildSessionParam(item));
     }
 
-    @GetMapping({ "/getStripe" })
-    @PreAuthorize("hasRole('User')")
-    @ResponseBody
-    public ResponseEntity<String> getSecret() {
-        JsonObject jsonObject = Json.createObjectBuilder().add("message", publicKey).build();
-        return ResponseEntity.ok(jsonObject.toString());
-    }
+    SessionCreateParams param = SessionCreateParams
+      .builder()
+      .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+      .setMode(SessionCreateParams.Mode.PAYMENT)
+      .setSuccessUrl("https://vttp-final-miniproject-hu9i.vercel.app/success")
+      .setCancelUrl("https://vttp-final-miniproject-hu9i.vercel.app/checkOut")
+      .addAllLineItem(lineItemList)
+      .build();
+    Session sess = Session.create(param);
+    Map<String, String> respData = new HashMap<>();
+    respData.put("id", sess.getId());
 
-    private String getUsername(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        String jwtToken = header.substring(7);
-        return jwtUtil.getUserNameFromToken(jwtToken);
+    JsonBuilderFactory factory = JsonProvider
+      .provider()
+      .createBuilderFactory(null);
+    JsonObjectBuilder builder = factory.createObjectBuilder();
+    for (Map.Entry<String, String> entry : respData.entrySet()) {
+      builder.add(entry.getKey(), entry.getValue());
     }
+    return (builder.build().toString());
+  }
 
-    private SessionCreateParams.LineItem buildSessionParam(Item item){
-         return SessionCreateParams.LineItem.builder()
-                .setQuantity(Long.valueOf(item.getQuantity()))
-                    .setPriceData(SessionCreateParams.LineItem.PriceData.builder()
-                        .setCurrency("SGD")
-                        .setUnitAmount((long) item.getPrice() * 100)
-                        .setProductData(SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                        .setName(item.getItemName())
-                        .build())
-                        .build())
-                        .build();
-    }
+  @GetMapping({ "/getStripe" })
+  @PreAuthorize("hasRole('User')")
+  @ResponseBody
+  public ResponseEntity<String> getSecret() {
+    JsonObject jsonObject = Json
+      .createObjectBuilder()
+      .add("message", publicKey)
+      .build();
+    return ResponseEntity.ok(jsonObject.toString());
+  }
 
+  private String getUsername(HttpServletRequest request) {
+    String header = request.getHeader("Authorization");
+    String jwtToken = header.substring(7);
+    return jwtUtil.getUserNameFromToken(jwtToken);
+  }
+
+  private SessionCreateParams.LineItem buildSessionParam(Item item) {
+    return SessionCreateParams.LineItem
+      .builder()
+      .setQuantity(Long.valueOf(item.getQuantity()))
+      .setPriceData(
+        SessionCreateParams.LineItem.PriceData
+          .builder()
+          .setCurrency("SGD")
+          .setUnitAmount((long) item.getPrice() * 100)
+          .setProductData(
+            SessionCreateParams.LineItem.PriceData.ProductData
+              .builder()
+              .setName(item.getItemName())
+              .build()
+          )
+          .build()
+      )
+      .build();
+  }
 }
