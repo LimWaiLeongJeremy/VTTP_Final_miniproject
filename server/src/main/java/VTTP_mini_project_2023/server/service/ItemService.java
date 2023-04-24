@@ -26,8 +26,7 @@ public class ItemService {
   @Autowired
   private ItemCache itemCache;
 
-  public static final String POTTER_POTION_API_URL =
-    "https://api.potterdb.com/v1/potions";
+  public static final String POTTER_POTION_API_URL = "https://api.potterdb.com/v1/potions";
 
   public JsonArray getItem() {
     List<Item> items = new LinkedList<>();
@@ -35,9 +34,9 @@ public class ItemService {
 
     if (cache.isEmpty() && itemRepo.getFromMySQL().isEmpty()) {
       RequestEntity<Void> req = RequestEntity
-        .get(POTTER_POTION_API_URL)
-        .accept(MediaType.APPLICATION_JSON)
-        .build();
+          .get(POTTER_POTION_API_URL)
+          .accept(MediaType.APPLICATION_JSON)
+          .build();
       RestTemplate template = new RestTemplate();
       ResponseEntity<String> resp = template.exchange(req, String.class);
       String payload = resp.getBody();
@@ -55,6 +54,30 @@ public class ItemService {
       itemCache.add("potion", items);
     } else {
       items = cache.get();
+    }
+
+    return Item.setJArr(items);
+  }
+
+  public JsonArray getItemLimited(int limit, int offset) {
+    List<Item> items = new LinkedList<>();
+    items = itemRepo.getSelectedItemsFromMySQL(limit, offset);
+
+    if (items.isEmpty()) {
+      RequestEntity<Void> req = RequestEntity
+          .get(POTTER_POTION_API_URL)
+          .accept(MediaType.APPLICATION_JSON)
+          .build();
+      RestTemplate template = new RestTemplate();
+      ResponseEntity<String> resp = template.exchange(req, String.class);
+      String payload = resp.getBody();
+      JsonReader reader = Json.createReader(new StringReader(payload));
+      JsonArray data = reader.readObject().getJsonArray("data");
+      for (int i = 0; i < data.size(); i++) {
+        Item setModel = Item.setJObj(data.getJsonObject(i));
+        itemRepo.insertIntoSQL(setModel);
+        items.add(setModel);
+      }
     }
 
     return Item.setJArr(items);

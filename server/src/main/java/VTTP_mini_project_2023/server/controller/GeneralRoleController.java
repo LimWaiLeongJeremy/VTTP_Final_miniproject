@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -34,5 +35,12 @@ public class GeneralRoleController {
   @ResponseBody
   public ResponseEntity<String> getItem() {
     return ResponseEntity.ok(itemSvc.getItem().toString());
+  }
+
+  @GetMapping("/itemsLimited")
+  @ResponseBody
+  public ResponseEntity<String> getItemLimited(
+      @RequestParam(defaultValue = "12") int limit, @RequestParam(defaultValue = "0") int offset) {
+    return ResponseEntity.ok(itemSvc.getItemLimited(limit, offset).toString());
   }
 }

@@ -7,6 +7,8 @@ public class Queries {
     "SELECT email FROM user WHERE user_name = ?;";
   // for item
   public static String SQL_SELECT_ALL_ITEM = "SELECT * FROM item;";
+  public static String SQL_SELECT_ALL_ITEM_LIMIT_OFFSET =
+    "SELECT * FROM E_Com.item limit ? offset ?;";
   public static String SQL_INSERT_INTO_ITEM =
     "INSERT INTO item VALUES (?, ?, ?, ?, ?, ?);";
   public static String SQL_UPDATE_ITEM_TABLE =

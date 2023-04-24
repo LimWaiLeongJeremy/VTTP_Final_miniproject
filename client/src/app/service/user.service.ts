@@ -6,14 +6,14 @@ import { Roles } from '../model/roles';
 import { Item } from '../model/item';
 import { Observable, Subject, catchError, firstValueFrom } from 'rxjs';
 import { CheckOutComponent } from '../check-out/check-out.component';
+import { environment } from './environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  endPoint = 'https://potter-potion-production.up.railway.app';
+  endPoint = environment.serverUrl;
   requestHeader = new HttpHeaders({ 'No-Auth': 'true' });
-  //endpoint: string = "localhost:8080"
   userName!: string;
   password!: string;
   items: Item[] = [];
@@ -21,7 +21,6 @@ export class UserService {
   body = {};
   private cartSubject = new Subject<any>();
   private saveCartSubject = new Subject<any>();
-  // saveCartHeader = new HttpHeaders();
 
   token = this.userAuthSvc.getToken() || '';
   constructor(private http: HttpClient, private userAuthSvc: UserAuthService) {}
@@ -40,6 +39,12 @@ export class UserService {
 
   public getItem() {
     return this.http.get<any>(this.endPoint + `/api/items`);
+  }
+
+  public getItemLimited() {
+    return this.http.get<any>(
+      this.endPoint + `/itemsLimited?limit=12&offset=35`
+    );
   }
 
   emitShowCartEvent() {
@@ -73,7 +78,7 @@ export class UserService {
     return this.http.put<any>(
       this.endPoint +
         `/api/updateItem/${item.price}/${item.quantity}/${item.id}`,
-        this.body
+      this.body
     );
   }
 

@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   responsiveOptions!: any[];
 
   ngOnInit(): void {
-    this.userSvc.getItem().subscribe((item: Item[]) => {
+    this.userSvc.getItemLimited().subscribe((item: Item[]) => {
       this.products = item;
       this.loading = false;
     });
