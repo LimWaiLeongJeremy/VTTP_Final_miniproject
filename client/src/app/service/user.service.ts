@@ -29,7 +29,7 @@ export class UserService {
     this.userName = loginData.userName;
     this.password = loginData.password;
     return this.http.post<AuthResponse>(
-      this.endPoint + '/api/authenticate',
+      this.endPoint + '/authenticate',
       loginData,
       {
         headers: this.requestHeader,
@@ -38,7 +38,7 @@ export class UserService {
   }
 
   public getItem() {
-    return this.http.get<any>(this.endPoint + `/api/items`);
+    return this.http.get<any>(this.endPoint + `/items`);
   }
 
   public getItemLimited() {
@@ -69,7 +69,7 @@ export class UserService {
     const saveCartHeader = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<any>(this.endPoint + '/api/saveCart', items, {
+    return this.http.post<any>(this.endPoint + '/saveCart', items, {
       headers: saveCartHeader,
     });
   }
@@ -77,7 +77,7 @@ export class UserService {
   public updateItem(item: Item) {
     return this.http.put<any>(
       this.endPoint +
-        `/api/updateItem/${item.price}/${item.quantity}/${item.id}`,
+        `/updateItem/${item.price}/${item.quantity}/${item.id}`,
       this.body
     );
   }
@@ -101,14 +101,14 @@ export class UserService {
   }
 
   public getUserCart() {
-    return this.http.get<any>(this.endPoint + `/api/userCart`);
+    return this.http.get<any>(this.endPoint + `/userCart`);
   }
 
   public deleteUserCart() {
-    return this.http.get<any>(this.endPoint + `/api/deleteCart`);
+    return this.http.get<any>(this.endPoint + `/deleteCart`);
   }
 
   public sendMail() {
-    return this.http.get<any>(this.endPoint + `/api/sendMail`);
+    return this.http.get<any>(this.endPoint + `/sendMail`);
   }
 }
