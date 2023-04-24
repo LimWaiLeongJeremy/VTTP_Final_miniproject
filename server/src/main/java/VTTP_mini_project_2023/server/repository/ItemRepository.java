@@ -25,6 +25,15 @@ public class ItemRepository {
     return result;
   }
 
+  public List<Item> getSelectedItemsFromMySQL(int limit, int Offset) {
+    final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_SELECT_ALL_ITEM_LIMIT_OFFSET, limit, Offset);
+    final List<Item> result = new LinkedList<>();
+    while (rs.next()) {
+      result.add(Item.setModelFromSql(rs));
+    }
+    return result;
+  }
+
   public int insertIntoSQL(Item item) {
     return jdbcTemplate.update(
       SQL_INSERT_INTO_ITEM,

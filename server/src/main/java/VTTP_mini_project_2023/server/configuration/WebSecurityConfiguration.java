@@ -47,6 +47,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         "/api/authenticate",
         "/api/registerNewUser",
         "/api/items",
+        "/api/itemsLimited",
         "/api/carouselImages",
         "/",
         "/favicon.ico",
