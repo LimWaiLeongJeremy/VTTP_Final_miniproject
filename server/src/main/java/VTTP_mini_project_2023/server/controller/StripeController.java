@@ -62,8 +62,8 @@ public class StripeController {
         .builder()
         .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
         .setMode(SessionCreateParams.Mode.PAYMENT)
-        .setSuccessUrl("https://vttp-final-miniproject-hu9i.vercel.app/success")
-        .setCancelUrl("https://vttp-final-miniproject-hu9i.vercel.app/checkOut")
+        .setSuccessUrl("https://potter-potion.vercel.app/success")
+        .setCancelUrl("https://potter-potion.vercel.app/checkOut")
         .addAllLineItem(lineItemList)
         .build();
     Session sess = Session.create(param);
