@@ -50,18 +50,6 @@ public class UserController {
     userSvc.initRolesAndUser();
   }
 
-  @PostMapping({ "/registerNewUser" })
-  @ResponseBody
-  public User registerNewUser(@RequestBody User user) {
-    return userSvc.registerNewUser(user);
-  }
-
-  @GetMapping({ "/items" })
-  @ResponseBody
-  public ResponseEntity<String> getItem() {
-    return ResponseEntity.ok(itemSvc.getItem().toString());
-  }
-
   @GetMapping({ "/carouselImages" })
   @ResponseBody
   public ResponseEntity<String> getImagesForCarousel() {
@@ -85,7 +73,6 @@ public class UserController {
         jsontify("Error saving cart for user " + userName)
       );
     }
-
     return ResponseEntity.ok(jsontify("Cart saved"));
   }
 
