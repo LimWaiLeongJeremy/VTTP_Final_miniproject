@@ -2,7 +2,7 @@ name: Deploy to Railway
 
 on:
   push:
-    branches: [fature/googlemaps]
+    branches: [feature2]
 
 jobs:
   deploy:

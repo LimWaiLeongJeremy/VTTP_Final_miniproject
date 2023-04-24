@@ -1,85 +1,83 @@
 package VTTP_mini_project_2023.server.service;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-
 import VTTP_mini_project_2023.server.model.Role;
 import VTTP_mini_project_2023.server.model.User;
 import VTTP_mini_project_2023.server.repository.RoleRepository;
 import VTTP_mini_project_2023.server.repository.UserRepository;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepo;
-    @Autowired
-    private RoleRepository roleRepo;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+  @Autowired
+  private UserRepository userRepo;
 
-    public User registerNewUser(User user) {
-        // TODO: handle if user exist
-        Role role = roleRepo.findById("User").get();
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        user.setRole(roles);
-        user.setPassword(encoderPassword(user.getPassword()));
+  @Autowired
+  private RoleRepository roleRepo;
 
-        return userRepo.save(user);
-    }
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
-    public void initRolesAndUser() {
-        Role adminRole = new Role();
-        adminRole.setRole("Admin");
-        adminRole.setDescription("Admin role");
-        roleRepo.save(adminRole);
+  public User registerNewUser(User user) {
+    // TODO: handle if user exist
+    Role role = roleRepo.findById("User").get();
+    Set<Role> roles = new HashSet<>();
+    roles.add(role);
+    user.setRole(roles);
+    user.setPassword(encoderPassword(user.getPassword()));
 
-        Role userRole = new Role();
-        userRole.setRole("User");
-        userRole.setDescription("Default role");
-        roleRepo.save(userRole);
+    return userRepo.save(user);
+  }
 
-        User adminUser = new User();
-        adminUser.setFirstName("admin");
-        adminUser.setLastName("admin");
-        adminUser.setUserName("admin");
-        adminUser.setEmail("jereremy19995@hotmail.sg");
-        adminUser.setPassword(encoderPassword("admin"));
-        Set<Role> adminRoles = new HashSet<>();
-        adminRoles.add(adminRole);
-        adminUser.setRole(adminRoles);
-        userRepo.save(adminUser);
+  public void initRolesAndUser() {
+    Role adminRole = new Role();
+    adminRole.setRole("Admin");
+    adminRole.setDescription("Admin role");
+    roleRepo.save(adminRole);
 
-        User user = new User();
-        user.setFirstName("Tan");
-        user.setLastName("Ah Gao");
-        user.setUserName("tan");
-        user.setEmail("tan@mail.com");
-        user.setPassword(encoderPassword("tan"));
-        Set<Role> userRoles = new HashSet<>();
-        userRoles.add(userRole);
-        user.setRole(userRoles);
-        userRepo.save(user);
+    Role userRole = new Role();
+    userRole.setRole("User");
+    userRole.setDescription("Default role");
+    roleRepo.save(userRole);
 
-    }
+    User adminUser = new User();
+    adminUser.setFirstName("admin");
+    adminUser.setLastName("admin");
+    adminUser.setUserName("admin");
+    adminUser.setEmail("jereremy19995@hotmail.sg");
+    adminUser.setPassword(encoderPassword("admin"));
+    Set<Role> adminRoles = new HashSet<>();
+    adminRoles.add(adminRole);
+    adminUser.setRole(adminRoles);
+    userRepo.save(adminUser);
 
-    public String encoderPassword(String password) {
-        return passwordEncoder.encode(password);
-    }
+    User user = new User();
+    user.setFirstName("Tan");
+    user.setLastName("Ah Gao");
+    user.setUserName("tan");
+    user.setEmail("tan@mail.com");
+    user.setPassword(encoderPassword("tan"));
+    Set<Role> userRoles = new HashSet<>();
+    userRoles.add(userRole);
+    user.setRole(userRoles);
+    userRepo.save(user);
+  }
 
-    private String idGenerator() {
-        return UUID.randomUUID().toString().substring(0, 8);
-    }
+  public String encoderPassword(String password) {
+    return passwordEncoder.encode(password);
+  }
 
-    public String getEmailByUsername(String username) {
-        return userRepo.getEmailByUsername(username);
-    }
+  public String getEmailByUsername(String username) {
+    return userRepo.getEmailByUsername(username);
+  }
+
+  private String idGenerator() {
+    return UUID.randomUUID().toString().substring(0, 8);
+  }
 }

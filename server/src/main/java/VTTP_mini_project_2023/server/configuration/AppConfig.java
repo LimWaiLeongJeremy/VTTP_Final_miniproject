@@ -12,48 +12,47 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 public class AppConfig {
 
-    public static final String CACHE_ITEM = "item-cache";
+  public static final String CACHE_ITEM = "item-cache";
 
-    @Value("${spring.redis.host}")
-    private String redisHost;
+  @Value("${spring.redis.host}")
+  private String redisHost;
 
-    @Value("${spring.redis.port}")
-    private Integer redisPort;
+  @Value("${spring.redis.port}")
+  private Integer redisPort;
 
-    @Value("${spring.redis.database}")
-    private Integer redisDatabase;
+  @Value("${spring.redis.database}")
+  private Integer redisDatabase;
 
-    @Value("${spring.redis.user}")
-    private String redisUser;
+  @Value("${spring.redis.user}")
+  private String redisUser;
 
-    @Value("${spring.redis.password}")
-    private String redisPassword;
+  @Value("${spring.redis.password}")
+  private String redisPassword;
 
-    @Bean(CACHE_ITEM)
-    public RedisTemplate<String, String> createRedisTemplate() {
+  @Bean(CACHE_ITEM)
+  public RedisTemplate<String, String> createRedisTemplate() {
+    final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+    config.setHostName(redisHost);
+    config.setPort(redisPort);
+    config.setDatabase(redisDatabase);
+    config.setUsername(redisUser);
+    config.setPassword(redisPassword);
 
-        final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName(redisHost);
-        config.setPort(redisPort);
-        config.setDatabase(redisDatabase);
-        config.setUsername(redisUser);
-        config.setPassword(redisPassword);
+    final JedisClientConfiguration jedisClient = JedisClientConfiguration
+      .builder()
+      .build();
 
-        final JedisClientConfiguration jedisClient = JedisClientConfiguration
-            .builder().build();
+    final JedisConnectionFactory jedisFac = new JedisConnectionFactory(
+      config,
+      jedisClient
+    );
+    jedisFac.afterPropertiesSet();
 
-                    // jedisClient.isUsePooling();
+    final RedisTemplate<String, String> template = new RedisTemplate<>();
+    template.setConnectionFactory(jedisFac);
+    template.setKeySerializer(new StringRedisSerializer());
+    template.setValueSerializer(new StringRedisSerializer());
 
-
-        final JedisConnectionFactory jedisFac = new JedisConnectionFactory(config, jedisClient);
-        jedisFac.afterPropertiesSet();
-
-        final RedisTemplate<String, String> template = new RedisTemplate<>();
-        template.setConnectionFactory(jedisFac);
-        template.setKeySerializer(new StringRedisSerializer());
-        template.setValueSerializer(new StringRedisSerializer());
-
-        return template;
-    
-    }
+    return template;
+  }
 }
