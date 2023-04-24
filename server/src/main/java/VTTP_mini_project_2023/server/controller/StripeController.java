@@ -2,7 +2,6 @@ package VTTP_mini_project_2023.server.controller;
 
 import VTTP_mini_project_2023.server.model.Item;
 import VTTP_mini_project_2023.server.service.CartService;
-import VTTP_mini_project_2023.server.service.JwtService;
 import VTTP_mini_project_2023.server.util.JwtUtil;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
@@ -25,7 +24,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;

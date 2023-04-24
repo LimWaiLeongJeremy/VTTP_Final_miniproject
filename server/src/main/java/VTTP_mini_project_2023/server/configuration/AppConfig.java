@@ -42,8 +42,6 @@ public class AppConfig {
       .builder()
       .build();
 
-    // jedisClient.isUsePooling();
-
     final JedisConnectionFactory jedisFac = new JedisConnectionFactory(
       config,
       jedisClient
