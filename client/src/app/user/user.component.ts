@@ -3,7 +3,6 @@ import { Subscription } from 'rxjs';
 import { Item } from '../model/item';
 import { UserAuthService } from '../service/user-auth.service';
 import { UserService } from '../service/user.service';
-import { DataViewModule, DataViewLayoutOptions } from 'primeng/dataview';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 
@@ -23,7 +22,6 @@ export class UserComponent implements OnInit {
   itemSum: number = 0;
   loading: boolean = true;
 
-  //DataView Variables
   sortOptions: any[] = [
     { label: 'Price High to Low', value: '!price' },
     { label: 'Price Low to High', value: 'price' },
@@ -40,7 +38,6 @@ export class UserComponent implements OnInit {
 
   constructor(
     private userSvc: UserService,
-    private userAuthSvc: UserAuthService,
     private messageService: MessageService,
     public router: Router
   ) {}
