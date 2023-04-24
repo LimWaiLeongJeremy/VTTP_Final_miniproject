@@ -2,7 +2,7 @@ name: Deploy to Railway
 
 on:
   push:
-    branches: [feature/Cleanup]
+    branches: [main]
 
 jobs:
   deploy:
@@ -12,10 +12,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Use Node 16
+      - name: Use Node 19
         uses: actions/setup-node@v1
         with:
-          node-version: 16.x
+          node-version: 19.x
 
       - name: Install packages
         run: yarn install --frozen-lockfile
