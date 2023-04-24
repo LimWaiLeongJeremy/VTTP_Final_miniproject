@@ -9,13 +9,10 @@ import VTTP_mini_project_2023.server.util.EmailService;
 import VTTP_mini_project_2023.server.util.JwtUtil;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
-
 import java.util.List;
 import java.util.Optional;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,99 +30,111 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @CrossOrigin
 public class UserController {
 
-    @Autowired
-    private UserService userSvc;
-    @Autowired
-    private ItemService itemSvc;
-    @Autowired
-    private CartService cartSvc;
-    @Autowired
-    private JwtUtil jwtUtil;
-    
-    @Autowired
-    private EmailService mail;
-    
-    @PostConstruct
-    public void initRolesAndUsers() {
-        userSvc.initRolesAndUser();
-    }
-    
-    @PostMapping({ "/registerNewUser" })
-    @ResponseBody
-    public User registerNewUser(@RequestBody User user) {
-        return userSvc.registerNewUser(user);
-    }
+  @Autowired
+  private UserService userSvc;
 
-    @GetMapping({ "/items" })
-    @ResponseBody
-    public ResponseEntity<String> getItem() {
-        return ResponseEntity.ok(itemSvc.getItem().toString());
-    }
+  @Autowired
+  private ItemService itemSvc;
 
-    @GetMapping({ "/carouselImages" })
-    @ResponseBody
-    public ResponseEntity<String> getImagesForCarousel() {
-        return ResponseEntity.ok(itemSvc.getCarouselImages().toString());
-    }
+  @Autowired
+  private CartService cartSvc;
 
-    @PutMapping({ "/updateItem/{price}/{quantity}/{itemId}" })
-    @PreAuthorize("hasRole('Admin')")
-    @ResponseBody
-    public ResponseEntity<Integer> updatepdateItem(@PathVariable int price, @PathVariable int quantity,
-            @PathVariable String itemId) {
-        return ResponseEntity.ok(itemSvc.updateItem(price, quantity, itemId));
-    }
+  @Autowired
+  private JwtUtil jwtUtil;
 
-    @PostMapping(path = {"/saveCart"}, consumes=MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasRole('User')")
-    @ResponseBody
-    public ResponseEntity<String> saveCart(HttpServletRequest request, @RequestBody List<Item> cart) {
-        String userName = getUsername(request);
-        Optional<int[]> saveCart = cartSvc.saveToCart(cart, userName);
-        if (saveCart.isEmpty()) {
-            return ResponseEntity.ok(jsontify("Error saving cart for user " + userName));
-        }
+  @Autowired
+  private EmailService mail;
 
-        return ResponseEntity.ok(jsontify("Cart saved"));
-    }
+  @PostConstruct
+  public void initRolesAndUsers() {
+    userSvc.initRolesAndUser();
+  }
 
-    @GetMapping({ "/userCart" })
-    @PreAuthorize("hasRole('User')")
-    @ResponseBody
-    public ResponseEntity<String> getUserCart(HttpServletRequest request) {
-        return ResponseEntity.ok(cartSvc.getUserCart(getUsername(request)).toString());
+  @PostMapping({ "/registerNewUser" })
+  @ResponseBody
+  public User registerNewUser(@RequestBody User user) {
+    return userSvc.registerNewUser(user);
+  }
+
+  @GetMapping({ "/items" })
+  @ResponseBody
+  public ResponseEntity<String> getItem() {
+    return ResponseEntity.ok(itemSvc.getItem().toString());
+  }
+
+  @GetMapping({ "/carouselImages" })
+  @ResponseBody
+  public ResponseEntity<String> getImagesForCarousel() {
+    return ResponseEntity.ok(itemSvc.getCarouselImages().toString());
+  }
+
+  @PostMapping(
+    path = { "/saveCart" },
+    consumes = MediaType.APPLICATION_JSON_VALUE
+  )
+  @PreAuthorize("hasRole('User')")
+  @ResponseBody
+  public ResponseEntity<String> saveCart(
+    HttpServletRequest request,
+    @RequestBody List<Item> cart
+  ) {
+    String userName = getUsername(request);
+    Optional<int[]> saveCart = cartSvc.saveToCart(cart, userName);
+    if (saveCart.isEmpty()) {
+      return ResponseEntity.ok(
+        jsontify("Error saving cart for user " + userName)
+      );
     }
 
-    @GetMapping({ "/sendMail" })
-    @PreAuthorize("hasRole('User')")
-    @ResponseBody
-    public ResponseEntity<String> checkOut(HttpServletRequest request) {
-        String email = userSvc.getEmailByUsername(getUsername(request));
+    return ResponseEntity.ok(jsontify("Cart saved"));
+  }
 
-        mail.sendMail(email);
-        
-        return ResponseEntity.ok(jsontify("An order confirmation email will be sent to you shortly."));
-    }
+  @GetMapping({ "/userCart" })
+  @PreAuthorize("hasRole('User')")
+  @ResponseBody
+  public ResponseEntity<String> getUserCart(HttpServletRequest request) {
+    return ResponseEntity.ok(
+      cartSvc.getUserCart(getUsername(request)).toString()
+    );
+  }
 
-    @GetMapping({ "/deleteCart" })
-    @PreAuthorize("hasRole('User')")
-    @ResponseBody
-    public ResponseEntity<String> deleteByUsername(HttpServletRequest request) {
-        String username = getUsername(request);
-        cartSvc.deleteByUsername(username);
-        
-        return ResponseEntity.ok(jsontify("Cart have been deleted for user " + username));
-    }
+  @GetMapping({ "/sendMail" })
+  @PreAuthorize("hasRole('User')")
+  @ResponseBody
+  public ResponseEntity<String> checkOut(HttpServletRequest request) {
+    String email = userSvc.getEmailByUsername(getUsername(request));
 
-    private String getUsername(HttpServletRequest request) {
-        String header = request.getHeader("Authorization");
-        String jwtToken = header.substring(7);
-        return jwtUtil.getUserNameFromToken(jwtToken);
-    }
+    mail.sendMail(email);
 
-    private String jsontify(String message) {
-        String good = message;
-        JsonObject jsonObject = Json.createObjectBuilder().add("message", good).build();
-        return jsonObject.toString();
-    }
+    return ResponseEntity.ok(
+      jsontify("An order confirmation email will be sent to you shortly.")
+    );
+  }
+
+  @GetMapping({ "/deleteCart" })
+  @PreAuthorize("hasRole('User')")
+  @ResponseBody
+  public ResponseEntity<String> deleteByUsername(HttpServletRequest request) {
+    String username = getUsername(request);
+    cartSvc.deleteByUsername(username);
+
+    return ResponseEntity.ok(
+      jsontify("Cart have been deleted for user " + username)
+    );
+  }
+
+  private String getUsername(HttpServletRequest request) {
+    String header = request.getHeader("Authorization");
+    String jwtToken = header.substring(7);
+    return jwtUtil.getUserNameFromToken(jwtToken);
+  }
+
+  private String jsontify(String message) {
+    String good = message;
+    JsonObject jsonObject = Json
+      .createObjectBuilder()
+      .add("message", good)
+      .build();
+    return jsonObject.toString();
+  }
 }
