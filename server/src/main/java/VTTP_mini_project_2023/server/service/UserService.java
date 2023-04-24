@@ -5,9 +5,7 @@ import VTTP_mini_project_2023.server.model.User;
 import VTTP_mini_project_2023.server.repository.RoleRepository;
 import VTTP_mini_project_2023.server.repository.UserRepository;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,6 @@ public class UserService {
   private PasswordEncoder passwordEncoder;
 
   public User registerNewUser(User user) {
-    // TODO: handle if user exist
     Role role = roleRepo.findById("User").get();
     Set<Role> roles = new HashSet<>();
     roles.add(role);
@@ -75,9 +72,5 @@ public class UserService {
 
   public String getEmailByUsername(String username) {
     return userRepo.getEmailByUsername(username);
-  }
-
-  private String idGenerator() {
-    return UUID.randomUUID().toString().substring(0, 8);
   }
 }

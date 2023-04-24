@@ -1,7 +1,6 @@
 package VTTP_mini_project_2023.server.controller;
 
 import VTTP_mini_project_2023.server.model.Item;
-import VTTP_mini_project_2023.server.model.User;
 import VTTP_mini_project_2023.server.service.CartService;
 import VTTP_mini_project_2023.server.service.ItemService;
 import VTTP_mini_project_2023.server.service.UserService;
