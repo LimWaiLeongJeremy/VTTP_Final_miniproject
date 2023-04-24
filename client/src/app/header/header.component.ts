@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { UserAuthService } from '../service/user-auth.service';

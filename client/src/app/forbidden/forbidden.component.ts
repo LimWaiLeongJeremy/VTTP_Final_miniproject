@@ -8,11 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./forbidden.component.css'],
 })
 export class ForbiddenComponent {
-  
-  constructor( private userAuthSvc: UserAuthService, private router: Router ) { }
+  constructor(private userAuthSvc: UserAuthService, private router: Router) {}
 
   public logout() {
-    this.userAuthSvc.clear()
-    this.router.navigateByUrl("/home")
+    this.userAuthSvc.clear();
+    this.router.navigateByUrl('/home');
   }
 }
