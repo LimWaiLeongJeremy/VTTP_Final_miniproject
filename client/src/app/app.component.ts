@@ -6,21 +6,15 @@ import { UserAuthService } from './service/user-auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'client';
 
-  constructor( private userAuthSvc: UserAuthService ) {
-
-  }
+  constructor(private userAuthSvc: UserAuthService) {}
   ngOnInit(): void {
     window.onbeforeunload = () => {
       if (this.userAuthSvc.authenticated()) {
-        this.userAuthSvc.clear
+        this.userAuthSvc.clear;
       }
-    }
-  }
-
-  headerViewCartClicked(event: any){
-    console.log("appcomp clicked", event)
+    };
   }
 }

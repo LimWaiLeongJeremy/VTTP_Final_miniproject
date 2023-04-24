@@ -1,25 +1,22 @@
 <div class="text-center">
-    <h2>About Us</h2>
-    <p>
-        Our company, Potter Potion, provides freshly brewed potions 
-        that are made in Hogwarts and shipped from here. Despite being located in 
-        Hogwarts, it may be challenging to locate us, even if you are within 
-        the castle premises (for the non-magical individuals, Edinburgh Castle).
-    </p>
+  <h2>About Us</h2>
+  <p>
+    Our company, Potter Potion, provides freshly brewed potions that are made in
+    Hogwarts and shipped from here. Despite being located in Hogwarts, it may be
+    challenging to locate us, even if you are within the castle premises (for
+    the non-magical individuals, Edinburgh Castle).
+  </p>
 </div>
-<br>
-<div> 
-    <google-map
+<br />
+<div>
+  <google-map
     height="500px"
     width="100%"
     [zoom]="15"
     [center]="location"
-    [options]="options">
-
-    <map-marker
-        [position]="location"
-        label="Hogwarts School Of Wizardry"
-        >
-        </map-marker>
-        </google-map>
+    [options]="options"
+  >
+    <map-marker [position]="location" label="Hogwarts School Of Wizardry">
+    </map-marker>
+  </google-map>
 </div>

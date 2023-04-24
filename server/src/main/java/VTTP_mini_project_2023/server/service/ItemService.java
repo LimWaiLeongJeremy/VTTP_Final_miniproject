@@ -44,7 +44,6 @@ public class ItemService {
 
             // if item not in cache or DB isert item and return value
             // call API
-            System.out.println(">>>>>>>>item form API");
             RequestEntity<Void> req = RequestEntity
                     .get(POTTER_POTION_API_URL)
                     .accept(MediaType.APPLICATION_JSON)
@@ -63,20 +62,15 @@ public class ItemService {
                 
                 items.add(setModel);
             }
-            System.out.println(">>>> save to SQL");
             // insert itemsinto cache
             itemCache.add("potion", items);
-            System.out.println(">>>> save to redis");
         } else if (cache.isEmpty()) {
             // check if items exisit in db
-            System.out.println(">>>>>>>>item form SQL");
             items = itemRepo.getFromMySQL();
             itemCache.add("potion", items);
-            System.out.println(">>>> save to redis");
 
         } else {
             // check if item exist in cache
-            System.out.println(">>>>>>>>item form Cache");
             items = cache.get();
         }
 

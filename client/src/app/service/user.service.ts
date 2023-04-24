@@ -18,7 +18,7 @@ export class UserService {
   password!: string;
   items: Item[] = [];
   private cart: Item[] = [];
-  body = {} ;
+  body = {};
   private cartSubject = new Subject<any>();
   private saveCartSubject = new Subject<any>();
   // saveCartHeader = new HttpHeaders();
@@ -27,7 +27,6 @@ export class UserService {
   constructor(private http: HttpClient, private userAuthSvc: UserAuthService) {}
 
   public login(loginData: any) {
-    console.log('login');
     this.userName = loginData.userName;
     this.password = loginData.password;
     return this.http.post<AuthResponse>(
@@ -43,7 +42,7 @@ export class UserService {
     return this.http.get<any>(this.endPoint + `/api/items`);
   }
 
-  emitShowCartEvent(){
+  emitShowCartEvent() {
     this.cartSubject.next(true);
   }
 
@@ -51,7 +50,7 @@ export class UserService {
     return this.cartSubject.asObservable();
   }
 
-  emitSaveCartEvent(){
+  emitSaveCartEvent() {
     this.saveCartSubject.next(true);
   }
 
@@ -59,18 +58,23 @@ export class UserService {
     return this.saveCartSubject.asObservable();
   }
 
-  public saveUserCart(items: Item[]){
-    console.log('save Cart ', items)
+  public saveUserCart(items: Item[]) {
     const token = localStorage.getItem('token');
-    localStorage.clear()
+    localStorage.clear();
     const saveCartHeader = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
+      Authorization: `Bearer ${token}`,
     });
-    return this.http.post<any>(this.endPoint + '/api/saveCart', items, {headers: saveCartHeader});
+    return this.http.post<any>(this.endPoint + '/api/saveCart', items, {
+      headers: saveCartHeader,
+    });
   }
 
   public updateItem(item: Item) {
-    return this.http.put<any>(this.endPoint + `/api/updateItem/${item.price}/${item.quantity}/${item.id}`, this.body);
+    return this.http.put<any>(
+      this.endPoint +
+        `/api/updateItem/${item.price}/${item.quantity}/${item.id}`,
+        this.body
+    );
   }
 
   public roleMatch(allowedRoles: string | any[]): boolean {
@@ -79,7 +83,6 @@ export class UserService {
     if (userRoles != null && userRoles) {
       for (let i = 0; i < userRoles.length; i++) {
         for (let j = 0; j < allowedRoles.length; j++) {
-          console.log("role",userRoles[i], allowedRoles[j])
           if (userRoles[i].role === allowedRoles[j]) {
             isMatch = true;
             return isMatch;
@@ -92,19 +95,15 @@ export class UserService {
     return isMatch;
   }
 
-  public getUserCart(){
+  public getUserCart() {
     return this.http.get<any>(this.endPoint + `/api/userCart`);
   }
 
   public deleteUserCart() {
-    console.log("delete")
-
-    return this.http.get<any>(this.endPoint + `/api/deleteCart`)
+    return this.http.get<any>(this.endPoint + `/api/deleteCart`);
   }
 
   public sendMail() {
-    console.log("mail")
-
-    return this.http.get<any>(this.endPoint + `/api/sendMail`)
+    return this.http.get<any>(this.endPoint + `/api/sendMail`);
   }
 }

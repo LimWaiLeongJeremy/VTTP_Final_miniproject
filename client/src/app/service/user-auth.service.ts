@@ -12,7 +12,6 @@ export class UserAuthService {
   token$ = this.tokenSubject.asObservable();
   userName$ = this.usernameSubject.asObservable();
   private roleChange = new Subject<any>();
-  
 
   public setRole(roles: Roles[]) {
     sessionStorage.setItem('roles', JSON.stringify(roles));
@@ -24,12 +23,12 @@ export class UserAuthService {
       const roleString = sessionStorage.getItem('roles') || '{}';
       role = JSON.parse(roleString);
     } catch (error) {
-      console.log(error);
+      console.info(error);
     }
     return role;
   }
 
-  emitRoleChange(role: any){
+  emitRoleChange(role: any) {
     this.roleChange.next(role);
   }
 
@@ -39,7 +38,6 @@ export class UserAuthService {
 
   public setToken(jwtToken: string) {
     sessionStorage.setItem('jwtToken', jwtToken);
-    console.log(jwtToken);
     this.token = jwtToken;
     this.tokenSubject.next(jwtToken);
   }
@@ -58,9 +56,7 @@ export class UserAuthService {
   }
 
   public getUserName() {
-    console.log(sessionStorage.getItem('userName'))
     return sessionStorage.getItem('userName');
-
   }
 
   public clear() {
@@ -71,5 +67,4 @@ export class UserAuthService {
     const token = sessionStorage.getItem('jwtToken');
     return this.getToken() && this.getRoles();
   }
-
 }

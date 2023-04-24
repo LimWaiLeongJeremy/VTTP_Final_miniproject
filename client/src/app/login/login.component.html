@@ -12,7 +12,11 @@
         pInputText
         formControlName="userName"
         id="userName"
-        [ngClass]="userName?.invalid && (userName?.dirty || userName?.touched) ? 'ng-invalid ng-dirty' : ''"
+        [ngClass]="
+          userName?.invalid && (userName?.dirty || userName?.touched)
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
       />
       <label for="username">Username</label>
     </span>
@@ -24,21 +28,29 @@
         pInputText
         formControlName="password"
         id="password"
-        [ngClass]="password?.invalid && (password?.dirty || password?.touched) ? 'ng-invalid ng-dirty' : ''"
+        [ngClass]="
+          password?.invalid && (password?.dirty || password?.touched)
+            ? 'ng-invalid ng-dirty'
+            : ''
+        "
       />
       <label for="password">Password</label>
     </span>
-    
+
     <p-button id="loginBtn" type="submit" label="Login"></p-button>
   </form>
 
-<div *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)"
-    class="errorMsg">
+  <div
+    *ngIf="userName?.invalid && (userName?.dirty || userName?.touched)"
+    class="errorMsg"
+  >
     Username must not be empty.
-</div>
+  </div>
 
-<div *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-  class="errorMsg">
-  Password must not be empty.
-</div>
+  <div
+    *ngIf="password?.invalid && (password?.dirty || password?.touched)"
+    class="errorMsg"
+  >
+    Password must not be empty.
+  </div>
 </div>

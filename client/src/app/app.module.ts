@@ -2,7 +2,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule, isDevMode } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { GoogleMapsModule } from "@angular/google-maps";
+import { GoogleMapsModule } from '@angular/google-maps';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,65 +29,67 @@ import { SidebarModule } from 'primeng/sidebar';
 import { DataViewModule } from 'primeng/dataview';
 import { DropdownModule } from 'primeng/dropdown';
 import { CarouselModule } from 'primeng/carousel';
-import { AccordionModule } from 'primeng/accordion'; 
+import { AccordionModule } from 'primeng/accordion';
 import { InputTextModule } from 'primeng/inputtext';
 import { OrderListModule } from 'primeng/orderlist';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AboutUsComponent } from './about-us/about-us.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
-    title: "Potter Potions!", 
-    component: HomeComponent 
+  {
+    path: '',
+    title: 'Potter Potions!',
+    component: HomeComponent,
   },
-  { 
-    path: 'home', 
-    title: "Potter Potions!", 
-    component: HomeComponent 
+  {
+    path: 'home',
+    title: 'Potter Potions!',
+    component: HomeComponent,
   },
-  {  
-    path: 'login', 
-    title: "Login",
-    component: LoginComponent 
+  {
+    path: 'login',
+    title: 'Login',
+    component: LoginComponent,
   },
-  { 
-    path: 'about', 
-    title: "About Potter Potions!", 
-    component: AboutUsComponent 
+  {
+    path: 'about',
+    title: 'About Potter Potions!',
+    component: AboutUsComponent,
   },
   {
     path: 'admin',
     component: AdminComponent,
-    title: "Admin DashBoard",
+    title: 'Admin DashBoard',
     canActivate: [AuthGuard],
     data: { roles: ['Admin'] },
   },
   {
     path: 'user',
     component: UserComponent,
-    title: "Store",
+    title: 'Store',
     canActivate: [AuthGuard],
     data: { roles: ['User'] },
   },
-  { path: 'checkOut', 
+  {
+    path: 'checkOut',
     component: CheckOutComponent,
-    title: "Check Out",
+    title: 'Check Out',
     canActivate: [AuthGuard],
-    data: { roles: ['User'] }
+    data: { roles: ['User'] },
   },
-  { path: 'success', 
+  {
+    path: 'success',
     component: SucessComponent,
-    title: "Success",
+    title: 'Success',
     canActivate: [AuthGuard],
-    data: { roles: ['User'] } 
+    data: { roles: ['User'] },
   },
-  { 
-    path: 'forbidden', 
-    title: "Forbidden",
-    component: ForbiddenComponent, 
+  {
+    path: 'forbidden',
+    title: 'Forbidden',
+    component: ForbiddenComponent,
   },
-  { path: '**', redirectTo: '/', pathMatch: 'full' }
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -129,8 +131,8 @@ const routes: Routes = [
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    })
+      registrationStrategy: 'registerWhenStable:30000',
+    }),
   ],
   providers: [
     AuthGuard,
