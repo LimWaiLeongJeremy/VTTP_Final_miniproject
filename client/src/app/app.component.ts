@@ -7,7 +7,7 @@ import { UserAuthService } from './service/user-auth.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  title = 'client';
+  title = 'Potter Potion!';
 
   constructor(private userAuthSvc: UserAuthService) {}
   ngOnInit(): void {

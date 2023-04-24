@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Item } from '../model/item';
-import { UserAuthService } from '../service/user-auth.service';
 import { UserService } from '../service/user.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
