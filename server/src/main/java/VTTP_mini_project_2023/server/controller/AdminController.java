@@ -23,10 +23,9 @@ public class AdminController {
   @PreAuthorize("hasRole('Admin')")
   @ResponseBody
   public ResponseEntity<Integer> updatepdateItem(
-    @PathVariable int price,
-    @PathVariable int quantity,
-    @PathVariable String itemId
-  ) {
+      @PathVariable int price,
+      @PathVariable int quantity,
+      @PathVariable String itemId) {
     return ResponseEntity.ok(itemSvc.updateItem(price, quantity, itemId));
   }
 }

@@ -40,46 +40,44 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity httpSecurity) throws Exception {
     httpSecurity.cors();
     httpSecurity
-      .csrf()
-      .disable()
-      .authorizeRequests()
-      .antMatchers(
-        "/api/authenticate",
-        "/api/registerNewUser",
-        "/api/items",
-        "/api/itemsLimited",
-        "/api/carouselImages",
-        "/",
-        "/favicon.ico",
-        "index.html",
-        "/MagicSchoolOne-ovYz.ttf",
-        "/MagicSchoolTwo-4n5D.ttf",
-        "/main.js",
-        "/polyfills.js",
-        "/primeicons.eot",
-        "/primeicons.svg",
-        "/primeicons.ttf",
-        "/primeicons.woff",
-        "/primeicons.woff2",
-        "/runtime.js",
-        "/styles.css"
-      )
-      .permitAll()
-      .antMatchers(HttpHeaders.ALLOW)
-      .permitAll()
-      .anyRequest()
-      .authenticated()
-      .and()
-      .exceptionHandling()
-      .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-      .and()
-      .sessionManagement()
-      .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        .csrf()
+        .disable()
+        .authorizeRequests()
+        .antMatchers(
+            "/api/authenticate",
+            "/api/registerNewUser",
+            "/api/items",
+            "/api/itemsLimited",
+            "/api/carouselImages",
+            "/",
+            "/favicon.ico",
+            "index.html",
+            "/MagicSchoolOne-ovYz.ttf",
+            "/MagicSchoolTwo-4n5D.ttf",
+            "/main.js",
+            "/polyfills.js",
+            "/primeicons.eot",
+            "/primeicons.svg",
+            "/primeicons.ttf",
+            "/primeicons.woff",
+            "/primeicons.woff2",
+            "/runtime.js",
+            "/styles.css")
+        .permitAll()
+        .antMatchers(HttpHeaders.ALLOW)
+        .permitAll()
+        .anyRequest()
+        .authenticated()
+        .and()
+        .exceptionHandling()
+        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+        .and()
+        .sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
     httpSecurity.addFilterBefore(
-      jwtRequestFilter,
-      UsernamePasswordAuthenticationFilter.class
-    );
+        jwtRequestFilter,
+        UsernamePasswordAuthenticationFilter.class);
   }
 
   @Bean
@@ -89,10 +87,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
   @Autowired
   public void configureGlobal(
-    AuthenticationManagerBuilder authenticationManagerBuilder
-  ) throws Exception {
+      AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
     authenticationManagerBuilder
-      .userDetailsService(jwtSvc)
-      .passwordEncoder(passwordEncoder());
+        .userDetailsService(jwtSvc)
+        .passwordEncoder(passwordEncoder());
   }
 }

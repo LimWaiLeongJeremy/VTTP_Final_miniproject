@@ -55,22 +55,17 @@ public class UserController {
     return ResponseEntity.ok(itemSvc.getCarouselImages().toString());
   }
 
-  @PostMapping(
-    path = { "/saveCart" },
-    consumes = MediaType.APPLICATION_JSON_VALUE
-  )
+  @PostMapping(path = { "/saveCart" }, consumes = MediaType.APPLICATION_JSON_VALUE)
   @PreAuthorize("hasRole('User')")
   @ResponseBody
   public ResponseEntity<String> saveCart(
-    HttpServletRequest request,
-    @RequestBody List<Item> cart
-  ) {
+      HttpServletRequest request,
+      @RequestBody List<Item> cart) {
     String userName = getUsername(request);
     Optional<int[]> saveCart = cartSvc.saveToCart(cart, userName);
     if (saveCart.isEmpty()) {
       return ResponseEntity.ok(
-        jsontify("Error saving cart for user " + userName)
-      );
+          jsontify("Error saving cart for user " + userName));
     }
     return ResponseEntity.ok(jsontify("Cart saved"));
   }
@@ -80,8 +75,7 @@ public class UserController {
   @ResponseBody
   public ResponseEntity<String> getUserCart(HttpServletRequest request) {
     return ResponseEntity.ok(
-      cartSvc.getUserCart(getUsername(request)).toString()
-    );
+        cartSvc.getUserCart(getUsername(request)).toString());
   }
 
   @GetMapping({ "/sendMail" })
@@ -93,8 +87,7 @@ public class UserController {
     mail.sendMail(email);
 
     return ResponseEntity.ok(
-      jsontify("An order confirmation email will be sent to you shortly.")
-    );
+        jsontify("An order confirmation email will be sent to you shortly."));
   }
 
   @GetMapping({ "/deleteCart" })
@@ -105,8 +98,7 @@ public class UserController {
     cartSvc.deleteByUsername(username);
 
     return ResponseEntity.ok(
-      jsontify("Cart have been deleted for user " + username)
-    );
+        jsontify("Cart have been deleted for user " + username));
   }
 
   private String getUsername(HttpServletRequest request) {
@@ -118,9 +110,9 @@ public class UserController {
   private String jsontify(String message) {
     String good = message;
     JsonObject jsonObject = Json
-      .createObjectBuilder()
-      .add("message", good)
-      .build();
+        .createObjectBuilder()
+        .add("message", good)
+        .build();
     return jsonObject.toString();
   }
 }

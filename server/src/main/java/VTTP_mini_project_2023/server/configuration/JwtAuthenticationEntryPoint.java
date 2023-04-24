@@ -13,13 +13,11 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
   @Override
   public void commence(
-    HttpServletRequest request,
-    HttpServletResponse response,
-    AuthenticationException authException
-  ) throws IOException, ServletException {
+      HttpServletRequest request,
+      HttpServletResponse response,
+      AuthenticationException authException) throws IOException, ServletException {
     response.sendError(
-      HttpServletResponse.SC_UNAUTHORIZED,
-      "Unauthorized entry"
-    );
+        HttpServletResponse.SC_UNAUTHORIZED,
+        "Unauthorized entry");
   }
 }

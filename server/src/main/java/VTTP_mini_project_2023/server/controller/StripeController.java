@@ -59,20 +59,20 @@ public class StripeController {
     }
 
     SessionCreateParams param = SessionCreateParams
-      .builder()
-      .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
-      .setMode(SessionCreateParams.Mode.PAYMENT)
-      .setSuccessUrl("https://vttp-final-miniproject-hu9i.vercel.app/success")
-      .setCancelUrl("https://vttp-final-miniproject-hu9i.vercel.app/checkOut")
-      .addAllLineItem(lineItemList)
-      .build();
+        .builder()
+        .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
+        .setMode(SessionCreateParams.Mode.PAYMENT)
+        .setSuccessUrl("https://vttp-final-miniproject-hu9i.vercel.app/success")
+        .setCancelUrl("https://vttp-final-miniproject-hu9i.vercel.app/checkOut")
+        .addAllLineItem(lineItemList)
+        .build();
     Session sess = Session.create(param);
     Map<String, String> respData = new HashMap<>();
     respData.put("id", sess.getId());
 
     JsonBuilderFactory factory = JsonProvider
-      .provider()
-      .createBuilderFactory(null);
+        .provider()
+        .createBuilderFactory(null);
     JsonObjectBuilder builder = factory.createObjectBuilder();
     for (Map.Entry<String, String> entry : respData.entrySet()) {
       builder.add(entry.getKey(), entry.getValue());
@@ -85,9 +85,9 @@ public class StripeController {
   @ResponseBody
   public ResponseEntity<String> getSecret() {
     JsonObject jsonObject = Json
-      .createObjectBuilder()
-      .add("message", publicKey)
-      .build();
+        .createObjectBuilder()
+        .add("message", publicKey)
+        .build();
     return ResponseEntity.ok(jsonObject.toString());
   }
 
@@ -99,21 +99,19 @@ public class StripeController {
 
   private SessionCreateParams.LineItem buildSessionParam(Item item) {
     return SessionCreateParams.LineItem
-      .builder()
-      .setQuantity(Long.valueOf(item.getQuantity()))
-      .setPriceData(
-        SessionCreateParams.LineItem.PriceData
-          .builder()
-          .setCurrency("SGD")
-          .setUnitAmount((long) item.getPrice() * 100)
-          .setProductData(
-            SessionCreateParams.LineItem.PriceData.ProductData
-              .builder()
-              .setName(item.getItemName())
-              .build()
-          )
-          .build()
-      )
-      .build();
+        .builder()
+        .setQuantity(Long.valueOf(item.getQuantity()))
+        .setPriceData(
+            SessionCreateParams.LineItem.PriceData
+                .builder()
+                .setCurrency("SGD")
+                .setUnitAmount((long) item.getPrice() * 100)
+                .setProductData(
+                    SessionCreateParams.LineItem.PriceData.ProductData
+                        .builder()
+                        .setName(item.getItemName())
+                        .build())
+                .build())
+        .build();
   }
 }

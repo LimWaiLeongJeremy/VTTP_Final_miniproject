@@ -76,8 +76,7 @@ export class UserService {
 
   public updateItem(item: Item) {
     return this.http.put<any>(
-      this.endPoint +
-        `/updateItem/${item.price}/${item.quantity}/${item.id}`,
+      this.endPoint + `/updateItem/${item.price}/${item.quantity}/${item.id}`,
       this.body
     );
   }

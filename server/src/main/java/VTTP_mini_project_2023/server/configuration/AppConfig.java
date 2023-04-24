@@ -39,13 +39,12 @@ public class AppConfig {
     config.setPassword(redisPassword);
 
     final JedisClientConfiguration jedisClient = JedisClientConfiguration
-      .builder()
-      .build();
+        .builder()
+        .build();
 
     final JedisConnectionFactory jedisFac = new JedisConnectionFactory(
-      config,
-      jedisClient
-    );
+        config,
+        jedisClient);
     jedisFac.afterPropertiesSet();
 
     final RedisTemplate<String, String> template = new RedisTemplate<>();
