@@ -21,9 +21,6 @@ export class HomeComponent implements OnInit {
   loading: boolean = true;
   responsiveOptions!: any[];
 
-  lat: number = 51.678418;
-  lng: number = 7.809007;
-
   ngOnInit(): void {
     this.userSvc.getItem().subscribe((item: Item[]) => {
       this.products = item;
@@ -52,7 +49,7 @@ export class HomeComponent implements OnInit {
   }
 
   public routeToLogin() {
-    if (this.role == undefined) {
+    if (Object.values(this.role).length === 0) {
       this.router.navigateByUrl('/login');
     } else if (this.role[0].role == 'Admin') {
       this.router.navigateByUrl('/admin');
