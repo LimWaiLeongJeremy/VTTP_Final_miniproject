@@ -4,22 +4,23 @@ ARG SPRING_MAIL_PASSWORD
 ARG STRIPE_PUBLICKEY
 ARG STRIPE_SECRETKEY
 
-# FROM node:19 as angular
+FROM node:19 as angular
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY client/angular.json .
-# COPY client/package.json .
-# COPY client/package-lock.json .
-# COPY client/tsconfig.json .
-# COPY client/tsconfig.app.json .
-# COPY client/tsconfig.spec.json .
-# COPY client/src ./src
+COPY client/angular.json .
+COPY client/package.json .
+COPY client/package-lock.json .
+COPY client/tsconfig.json .
+COPY client/tsconfig.app.json .
+COPY client/tsconfig.spec.json .
+COPY client/ngsw-config.json .
+COPY client/src ./src
 
-# RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli
 
-# RUN npm install
-# RUN ng build
+RUN npm install
+RUN ng build
 
 FROM maven:3.9.0-eclipse-temurin-19 as springboot
 
@@ -30,7 +31,7 @@ COPY server/mvnw.cmd .
 COPY server/pom.xml .
 COPY server/src ./src
 
-# COPY --from=angular /app/dist/client ./src/main/resource/static
+COPY --from=angular /app/dist/client ./src/main/resource/static
 
 
 RUN mvn package -Dmaven.test.skip=true
